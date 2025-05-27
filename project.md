@@ -1,7 +1,7 @@
 # Project: Online Boekwinkel/gamewinkel/filmplatform (verkoopplatform)
 
 ## Beschrijving:
-Een online platform waar gebruikers boeken/games/films kunnen zoeken, kopen en reviews kunnen schrijven. Het platform zal verschillende soorten databases gebruiken om de diverse aspecten van de applicatie te ondersteunen.
+Een (online) platform waar gebruikers boeken/games/films kunnen zoeken, kopen en reviews kunnen schrijven. Het platform zal verschillende soorten databases gebruiken om de diverse aspecten van de applicatie te ondersteunen.
 
 ## Functionaliteiten:
 - Gebruikersbeheer: Registratie, inloggen en profielbeheer.
