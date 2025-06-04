@@ -1,0 +1,1 @@
+# Normal forms (0NF, 1NF, 2NF, 3NF, Boyce Codd NF)
