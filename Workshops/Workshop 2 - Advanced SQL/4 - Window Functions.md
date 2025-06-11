@@ -34,7 +34,7 @@ FROM students;
 
 *Ranks students by their enrollment date (earliest gets rank 1).*
 
-<br<
+<br>
 
 ### 2.2 Running Total of Students Enrolled Per City
 
