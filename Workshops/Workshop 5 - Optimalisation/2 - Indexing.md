@@ -16,7 +16,6 @@ Without an index, PostgreSQL must perform a sequential scan — checking every r
 | ---------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | **B-tree** | The default index type; organizes values in a balanced tree structure.          | Fast for exact matches and range queries (`=`, `<`, `>`, `BETWEEN`)  |
 | **BRIN**   | Block Range Index; stores min/max metadata per block instead of row-level data. | Best for very large, **naturally ordered** tables (e.g., timestamps) |
-| **Hash**   | Uses a hash table for equality comparisons.                                     | Rarely used; mostly replaced by B-tree                               |
 | **GIN**    | Generalized Inverted Index; used for indexing composite or array values.        | Full-text search, JSONB, arrays                                      |
 | **GiST**   | Generalized Search Tree; supports complex data types like geometry.             | Spatial data, ranges, custom indexing                                |
 
@@ -68,13 +67,18 @@ Before creating an index, ask yourself:
 
 Indexing should be based on actual data access patterns. Good index design comes from understanding how your application queries the data.
 
-## Creating a BRIN Index
+## Creating a Block Range Index (BRIN)
+
+A BRIN index (Block Range Index) is a compact and efficient index type in PostgreSQL, designed for very large tables where values are physically ordered on disk — such as timestamped logs or sequential IDs.
+
+Unlike B-tree indexes, a BRIN does not store pointers to individual rows. Instead, it stores a summary — typically the minimum and maximum values — for each block of rows (e.g., every 128 pages. A page is the smallest storage unit in PostgreSQL, fixed at 8KB).
+
+The following SQL creates a Block Range Index (BRIN) on the salary column of the employees table.
 
 ````sql
 CREATE INDEX idx_employee_salary ON employees USING BRIN (salary);
 `````
 
-Creates a Block Range Index (BRIN) on the salary column of the employees table, which is efficient for large datasets.
 
 ### Full Example for Context and Testing
 
@@ -103,3 +107,33 @@ SELECT * FROM employees WHERE salary BETWEEN 75000 AND 75500;
 
 Before indexing, this will likely trigger a Seq Scan.
 After indexing, you should see a Bitmap Index Scan or BRIN Index Scan.
+
+### When BRIN works well
+BRIN indexes are highly efficient when:
+- The data is naturally ordered (e.g., ascending salary or created_at values)
+- Each block covers a tight range of values
+- You frequently query ranges (e.g., "find all salaries between 70,000 and 75,000")
+
+In this case, PostgreSQL can use the BRIN index to skip entire blocks that are clearly outside the filter range.
+
+### When BRIN becomes ineffective
+If the table’s data is not physically clustered (e.g., values are inserted randomly), the value ranges per block become too broad. The BRIN index can no longer help PostgreSQL eliminate irrelevant blocks efficiently — and the query may revert to a full table scan.
+
+### Reorder data physically in the table
+If your data is no longer physically ordered, you should consider reordering it to restore index efficiency. The `CLUSTER` command will rearrange the rows in the table based on the order defined by an index. However, `CLUSTER` requires a index that points to every row and defines a strict order - such as a B-Tree index. A BRIN index does not meet this requirement, as it only stores range summaries. In our example of the `employees` table, we can follow these steps:
+
+1. Create a temporay B-Tree index
+
+````sql
+CREATE INDEX idx_temp_salary ON employees (salary);
+````
+2. Reorder the table based upon the indexed column.
+````sql
+CLUSTER employees USING idx_temp_salary;
+````
+This rewrites the table on disk, physically ordering the rows by salary. This improves the effectiveness of the existing BRIN index.
+
+3. Drop the temporary B-Tree index
+````sql
+DROP INDEX idx_temp_salary;
+````   
