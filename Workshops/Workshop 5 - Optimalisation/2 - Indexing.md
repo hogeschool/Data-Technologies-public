@@ -21,7 +21,7 @@ Without an index, PostgreSQL must perform a sequential scan — checking every r
 
 
 In the figure below, you see a visual representation of a B-tree index. The blue rectangles represent the nodes of the tree, with the ones at the bottom (inside the yellow box) called leaf nodes.
-The leaf nodes contain the actual mapping between indexed values and row pointers, known in PostgreSQL as Tuple Identifiers (`TIDs`). Each `TID` points to the physical location of a row in the table, using a `(page, offset)` format.
+The leaf nodes contain the actual mapping between indexed values and row pointers, known in PostgreSQL as Tuple Identifiers (`TIDs`). Each `TID` points to the physical location of a row in the table, using a `(page, offset)` format. A page is the smallest storage unit in PostgreSQL, fixed at 8KB).
 In a B-tree, a node with N keys always has N+1 child nodes, which ensures that the search space is correctly partitioned.
 
 
