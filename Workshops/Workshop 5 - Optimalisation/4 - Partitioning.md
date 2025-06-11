@@ -1,8 +1,9 @@
 # Partitioning – Breaking Large Tables into Smaller Pieces
 
-When dealing with large datasets, partitioning can help improve performance and maintainability. There are two approaches for partitioning:
-- Horizontal (split by rows)
-- Vertical (split by columns)
+When dealing with large datasets, partitioning can help improve performance and maintainability. PostgreSQL supports two general types of partitioning:
+
+- Horizontal partitioning: splitting a table by rows
+- Vertical partitioning: splitting a table by columns
 
 ## Horizontal partitioning
 
