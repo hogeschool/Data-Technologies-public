@@ -19,6 +19,26 @@ Without an index, PostgreSQL must perform a sequential scan — checking every r
 | **Hash**   | Uses a hash table for equality comparisons.                                     | Rarely used; mostly replaced by B-tree                               |
 | **GIN**    | Generalized Inverted Index; used for indexing composite or array values.        | Full-text search, JSONB, arrays                                      |
 | **GiST**   | Generalized Search Tree; supports complex data types like geometry.             | Spatial data, ranges, custom indexing                                |
+
+```mermaid
+flowchart TD
+    A[1000&vert;2000&vert;3000] --> B(500&vert;750)
+    A --> C(1200&vert;1800)    
+    A --> E(2100&vert;2500)        
+    A --> G(3100&vert;3800)
+    C --> H(1100&vert;1150)    
+    C --> I(1250&vert;1400)
+    C --> J(1850&vert;1940)
+    I --> K(1220 => TID&lpar;5,20&rpar;)
+    I --> L(1420 => TID&lpar;8,22&rpar;)                
+    
+    subgraph leafnodes
+    K
+    L
+    end
+```
+A illustration of a B-Tree   
+
 ### Benefits of Using Indexes
 - Faster queries: Especially for SELECTs with filters or joins.
 - Enables efficient sorting and searching.
