@@ -67,6 +67,18 @@ WHERE sale_date BETWEEN '2024-05-01' AND '2024-05-31';
 ### Design tip
 Horizontal partitioning can be done not only by dates, but also by numeric values, text categories, or even hashed values. As a database designer, you should analyze the most common query patterns before deciding how to partition — the right partitioning strategy depends entirely on how the data is accessed.
 
+### Comparision: Horizontal Partitioning vs Indexes
+
+| Feature                | Horizontal Partitioning                            | Indexes                                       |
+| ---------------------- | -------------------------------------------------- | --------------------------------------------- |
+| **Main goal**          | Reduce scanned data volume                         | Speed up row lookup                           |
+| **How it works**       | Splits table into physical sub-tables (partitions) | Builds a search tree alongside the table      |
+| **Best for**           | Filtering on partition key (e.g. date, region)     | Filtering on other columns or point lookups   |
+| **Query optimizer**    | Can skip entire partitions (partition pruning)     | Must scan index structure for the whole table |
+| **Performance impact** | Reduces I/O and planning time for large datasets   | Improves access speed within a large table    |
+| **Can be combined?**   | Yes – with indexes per partition                   | Yes – especially inside partitions          |
+
+
 ## Vertical partitioning (TBD)
 
 No native PostgresSQL support, but the benefits are:
