@@ -4,6 +4,11 @@ When dealing with large datasets, partitioning can help improve performance and 
 
 ## Horizontal partitioning
 
+Horizontal partitioning is the process of splitting a large table into smaller pieces, called partitions, where each partition holds a subset of the rows based on the value of one or more columns.
+From the user's perspective, it behaves like a single logical table — but under the hood, the data is physically separated.
+
+In the example below, we partition a sales table by sale_date, using yearly ranges.
+
 ### Create the logical parent table
 ````sql
 CREATE TABLE sales (
