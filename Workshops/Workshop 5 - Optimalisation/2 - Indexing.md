@@ -208,3 +208,47 @@ WHERE info @> '{"department": "Engineering"}';
 ````
 This query retrieves all rows where the info JSON object contains the key "department" with the value "Engineering".
 Thanks to the GIN index, PostgreSQL can quickly locate the matching rows without scanning all rows or parsing every JSONB object.
+
+## Creating a Generalized Search Tree Index (GiST)
+
+TBD
+
+### Full Example for Context and Testing
+PostgreSQL supports a special `daterange` data type, which can represent a continuous span of dates (e.g., a vacation, booking, or subscription period).
+
+1. Create table with date ranges
+
+ ````sql
+   CREATE TABLE reservations (
+    id SERIAL PRIMARY KEY,
+    guest_name TEXT,
+    stay_period DATERANGE
+);
+````
+2. Insert some sample data
+
+````sql
+INSERT INTO reservations (guest_name, stay_period) VALUES
+('Alice',  '[2025-06-10, 2025-06-15)'),
+('Bob',    '[2025-06-20, 2025-06-25)'),
+('Charlie','[2025-06-15, 2025-06-22)');
+````
+> The range `[2025-06-10, 2025-06-15)` includes the 10th up to but not including the 15th.
+
+3. Create a GiST index to optimize overlap queries
+
+````sql
+CREATE INDEX idx_reservations_period ON reservations
+USING GiST (stay_period);
+````
+
+4. Run a query to find any existing reservations that overlap with a new booking request
+
+````sql
+SELECT guest_name
+FROM reservations
+WHERE stay_period && '[2025-06-14, 2025-06-17)';
+````
+> The && operator means: "overlaps with"
+
+
