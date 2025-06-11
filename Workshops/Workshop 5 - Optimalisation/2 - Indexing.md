@@ -137,3 +137,60 @@ This rewrites the table on disk, physically ordering the rows by salary. This im
 ````sql
 DROP INDEX idx_temp_salary;
 ````   
+
+## Creating a Generalized Inverted Index (GIN)
+
+When working with semi-structured data in PostgreSQL, the JSONB data type is commonly used. To improve query performance on JSONB columns — especially for containment checks — a GIN index is highly effective. A GIN index on a JSONB column allows PostgreSQL to index individual keys and values within each JSON object.
+
+This enables fast lookup for containment queries using operators like `@>` — for example:
+````sql
+SELECT * FROM employees WHERE info @> '{"department": "Engineering"}';
+````
+Without the index, PostgreSQL would scan every row. With the GIN index, it directly finds relevant rows using internal term-to-row mappings.
+
+In the context of GIN indexes, inversion refers to the idea that the index maps from internal elements (like JSON keys or array items) to the rows that contain them — rather than mapping from a full column value to a row, as B-tree indexes do.
+
+So instead of:
+value → list of rows (B-Tree)
+
+You get:
+element within value → list of rows (GIN)
+
+This "inversion" refers to the focus shifting from entire values to the internal terms or components that make up those values.
+
+### Full Example for Context and Testing
+
+1. Create a table with a JSONB column
+
+````sql
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    info JSONB
+);
+````
+
+2. Insert some sample data
+
+````sql
+INSERT INTO employees (info) VALUES
+  ('{"name": "Alice", "department": "HR", "active": true}'),
+  ('{"name": "Bob", "department": "Engineering", "active": true}'),
+  ('{"name": "Carol", "department": "Finance", "active": false}');
+````
+Each row stores a structured JSONB object with different key–value pairs.
+
+3. Create a GIN index on the info column
+
+````sql
+CREATE INDEX idx_info_gin ON employees USING GIN (info);
+````
+This index uses PostgreSQL’s default `jsonb_opsz` operator class, which supports indexing of keys and values in the JSONB structure.
+
+4. Run a query using the `@>` containment operator
+
+````
+SELECT * FROM employees
+WHERE info @> '{"department": "Engineering"}';
+````
+This query retrieves all rows where the info JSON object contains the key "department" with the value "Engineering".
+Thanks to the GIN index, PostgreSQL can quickly locate the matching rows without scanning all rows or parsing every JSONB object.
