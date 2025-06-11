@@ -1,6 +1,8 @@
 # Partitioning – Breaking Large Tables into Smaller Pieces
 
-When dealing with large datasets, partitioning can help improve performance and maintainability. In this example, we’ll partition a sales table by year using range partitioning in PostgreSQL.
+When dealing with large datasets, partitioning can help improve performance and maintainability. There are two approaches for partitioning:
+- Horizontal (split by rows)
+- Vertical (split by columns)
 
 ## Horizontal partitioning
 
