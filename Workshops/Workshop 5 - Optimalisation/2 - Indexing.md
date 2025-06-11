@@ -20,6 +20,27 @@ Without an index, PostgreSQL must perform a sequential scan — checking every r
 | **GiST**   | Generalized Search Tree; supports complex data types like geometry.             | Spatial data, ranges, custom indexing                                |
 
 
+### Benefits of Using Indexes
+- Faster queries: Especially for SELECTs with filters or joins.
+- Enables efficient sorting and searching.
+- Supports constraints: e.g., enforcing uniqueness.
+
+### Drawbacks of Indexes
+- Insert/Update overhead: Indexes must be updated when the table changes, which adds write cost.
+- More storage usage: Indexes take up disk space.
+- Too many indexes hurt performance: Each additional index slows down inserts, updates, and deletes.
+
+### Design Tip
+Indexing is a powerful optimization tool, but not every column should be indexed.
+Before creating an index, ask yourself:
+
+- Will this column be frequently searched or filtered?
+- Will the index reduce the need to scan large portions of the table?
+- Is the table large enough that indexing brings real value?
+
+Indexing should be based on actual data access patterns. Good index design comes from understanding how your application queries the data.
+
+## Creating a Balanced Tree Index (B-Tree)
 In the figure below, you see a visual representation of a B-tree index. The blue rectangles represent the nodes of the tree, with the ones at the bottom (inside the yellow box) called leaf nodes.
 The leaf nodes contain the actual mapping between indexed values and row pointers, known in PostgreSQL as Tuple Identifiers (`TIDs`). Each `TID` points to the physical location of a row in the table, using a `(page, offset)` format. A page is the smallest storage unit in PostgreSQL, fixed at 8KB.
 In a B-tree, a node with N keys always has N+1 child nodes, which ensures that the search space is correctly partitioned.
@@ -45,27 +66,20 @@ flowchart TD
     end
 ```
 
+When you create a standard index in PostgreSQL without specifying the index type, PostgreSQL uses a balanced B-Tree by default.
 
+```sql
+CREATE INDEX idx_last_name ON customers (last_name);
+```
+This statement creates an index on the `last_name` column of the `customers` table.
+Since no `USING` clause is specified, PostgreSQL uses its default index type: *a B-Tree*.
 
-### Benefits of Using Indexes
-- Faster queries: Especially for SELECTs with filters or joins.
-- Enables efficient sorting and searching.
-- Supports constraints: e.g., enforcing uniqueness.
+You don’t need to explicitly write `USING BTREE` unless you want to make it explicit:
 
-### Drawbacks of Indexes
-- Insert/Update overhead: Indexes must be updated when the table changes, which adds write cost.
-- More storage usage: Indexes take up disk space.
-- Too many indexes hurt performance: Each additional index slows down inserts, updates, and deletes.
-
-### Design Tip
-Indexing is a powerful optimization tool, but not every column should be indexed.
-Before creating an index, ask yourself:
-
-- Will this column be frequently searched or filtered?
-- Will the index reduce the need to scan large portions of the table?
-- Is the table large enough that indexing brings real value?
-
-Indexing should be based on actual data access patterns. Good index design comes from understanding how your application queries the data.
+```sql
+-- Equivalent but more explicit:
+CREATE INDEX idx_last_name ON customers USING BTREE (last_name);
+```
 
 ## Creating a Block Range Index (BRIN)
 
