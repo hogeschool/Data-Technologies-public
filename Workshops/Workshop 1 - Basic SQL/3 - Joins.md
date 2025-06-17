@@ -1,29 +1,32 @@
 # SQL Joins
 
 ## Introduction
+
 SQL joins are used to combine rows from two or more tables based on a related column. In this document, we'll explore different types of joins using the given database schema.
-
-
 
 :information_source: Just as a reminder, we have the following tables in our [University dataset]("data/university.sql"):
 
 ---
+
 - `students`
 - `teachers`
 - `courses`
 - `course_teachers`
 - `enrollments`
 - `results`
+
 ---
 
-<br>
+&nbsp;
 
 ### Inner Join
+
 An `INNER JOIN` retrieves records where there is a matching value in both tables. Any non-matching rows are discarded.
 
 ![alt text](data/img/inner-join.jpeg "Inner Join")
 
 **Example:** Get students and their enrolled courses
+
 ```sql
 SELECT 
     students.first_name, 
@@ -35,6 +38,7 @@ INNER JOIN courses ON enrollments.course_id = courses.id;
 ```
 
 **How it works:**
+
 - Matches students with enrollments.
 - Then matches enrollments with courses.
 - If a student is NOT enrolled in any course, they won’t appear.
@@ -44,18 +48,19 @@ INNER JOIN courses ON enrollments.course_id = courses.id;
 
 | first_name  | last_name | course_name |
 |------|-------------|:-------------|
-Sandra | Durand | Supply Chain Management
-Sandra | Durand | Database Management Systems
-Sandra | Durand | Molecular Biology
-Sandra | Durand | Statics and Dynamics
-... | ... | ...
+| Sandra | Durand | Supply Chain Management |
+| Sandra | Durand | Database Management Systems |
+| Sandra | Durand | Molecular Biology |
+| Sandra | Durand | Statics and Dynamics |
+| ... | ... | ... |
 
 </details>
 
-<br>
-<br>
+&nbsp;
+&nbsp;
 
 ### :arrow_left: Left Join
+
 A `LEFT JOIN` returns all records from the left table, plus matching records from the right table. If no match exists, NULL is returned from the right-side columns.
 
 ![alt text](data/img/left-join.jpeg "Left (Outer) Join")
@@ -74,6 +79,7 @@ LEFT JOIN enrollments ON students.id = enrollments.student_id;
 ````
 
 **How it works:**
+
 - Includes all students.
 - If a student isn’t enrolled, the `course_id` and `academic_year` will be `NULL`.
 
@@ -82,18 +88,19 @@ LEFT JOIN enrollments ON students.id = enrollments.student_id;
 
 | first_name  | last_name | course_id | academic_year |
 |------|-------------|:---:|:----:|
-Sandra | Durand | 97 | 2024
-Sandra | Durand | 3 | 2024
-Sandra | Durand | 87 | 2024
-Sandra | Durand | 31 | 2024
-... | ... | ...
+| Sandra | Durand | 97 | 2024 |
+| Sandra | Durand | 3 | 2024 |
+| Sandra | Durand | 87 | 2024 |
+| Sandra | Durand | 31 | 2024 |
+| ... | ... | ... |
 
 </details>
 
-<br>
-<br>
+&nbsp;
+&nbsp;
 
 ### :arrow_right: Right Join
+
 A `RIGHT JOIN` works similarly to LEFT JOIN, but keeps all records from the right table while including only matching rows from the left.
 
 ![alt text](data/img/right-join.jpeg "Right (Outer) Join")
@@ -112,6 +119,7 @@ RIGHT JOIN students ON enrollments.student_id = students.id;
 ````
 
 **How it works:**
+
 - Shows all enrollments first.
 - If a course isn’t enrolled by any student, it won’t show up (because enrollments table is "stronger" in this join).
 - Typically, LEFT JOIN is preferred over RIGHT JOIN for readability.
@@ -121,19 +129,20 @@ RIGHT JOIN students ON enrollments.student_id = students.id;
 
 | course_id | academic_year | first_name  | last_name |
 |:---:|:----:|------|-------------|
-97 | 2024 | Sandra | Durand
-3 | 2024 | Sandra | Durand
-87 | 2024 | Sandra | Durand
-31 | 2024 | Sandra | Durand
-51 | 2024 | Sandra | Durand
-... | ... | ...
+| 97 | 2024 | Sandra | Durand |
+| 3 | 2024 | Sandra | Durand |
+| 87 | 2024 | Sandra | Durand |
+| 31 | 2024 | Sandra | Durand |
+| 51 | 2024 | Sandra | Durand |
+| ... | ... | ... |
 
 </details>
 
-<br>
-<br>
+&nbsp;
+&nbsp;
 
 ### :arrow_double_down: Full Outer Join
+
 A `FULL OUTER JOIN` returns all records from both tables, filling NULLs where matches don’t exist.
 
 ![alt text](data/img/full-join.jpeg "Full (Outer) Join")
@@ -153,6 +162,7 @@ FULL JOIN courses ON enrollments.course_id = courses.id;
 ````
 
 **How it works:**
+
 - Everything appears—students, courses, and academic_year.
 - If a student is not enrolled, their course_id will be NULL.
 - If a course has no enrollments, it will still be listed.
@@ -162,18 +172,18 @@ FULL JOIN courses ON enrollments.course_id = courses.id;
 
 | first_name  | last_name | course_id | academic_year |
 |------|-------------|:---:|:----:|
-Sandra | Durand | 97 | 2024
-Sandra | Durand | 3 | 2024
-Sandra | Durand | 87 | 2024
-Sandra | Durand | 31 | 2024
-... | ... | ...
+| Sandra | Durand | 97 | 2024 |
+| Sandra | Durand | 3 | 2024 |
+| Sandra | Durand | 87 | 2024 |
+| Sandra | Durand | 31 | 2024 |
+| ... | ... | ... |
 
 </details>
 
-
-<br>
+&nbsp;
 
 ### :twisted_rightwards_arrows: Cross Join
+
 A `CROSS JOIN`s generates a Cartesian product, meaning every row in one table joins with every row in another.
 
 ![alt text](data/img/cross-join.jpeg "Cross Join")
@@ -189,7 +199,9 @@ FROM students
 CROSS JOIN courses;
 
 ````
+
 **How it works:**
+
 - If we have 100 students and 10 courses, this returns 1,000 rows.
 - Not commonly used unless explicitly needed.
 - Can be dangerous if tables contain large numbers of rows!
@@ -199,18 +211,19 @@ CROSS JOIN courses;
 
 | first_name  | last_name | course_name |
 |------|-------------|:-------------|
-Luuk | Wagner | Introduction to Programming
-Luuk | Wagner | Data Structures and Algorithms
-Luuk | Wagner | Database Management Systems
-Luuk | Wagner | Operating Systems
-... | ... | ...
+| Luuk | Wagner | Introduction to Programming |
+| Luuk | Wagner | Data Structures and Algorithms |
+| Luuk | Wagner | Database Management Systems |
+| Luuk | Wagner | Operating Systems |
+| ... | ... | ... |
 
 </details>
 
-<br>
-<br>
+&nbsp;
+&nbsp;
 
 ### :arrow_right_hook: Self Join
+
 A `SELF JOIN`s generates a Cartesian product, meaning every row in one table joins with every row in another.
 
 **Example:** Finding students from the same city
@@ -228,7 +241,9 @@ JOIN students s2
     AND s1.id <> s2.id;
 
 ````
+
 **How it works:**
+
 - Retrieve student pairs (`student1`, `student2`) and their shared city.
 - Match students living in the same city (`s1.city = s2.city`).
 - Ensure a student isn’t paired with themselves (`s1.id <> s2.id`).
@@ -236,29 +251,32 @@ JOIN students s2
 <details markdown="1">
 <summary>View this query result</summary>
 
-| s1_first_name  | s1_last_name | s2_first_name | s2_last_name | city
+| s1_first_name  | s1_last_name | s2_first_name | s2_last_name | city |
 |------|-------------|-------------|-------------|-------------|
-Luuk | Wagner | Carmen | Lammers | Pijnacker-Nootdorp
-Luuk | Wagner | Puck | Hoekstra | Pijnacker-Nootdorp
-Luuk | Wagner | Daniel | van der Meer | Pijnacker-Nootdorp
-... | ... | ... | ... | ...
+| Luuk | Wagner | Carmen | Lammers | Pijnacker-Nootdorp |
+| Luuk | Wagner | Puck | Hoekstra | Pijnacker-Nootdorp |
+| Luuk | Wagner | Daniel | van der Meer | Pijnacker-Nootdorp |
+| ... | ... | ... | ... | ... |
 
 </details>
 
-<br>
-<br>
+&nbsp;
+&nbsp;
 
 ### Real-World Considerations:
+
 - **INNER JOIN** is the default choice for extracting accurate relationships.
 - **LEFT JOIN** is great for auditing data (seeing missing connections).
 - **FULL JOIN** isn't always available in some databases *(MySQL doesn't support it natively)*.
 - **CROSS JOIN** should be handled with caution due to potentially huge result sets.
 - **SELF JOIN** is highly useful in social networks or employee management scenarios.
 
-<br>
-<br>
+&nbsp;
+&nbsp;
 
 ### Conclusion
+
 SQL joins aren’t just theoretical constructs; they’re powerful tools that shape data-driven decisions. Mastering them ensures efficient data retrieval, enhanced reporting, and strong relational database design.
 
-<br>
+&nbsp;
+&nbsp;

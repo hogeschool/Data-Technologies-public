@@ -1,24 +1,26 @@
 # SQL Data Manipulation
+
 Structured Query Language (SQL) allows database manipulation using `INSERT`, `UPDATE`, and `DELETE` commands.
 Data Manipulation Language (DML) allows modification of data in relational databases using:
+
 - `INSERT` (add new records)
 - `UPDATE` (modify existing records)
 - `DELETE` (remove records)
 
-
-<br>
+&nbsp;
 
 ## 1. Inserting data
 
 The `INSERT` statement is used to add new records to a table. The basic syntax is:
 
 **Syntax:**
+
 ````sql
 INSERT INTO table_name (column1, column2, column3, ...)
 VALUES (value1, value2, value3, ...);
 ````
 
-<br>
+&nbsp;
 
 Using our **students** table as an example:
 
@@ -29,9 +31,10 @@ VALUES (1, 'John', 'Doe', '2000-05-15', 'john.doe@example.com', 'Amsterdam', '20
 
 *This will add a **new student** with the specified values.*
 
-<br>
+&nbsp;
 
 #### Bulk insert
+
 Bulk inserts are useful for importing data efficiently.
 When using a bulk insert, we setup the fields and add multiple records seperated by a comma `,`.
 
@@ -46,9 +49,10 @@ VALUES
 
 This will insert 3 records at once and increases processing speed.
 
-<br>
+&nbsp;
 
 #### From another table
+
 Sometimes you want to add a lot of data that is partially in another table, you can query that data while inserting rows dynamically based on conditions.
 
 ````sql
@@ -58,9 +62,10 @@ SELECT id, 3, 2025 FROM students WHERE city = 'Rotterdam';
 
 This will insert students that are origination from `city = 'Rotterdam'` in the `enrollments` table for course_id `3` and academic_year `2025`.
 
-<br>
+&nbsp;
 
 #### CSV insert
+
 Postgress has the composability of UNIX in it, this means that 
 
 ````sql
@@ -70,18 +75,21 @@ DELIMITER ','
 CSV HEADER;
 ````
 
-<br>
+&nbsp;
 
 #### Try it yourself :rocket:
+
 - Try to `INSERT` yourself as a student into the database.
 - How about your teacher? Check if he/she is in the database and if not add them.
 
-<br><br>
+&nbsp;&nbsp;
 
 ## 2. Updating data
+
 The `UPDATE` statement is used to modify the existing records in a table.
 
 **Syntax:**
+
 ````sql
 UPDATE table_name
 SET column1 = value1, column2 = value2, ...
@@ -89,11 +97,13 @@ WHERE condition;
 ````
 
 **Example:**
+
 ````sql
 UPDATE students
 SET city = 'Amsterdam'
 WHERE email = 'john.doe@example.com';
 ````
+
 *This will update the `city` of all students matching `john.doe@example.com` to `'Amsterdam'`.*
 
 > [!WARNING]
@@ -101,9 +111,10 @@ WHERE email = 'john.doe@example.com';
 > Notice the `WHERE` clause in the `UPDATE` statement. The `WHERE` clause specifies which record(s) that should be updated. 
 > **If you omit the `WHERE` clause, ALL records in the table will be updated!**
 
-<br>
+&nbsp;
 
 #### Updating multiple rows based on conditions
+
 In the above example we showed how to update based on a condition, an email is in most condition an unique field for a student, but if we use a condition that is much wider in range this will also work.
 
 ````sql
@@ -111,11 +122,13 @@ UPDATE students
 SET city = 'The Hague'
 WHERE city = 'Rotterdam';
 ```` 
+
 *This will update the `city` of all students to `'The Hague'` currently living in `'Rotterdam'`.*
 
-<br>
+&nbsp;
 
 #### Updating multiple columns at once
+
 Up until now we just update a single column in our database table, but in most cases we want to update multiple columns of a record that matches our condition.
 
 *It is the `WHERE` clause that determines how many records will be updated.*
@@ -125,85 +138,96 @@ UPDATE courses
 SET department = 'Data Science', credits = 6
 WHERE name = 'Database Systems';
 ```` 
+
 *This will update the `city` of all students to `'The Hague'` currently living in `'Rotterdam'`.*
 
-<br>
+&nbsp;
 
 #### Updating using data from another table
+
 ````sql
 UPDATE students
 SET enrolled = '2025-09-01'
 WHERE id IN (SELECT student_id FROM enrollments WHERE academic_year = 2025);
 ````
 
-<br>
+&nbsp;
 
 > [!CAUTION]
 > Be careful when updating records. If you omit the `WHERE` clause, ALL records will be updated!
 
-<br>
+&nbsp;
 
 #### Try it yourself :rocket:
+
 - Search all students that live in `'Losser'`, how many students are there?
 - Update these students to now live in `'Lutjebroek'`
 - Update your own enrollment year in the database to be `'01-09-2025'`
 
-<br><br>
+&nbsp;&nbsp;
 
 ## 3. Deleting data
+
 The `DELETE` statement is used to delete existing records in a table.
 
 **Syntax:**
+
 ````sql
 DELETE FROM table_name WHERE condition;
 ````
 
 **Example:**
+
 ````sql
 DELETE FROM students
 WHERE email = 'john.doe@example.com';
 ````
+
 *This will delete all students with email `'john.doe@example.com'`.*
-<br>
+&nbsp;
 
 > [!WARNING]
 > Be careful when deleting records in a table! 
 > Notice the `WHERE` clause in the `DELETE` statement. The `WHERE` clause specifies which record(s) that should be deleted. 
 > **If you omit the `WHERE` clause, ALL records in the table will be deleted!**
 
-<br>
+&nbsp;
 
 #### Deleting multiple rows based on a condition
+
 ````sql
 DELETE FROM enrollments
 WHERE academic_year < 2020;
 ````
 
-<br>
+&nbsp;
 
 #### Deleting data using subqueries
+
 ````sql
 DELETE FROM enrollments
 WHERE student_id IN (SELECT id FROM students WHERE city = 'Amsterdam');
 ````
 
-<br>
+&nbsp;
 
 > [!CAUTION]
 > Be careful when deleting records. If you omit the `WHERE` clause, ALL records will be deleted!
 
-<br>
+&nbsp;
 
 #### Try it yourself :rocket:
+
 - Try deleting all students that live in `'Lutjebroek'`, 
 make sure that all records belonging with this student inside other tables are also deleted.
 
-<br><br>
+&nbsp;&nbsp;
 
 ### Best practices
+
 - Use transactions when modifying multiple related records (*next workshop*). 
 - Always test updates and deletions on sample data before applying to live data.
 - Use bulk operations for efficient insertions and updates. 
 - Regularly backup your database before making structural changes.
 
-<br>
+&nbsp;
