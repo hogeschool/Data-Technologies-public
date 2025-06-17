@@ -1,4 +1,5 @@
-## Resources for further learning
+# Resources for further learning
+
 For more in depth information about PostgresSql and SQL, the following resources could help.
 
 - [PostgreSQL Advanced Features](https://www.postgresql.org/docs/current/tutorial-advanced.html)

@@ -3,22 +3,25 @@
 Window functions are a powerful feature in SQL that allow calculations across a specific "window" of rows related to the current row—without collapsing them into a single output like traditional aggregation functions. 
 They are essential for ranking, running totals, and advanced analytics.
 
-
 ## 1. What are Window Functions?
+
 Unlike standard aggregate functions (`SUM()`, `AVG()`, etc.), which reduce a result set to a single row, window functions operate on a subset of rows while preserving individual row details. 
 Window functions are often used for ranking, running totals, moving averages, and cumulative sums.
 
 **Syntax**
+
 ````sql
 SELECT column_name, 
        window_function() OVER (PARTITION BY column ORDER BY column)
 FROM table_name;
 ````
+
 Each **window function** operates within a defined **window** of rows, determined by:
+
 - **PARTITION BY**: Divides data into subsets.
 - **ORDER BY**: Defines row order within each partition.
 
-<br>
+&nbsp;
 
 ## 2. Key Window Functions
 
@@ -34,7 +37,7 @@ FROM students;
 
 *Ranks students by their enrollment date (earliest gets rank 1).*
 
-<br>
+&nbsp;
 
 ### 2.2 Running Total of Students Enrolled Per City
 
@@ -48,7 +51,7 @@ FROM students;
 
 *Shows how many students have enrolled in each city over time.*
 
-<br>
+&nbsp;
 
 ### 2.3. First & Last Course Taken Per Student
 
@@ -64,7 +67,7 @@ JOIN courses c ON e.course_id = c.id;
 
 *Retrieves the first and last course a student enrolled in.*
 
-<br>
+&nbsp;
 
 ### 2.4. Moving Average of Student Grades
 
@@ -78,7 +81,7 @@ FROM results r;
 
 *Smooths variations in grades by averaging each student's last three results.*
 
-<br>
+&nbsp;
 
 ### 2.5. Percentile Ranking of Courses by Credit Count
 
@@ -92,12 +95,13 @@ FROM courses;
 
 *Divides courses into quartiles, grouping similar ones together.*
 
-<br>
+&nbsp;
 
 ## 3. Performance Considerations
+
 - Indexing `PARTITION BY` columns improves performance.
 - Avoid excessive memory usage with large datasets.
 - Parallel execution can optimize queries in PostgreSQL.
 
-<br>
-<br>
+&nbsp;
+&nbsp;
