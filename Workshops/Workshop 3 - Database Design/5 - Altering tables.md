@@ -27,7 +27,7 @@ When new business requirements emerge, you may need to expand a table structure 
 ALTER TABLE table_name ADD COLUMN column_name datatype [constraint];
 ```
 
-The above query adds a new column 
+The above query adds a new column.
 
 Let's assume we have a HR System, after a while we want to see the Job Title of our `employees`, we can fix this by adding a `job_title` column to our `employees` table.
 
@@ -201,7 +201,7 @@ DROP INDEX idx_employee_name;
 CREATE INDEX idx_employee_name ON employees USING GIN (name);
 ```
 
-### Considerations
+### Keep in mind
 
 - Over-indexing may slow down writes (inserts/updates) since indexes need maintenance.
 - Choosing the right index type based on query needs is crucial for performance.

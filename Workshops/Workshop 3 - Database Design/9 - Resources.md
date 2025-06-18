@@ -8,3 +8,5 @@ For more in depth information about PostgresSql and SQL, the following resources
 - [Selecting data in PostgreSQL](https://www.postgresql.org/docs/current/sql-select.html)
 - [Altering tables in PostgreSQL](https://www.postgresql.org/docs/current/sql-altertable.html)
 - [Deleting a database in PostgreSQL](https://www.postgresql.org/docs/current/sql-dropdatabase.html)
+- [Triggers in PostgreSQL](https://www.postgresql.org/docs/current/plpgsql-trigger.html)
+- [Dropping a table in PostgreSQL](https://www.postgresql.org/docs/current/sql-droptable.html)
