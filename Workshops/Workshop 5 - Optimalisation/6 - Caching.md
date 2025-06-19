@@ -12,6 +12,10 @@ Met caching hebben we het dan over de caches in PostgreSQL:
 | plan cache         | PostgreSQL    | Via prepared statements/functions      |
 
 
+Datawarehousing. Tijdeijke data voorbewerken en opslaan in data. (ETL).
+
+
+
 ## Connection pooling (TBD)
 PgPool or PgBouncer ?
 
