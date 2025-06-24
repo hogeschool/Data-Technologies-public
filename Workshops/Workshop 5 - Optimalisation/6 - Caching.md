@@ -33,6 +33,125 @@ In a system caching happens at different levels. In the table below you see typi
 | **Application**        | In-memory cache (e.g., Redis, Memcached)       | Caches frequently used query results or user sessions            |
 | **Custom aggregation** | Materialized views or precomputed tables       | Stores expensive query results to be reused                      |
 
+In this workshop we focus on caching at the Application and Custom aggregation level. 
+
+## Caching at Application level
+There are five caching strategies. The five caching strategies are:
+- Cache aside (lazy loading)
+- Read through
+- Write through
+- Write back
+- Write around
+
+Each strategy handles the following aspects in a different way:
+- Populating the cache
+- Keeping the cache and the database in sync
+- Managing the interaction with the cache
+  
+### Cache aside (lazy loading)
+
+```mermaid
+sequenceDiagram
+    title Cache-aside strategy (Read)
+
+    participant App as Application
+    participant Cache as Cache
+    participant DB as Database
+
+    App->>Cache: Read(key)
+    alt Cache miss
+        App->>DB: Read(key)
+        DB-->>App: Value
+        App->>Cache: Write(key, value)
+    else Cache hit
+        Cache-->>App: Value
+    end
+```
+```mermaid
+sequenceDiagram
+    title Cache-aside strategy (Write)
+
+    participant App as Application
+    participant DB as Database
+    participant Cache as Cache
+
+    App->>DB: Write(key, value)
+    App->>Cache: Invalidate(key)
+```
+
+
+### Read through
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Cache as Cache
+    participant DB as Database
+
+    App->>Cache: Read(key)
+    alt Cache miss
+        Cache->>DB: Read(key)
+        DB-->>Cache: Value
+        Cache-->>App: Value
+    else Cache hit
+        Cache-->>App: Value
+    end
+```
+
+Only read-strategy. Must be combined with a write strategy (usally write-through or write-back).
+
+### Write through
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Cache as Cache
+    participant DB as Database
+
+    App->>Cache: Write(key, value)
+    Cache->>DB: Write(key, value)
+```
+### Write back
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Cache as Cache
+    participant DB as Database
+
+    App->>Cache: Write(key, value)
+    Note right of Cache: Mark as dirty
+
+    Note over Cache, DB: Later (e.g., on eviction or timer)
+    Cache->>DB: Write(key, value)
+
+```
+### Write around
+```mermaid
+sequenceDiagram
+    title Write-around strategy (Read)
+
+    participant App as Application
+    participant Cache as Cache
+    participant DB as Database
+
+    App->>Cache: Read(key)
+    alt Cache miss
+        App->>DB: Read(key)
+        DB-->>App: Value
+        App->>Cache: Write(key, value)
+    else Cache hit
+        Cache-->>App: Value
+    end
+```
+
+```mermaid
+sequenceDiagram
+    title Write-around strategy (Write)
+
+    participant App as Application
+    participant DB as Database
+
+    App->>DB: Write(key, value)
+```
+
 ## Cache Staleness and Dirty Data
 ### Cache Staleness
 Cached data can become **stale**, meaning it is outdated, inaccurate, or no longer valid due to changes in the original data source.
