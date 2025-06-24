@@ -25,7 +25,7 @@ flowchart TB
 
 
 ## Caching happens at different Levels
-In a system caching happens at different levels. In the table below you see typical caching layers used in systems.
+In a system caching happens at different levels. In the table below you see typical caching levels used in systems.
 
 | **Level**              | **Example**                                    | **Purpose**                                                      |
 | ---------------------- | ---------------------------------------------- | ---------------------------------------------------------------- |
@@ -55,7 +55,7 @@ There are different strategies to deal with this:
 - Manual refresh (e.g., a scheduled job that updates materialized views)
 
 ### Dirty Data
-Cached data can also be **dirty**, meaning it contains changes that have not yet been written back to the original source. In this case, the original data is outdated and needs to be updated using the cache content.
+Cached data can also be **dirty**, meaning it contains changes that have not yet been written back to the original source. In this case, the original data is outdated and needs to be updated using the cached content.
 
 > 🔎 **Example:**  
 > A product’s price is updated in the cache, but not yet written to the database.  
@@ -64,7 +64,7 @@ Cached data can also be **dirty**, meaning it contains changes that have not yet
 
 
 ## Caching at Application level
-There are five caching strategies. The five caching strategies are:
+There are five caching strategies at application level:
 - Cache aside (lazy loading)
 - Read through
 - Write through
@@ -73,7 +73,7 @@ There are five caching strategies. The five caching strategies are:
 
 Each strategy handles the following aspects in a different way:
 - Populating the cache
-- How to deal with Stale and Dirty Data
+- Dealing with Stale and Dirty Data
 - Managing the interaction with the cache
   
 ### Cache aside (lazy loading)
