@@ -46,7 +46,9 @@ There are different strategies to deal with this:
 ### Diry Data
 Cached data can also be **dirty**, meaning it contains changes that have not yet been written back to the original source. In this case, the original data is outdated and needs to be updated using the cache content. This requires a write-through or write-back policy to ensure consistency.
 
-#### Write-through caching
+#### Write-through caching 
+> **TBD:** Write-through and write-back define how writes are handled between the cache and the backing store. Cache population, on the other hand, is managed through separate strategies like write-allocate and read-allocate.
+
 With write-through caching, every time data is written to the cache, it is also immediately written to the original data source (e.g., disk or database).
 
 Pros:
@@ -57,6 +59,16 @@ Cons:
 - Slower write performance, because every write involves the slower backing store.
 
 Analogy: It’s like writing a document and immediately saving it to a USB drive after every single keystroke.
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Cache as Cache
+    participant DB as Disk / Database
+
+    App->>Cache: Write(data)
+    Cache->>DB: Write(data)
+    Note right of DB: Data is immediately written
+```
 
 #### Write-back caching
 With write-back caching, data is initially written only to the cache. The write to the original source happens later, either on a schedule or when the cache entry is evicted.
@@ -70,6 +82,20 @@ Cons:
 - Cache and source can temporarily be inconsistent (dirty data).
 
 Analogy: It’s like writing in a notebook and only saving the contents to a USB drive when you're done or taking a break.
+
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Cache as Cache
+    participant DB as Disk / Database
+
+    App->>Cache: Write(data)
+    Note right of Cache: Data is now marked as dirty
+
+    Note over Cache, DB: Later...
+    Cache->>DB: Write(data)
+    Note right of DB: Data is written back from cache
+```
 
 ## Connection pooling (TBD)
 PgPool or PgBouncer ?
