@@ -1,40 +1,40 @@
 # Caching & Connection Pooling
 
 ## Caching (TBD)
-Caching is a mechanism used to speed up **read operations** between two components of a system, typically when one component (such as a database or disk) is significantly slower than the other (such as a processor or memory).
+Caching is a technique used to speed up **read operations** between two system components, especially when one component (like a disk or database) is much slower than the other (like RAM or a CPU).
 
-To accelerate **read operations**, previously fetched or computed data is stored in a temporary, faster storage layer called a cache. When the same data is requested again, it can be served from the cache instead of retrieving it from the slower original source.
+To reduce the time needed to retrieve data, a **cache** stores requently accessed or recently used data in a faster, temporary storage layer - usually in RAM. When the same data is requested again, it can be quickly returned from the cache instead of being fetched from the slower original source.
 
-In the diagram below, two components are shown: the *Application* and the *Disk*. The running application needs to read data from the disk. To speed up these read operations, a cache layer is placed between the two components. The *Cache Manager* stores previously accessed data in RAM, so that when the application requests the same data again, it can be retrieved from RAM instead of the slower disk.
+In the diagram below, three components are shown: the *Application*, the *Cache* and the *Disk*. The application needs to read stored data on the disk, but disk access is relatively slow. To speed up these read operations, a  *Cache Manager* temporarily stores previously read data in RAM. If the application requests the same data again, it can be served directly from the cache - avoiding the slower disk read.
 
 ```mermaid
-flowchart TB
-  A@{ shape: lin-cyl, label: "Disk" } <--> Cache 
-  
+flowchart TB   
+  Application <--> Cache
+
   subgraph Cache
     direction LR
     Cache_manager["Cache Manager"] <--> RAM
   end
   
-  Cache <--> Application
+  Cache <--> A@{ shape: lin-cyl, label: "Disk" } 
 ```
 > **Write caching note:**
 > Some caching strategies also involve storing writes in the cache. *Write-back caching* improves write performance by temporarily storing data in fast memory before writing it to the slower source at a later time. This strategy will be covered later in this workshop.
 
+Because the cache has limited space, it can’t store everything. That’s why the Cache Manager must decide which data to keep and which to evict. This decision is governed by caching strategies such as LRU (Least Recently Used), LFU (Least Frequently Used) or Write-through / Write-back. We will explore these in the following sections.
 
 
-
-## Caching happens at different Levels
-In a system caching happens at different levels. In the table below you see typical caching levels used in systems.
+## Caching Across System Layers
+Caching occurs at multiple levels within a software system. The table below shows typical caching layers, each serving a different purpose to reduce latency and system load.
 
 | **Level**              | **Example**                                    | **Purpose**                                                      |
 | ---------------------- | ---------------------------------------------- | ---------------------------------------------------------------- |
-| **Operating System**   | File system cache (e.g., Linux page cache)     | Reduces disk I/O by caching recently accessed file blocks in RAM |
-| **Database**           | PostgreSQL shared buffers and query plan cache | Avoids repeated disk reads and parsing of SQL queries            |
-| **Application**        | In-memory cache (e.g., Redis, Memcached)       | Caches frequently used query results or user sessions            |
-| **Custom aggregation** | Materialized views or precomputed tables       | Stores expensive query results to be reused                      |
+| **Operating System**   | File system cache (e.g., Linux page cache)     | Caches disk blocks in RAM to reduce filesystem I/O |
+| **Database**           | PostgreSQL shared buffers and query plan cache | Avoids repeated disk reads and redundant query planning           |
+| **Application**        | In-memory cache (e.g., Redis, Memcached)       | Caches computed results, sessions or external API data            |
+| **Custom aggregation** | Materialized views or precomputed summary tables       | Stores expensive query results for reuse                      |
 
-In this workshop we focus on caching at the Application and Custom aggregation level. 
+In this workshop, we focus on caching at the **Application** and **Custom Aggregation** levels — the layers most relevant to application developers. 
 
 ## Stale Data and Dirty Data
 The concepts **stale data** and **dirty data** are commonly used when discussing caching behavior.
@@ -45,8 +45,7 @@ Cached data can become **stale**, meaning it is outdated, inaccurate, or no long
 
 > 🔎 **Example:**  
 > A customer profile is cached. Later, the customer updates their address.  
-> The database is correct, but the cache still returns the old address. 
-> This is an example of **stale data**.
+> The database is correct, but the cache still returns the old address. This is an example of **stale data**.
 
 There are different strategies to deal with this:
 
@@ -59,22 +58,23 @@ Cached data can also be **dirty**, meaning it contains changes that have not yet
 
 > 🔎 **Example:**  
 > A product’s price is updated in the cache, but not yet written to the database.  
-> If another system reads the database directly, it will still see the old price.  
-> This is an example of **dirty data**.
+> If another system reads the database directly, it will still see the old price. This is an example of **dirty data**.
 
 
-## Caching at Application level
+## Caching stategies at Application level
+Since cache memory is limited and not automatically synchronized with the original data source, we need a strategy for how and when to store data in the cache. These strategies define how data is read from and written to the cache and the underlying storage.
+
 There are five caching strategies at application level:
-- Cache aside (lazy loading)
+- Cache aside (also know as: Lazy loading)
 - Read through
 - Write through
 - Write back
 - Write around
 
 Each strategy handles the following aspects in a different way:
-- Populating the cache
-- Dealing with Stale and Dirty Data
-- Managing the interaction with the cache
+- **Cache population policy** – When and how data enters the cache
+- **Stale or dirty data handling** - How consistency between cache and source is maintained
+- **Application behavior during cache hits and misses** - What the application does on a cache hit or miss, and how it interacts with the data source
   
 ### Cache aside (lazy loading)
 In this caching strategy, the **application itself controls access to the cache**. When reading data, the application first checks the cache. If the data is not found (a cache miss), it retrieves the data from the database and stores it in the cache for future use. When writing data, the application **writes directly to the database** and may explicitly invalidate or update the corresponding cache entry.
