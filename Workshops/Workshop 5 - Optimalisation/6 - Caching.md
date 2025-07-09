@@ -240,14 +240,14 @@ flowchart LR
     end
 
     subgraph "Read&nbsp;Policy"
-        R1["Application reads from cache first"]
-        R2["Cache handles miss automatically"]
+        R1["Application reads from cache.<br>In case of a cache miss, the application reads from the DB."]
+        R2["Application reads from cache.<br>In case of a cache miss, the cache itself reads from the DB."]
     end
 
     subgraph "Write&nbsp;Policy"
         W2["Writes go to cache and DB (sync)"]
         W3["Writes go to cache only, DB is updated later"]
-        W1["App writes to DB and invalidates/updates cache"]                
+        W1["Application writes to DB and invalidates/updates cache"]                
         W4["Writes go only to DB, cache is not touched"]
     end
 
