@@ -460,7 +460,7 @@ def get_product(product_id):
 ### Write-back caching
 
 Implementing a **write-back** caching policy is much more complex.  
-In this model, the **cache becomes the system of record**, which means it is responsible for eventually writing data back to the database.
+In this model, the **the cache temporarily holds the authoritative version of the data**, it becomes the primary place where updates are stored. The database is updated only later, during a scheduled or triggered flush.
 
 This introduces several challenges:
 
