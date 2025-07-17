@@ -426,10 +426,12 @@ These systems integrate easily with popular frameworks:
 - **Django**  
   Functions like `cache.get()`, `cache.set()`, and decorators like `@cache_page` are available.  
   [Django caching documentation](https://docs.djangoproject.com/en/5.2/topics/cache/)
-
+  
 - **Laravel**  
   Uses methods like `Cache::remember()`, `Cache::put()`, and others.  
   [Laravel cache documentation](https://laravel.com/docs/12.x/cache)
+
+👉 Tip: Ctrl+click (Windows) or Cmd+click (Mac) to open the framework documentation in a new tab.
 
 These caching mechanisms support strategies like:
 
@@ -459,8 +461,7 @@ def get_product(product_id):
 
 ### Write-back caching
 
-Implementing a **write-back** caching policy is much more complex.  
-In this model, the **the cache temporarily holds the authoritative version of the data**, it becomes the primary place where updates are stored. The database is updated only later, during a scheduled or triggered flush.
+Implementing a **write-back** caching policy is much more complex. In this model, the **the cache temporarily holds the authoritative version of the data**, it becomes the primary place where updates are stored. The database is updated only later, during a scheduled or triggered flush.
 
 This introduces several challenges:
 
