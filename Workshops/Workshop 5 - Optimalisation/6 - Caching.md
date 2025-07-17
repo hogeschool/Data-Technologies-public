@@ -276,10 +276,10 @@ It depends on the typical data access patterns in your application which caching
 
 |Strategy         |When to use|
 |-----------------|-----------|
-|**Write-around** |Use when you have many writes of unique or rarely-read data.<br/>Avoids polluting the cache with data that likely won’t be read.|
-|**Write-back**   |Use when you have many successive writes on the same data.<br/>Reduces database load but risks data loss on cache failure. |
 |**Write-through**|Use when reads and writes are equally frequent and you want the cache to stay consistent.<br/>Writes are slower, but the cache and database stay in sync.|   
+|**Write-back**   |Use when you have many successive writes on the same data.<br/>Reduces database load but risks data loss on cache failure. |
 |**Cache-aside**  |Use when you want control over when and what to cache.<br/>Flexible and safe, but more complex logic in the application. |
+|**Write-around** |Use when you have many writes of unique or rarely-read data.<br/>Avoids polluting the cache with data that likely won’t be read.|
 |**Read-through** |Use when you want automatic cache population on reads.<br/>Simplifies application logic at the cost of flexibility.|
 
 #### 🧠 Case 1: Banking Transactions
