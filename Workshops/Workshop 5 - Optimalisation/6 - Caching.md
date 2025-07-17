@@ -293,8 +293,7 @@ An account holder checks their balance and transaction history two or three time
 **Recommended caching strategy:**  **Write-around**
 
 **Explanation:**  
-The number of write operations (incoming transactions) far exceeds the number of reads (account holders checking their balance or history).  
-Each transaction is unique and typically not accessed immediately — many will never be accessed at all. Caching all of these writes would quickly fill the cache with data that’s unlikely to be reused.
+The number of write operations (incoming transactions) far exceeds the number of reads (account holders checking their balance or history). Each transaction is unique and typically not accessed immediately — many will never be accessed at all. Caching all of these writes would quickly fill the cache with data that’s unlikely to be reused.
 
 **Why write-around?**  
 Write-around writes directly to the database and avoids caching data unless it’s later read.  
