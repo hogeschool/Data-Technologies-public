@@ -49,11 +49,11 @@ Cached data can become **stale**, meaning it is outdated, inaccurate, or no long
 
 There are different invalidation policies to deal with this. The basic policies are:
 
-- Time-based invalidation (e.g., "invalidate after 10 minutes"). The cached data has a Time to Live (TTL) associated with it.
+- Time-based invalidation (e.g., "invalidate after 10 minutes"). The cached data has a timestamp & a Time to Live (TTL) associated with it.
 - Event-based invalidation (e.g., "invalidate if customer profile changes")
 - Manual refresh (e.g., a scheduled job at a fixed time or interval that updates materialized views)
 
-Later in this workshop we discuss caching strategies. These caching strategies implement one or more of these policies.
+Later in this workshop we discuss caching strategies. Some of these strategies apply the event-based invalidation policy. The other two policies are usually not part of caching strategies: time-based invalidation is an inherent feature of many cache systems, while manual refresh is typically implemented through system-level scheduling (e.g., cron jobs).
 
 
 ### Dirty Data
@@ -63,6 +63,7 @@ Cached data can also be **dirty**, meaning it contains changes that have not yet
 > A product’s price is updated in the cache, but not yet written to the database.  
 > If another system reads the database directly, it will still see the old price. This is an example of **dirty data**.
 
+Handling dirty data is not typically done with invalidation policies, but with caching strategies that define how and when cached changes are synchronized back to the original data source.
 
 ## Caching strategies at Application level
 Since cache memory is limited and not automatically kept in sync with the original data source, we need to decide - from the application perspective:
