@@ -49,7 +49,7 @@ Cached data can become **stale**, meaning it is outdated, inaccurate, or no long
 
 There are different invalidation policies to deal with this. The basic policies are:
 
-- Time-based invalidation (e.g., "invalidate after 10 minutes"). The cached data has a timestamp & a Time to Live (TTL) associated with it.
+- Time-based invalidation (e.g., "invalidate after 10 minutes"). The cached data has Time to Live (TTL) associated with it.
 - Event-based invalidation (e.g., "invalidate if customer profile changes")
 - Manual refresh (e.g., a scheduled job at a fixed time or interval that updates materialized views)
 
