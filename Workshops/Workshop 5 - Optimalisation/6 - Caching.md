@@ -49,9 +49,9 @@ Cached data can become **stale**, meaning it is outdated, inaccurate, or no long
 
 There are different strategies to deal with this:
 
-- Time-based invalidation (e.g., "invalidate after 10 minutes")
-- Event-based invalidation (e.g., "invalidate if order status changes")
-- Manual refresh (e.g., a scheduled job that updates materialized views)
+- Time-based invalidation (e.g., "invalidate after 10 minutes"). The cached data has a Time to Live (TTL) associated with it.
+- Event-based invalidation (e.g., "invalidate if customer profile changes")
+- Manual refresh (e.g., a scheduled job at a fixed time or interval that updates materialized views)
 
 ### Dirty Data
 Cached data can also be **dirty**, meaning it contains changes that have not yet been written back to the original source. In this case, the original data is outdated and needs to be updated using the cached content.
