@@ -47,7 +47,7 @@ Cached data can become **stale**, meaning it is outdated, inaccurate, or no long
 
 > 🔎 **Example:**  
 > A customer profile is cached. Later, the customer updates their address.  
-> The database is correct, but the cache still returns the old address. This is an example of **stale data**.
+> The record in the customer table is correct, but the cache still returns the old address. This is an example of **stale data**.
 
 There are different invalidation policies to deal with this. The basic policies are:
 
@@ -62,8 +62,8 @@ Later in this workshop we discuss caching strategies. Some of these strategies a
 Cached data can also be **dirty**, meaning it contains changes that have not yet been written back to the authoritative data source. In this case, the authoritative data source is outdated and needs to be updated using the cached content.
 
 > 🔎 **Example:**  
-> A product’s price is updated in the cache, but not yet written to the database.  
-> If another system reads the database directly, it will still see the old price. This is an example of **dirty data**.
+> A product’s price is updated in the cache, but not yet written to the product table.  
+> If another system reads the product table directly, it will still see the old price. This is an example of **dirty data**.
 
 Handling dirty data is not typically done with invalidation policies, but with caching strategies that define how and when cached changes are synchronized back to the authoritative data source.
 
@@ -174,7 +174,7 @@ In this caching strategy, **write operations are optimized** by temporarily stor
  
 Write-back is a **write strategy only**, and must be combined with a separate **read strategy** to define how data is retrieved from the cache. For example, it is commonly used alongside a cache-aside or read-through read strategy.
 
-In write-back caching, “back” refers to the delayed action of writing data back to the authoritative data source — not to the user or front-end, but to the persistent authoritative data source (e.g., a database or disk). 
+In write-back caching, “back” refers to the delayed action of writing data back to the authoritative data source — not to the user or front-end, but to the persistent authoritative data source (e.g., a product table). 
 
 Analogy: It’s like writing in a notebook and only saving the contents to a USB drive when you're done or taking a break.
 
@@ -286,11 +286,12 @@ It depends on the typical data access patterns in your application which caching
 
 |Strategy         |When to use|
 |-----------------|-----------|
+|**Cache-aside**  |Use when you want to give the application explicit control over when and what to cache.<br/>Flexible and safe, but more complex logic in the application. |
+|**Read-through** |Use when you want automatic cache population on reads.<br/>Simplifies application logic at the cost of flexibility.|
 |**Write-through**|Use when reads and writes are equally frequent and you want the cache to stay consistent.<br/>Writes are slower, but the cache and authoritative data source stay in sync.|   
 |**Write-back**   |Use when you have many successive writes on the same data.<br/>Reduces load on the authoritative data source but risks data loss on cache failure. |
-|**Cache-aside**  |Use when you want control over when and what to cache.<br/>Flexible and safe, but more complex logic in the application. |
 |**Write-around** |Use when you have many writes of unique or rarely-read data.<br/>Avoids polluting the cache with data that likely won’t be read.|
-|**Read-through** |Use when you want automatic cache population on reads.<br/>Simplifies application logic at the cost of flexibility.|
+
 
 #### 🧠 Case 1: Banking Transactions
 
@@ -300,14 +301,19 @@ An account holder checks their balance and transaction history two or three time
 <details>
 <summary>Click to reveal the answer</summary>
 
-**Recommended caching strategy:**  **Write-around**
+**Recommended caching strategy:**  **Write-around** in combination with **read-through** and **cache-aside**
 
 **Explanation:**  
-The number of write operations (incoming transactions) far exceeds the number of reads (account holders checking their balance or history). Each transaction is unique and typically not accessed immediately — many will never be accessed at all. Caching all of these writes would quickly fill the cache with data that’s unlikely to be reused.
+The number of write operations (incoming money-transactions) far exceeds the number of reads (account holders checking their balance or history). Each money-transaction is unique and typically not accessed immediately — many will never be accessed at all. Caching all of these writes would quickly fill the cache with data that’s unlikely to be reused.
 
 **Why write-around?**  
 Write-around writes directly to the authoritative data source and avoids caching data unless it’s later read.  
 This keeps the cache reserved for frequently-read data (like account balances), improving overall efficiency.
+
+**Why read-through and cache-aside?**
+Once a money transaction is recorded in a banking system, it will never be altered or deleted. The application therefore doesn’t need complex decisions about what and when to cache. With **read-through**, only money transactions that are actually requested will be cached, and the cache is populated automatically on a miss.
+
+For the current balance (derived from all money transactions), a **cache-aside** strategy is typically used: the application computes or fetches the balance from the authoritative data source, stores it in the cache, and invalidates or updates that cache entry when new transactions are written.
 
 **Why not write-through or write-back?**  
 - **Write-through** would push every transaction into the cache, wasting memory and evicting more relevant data.  
