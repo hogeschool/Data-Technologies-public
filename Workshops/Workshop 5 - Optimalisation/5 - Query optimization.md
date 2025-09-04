@@ -1,12 +1,11 @@
 # Query Optimization – Writing Efficient SQL
 
-Some first raw thougts:
-
 - Bulk Inserts
 - Insert .. Select
 - Returning clausule
 - Common Table Expressions (CTE's)
 - upserts
+- Window functions
 
 ## Bulk Inserts
 
