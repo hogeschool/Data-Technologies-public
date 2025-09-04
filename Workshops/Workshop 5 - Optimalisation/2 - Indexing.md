@@ -258,6 +258,17 @@ A partial index is an index built only on a subset of rows in a table, defined b
 Example:
 Suppose we have a users table, but we only need fast access to active users.
 
+Table creation:
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT true,
+    last_login TIMESTAMP
+);
+```
+
+Partial index creation:
 ```sql
 CREATE INDEX idx_active_users
 ON users (last_login)
@@ -279,8 +290,19 @@ A covering index stores extra non-key columns inside the index.
 This allows the database to answer queries directly from the index, without looking up the original table (a so-called index-only scan).
 
 Example:
-Suppose we often query orders by customer_id, but also need the amount column:
+Suppose we often query orders by customer_id, but also need the amount column.
 
+Table creation:
+```sql
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    customer_id INT NOT NULL,
+    amount NUMERIC(10,2) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT now()
+);
+```
+
+Covering index creation:
 ```sql
 CREATE INDEX idx_orders_customer
 ON orders (customer_id)
