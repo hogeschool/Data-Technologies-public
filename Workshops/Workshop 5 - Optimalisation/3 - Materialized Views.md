@@ -111,7 +111,9 @@ This method is suitable when:
 
 
 
-## Materialized View vs Regular View (TBD)
+## Regular View vs Materialized View
+While both regular views and materialized views allow you to present query results as if they were a table, they work in fundamentally different ways.  
+The table below highlights the key differences between them.
 
 |Feature|	Regular View	|Materialized View|
 |-------|---------------|-----------------|
