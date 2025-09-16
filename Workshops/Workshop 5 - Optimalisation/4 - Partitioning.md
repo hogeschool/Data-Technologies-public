@@ -92,8 +92,7 @@ In the text below the term **PII** is used. This abbreviation stands for *Person
 - **Update frequency:** Separate “hot” frequently updated columns from “cold” rarely changing columns.  
 - **Cache efficiency:** Narrow rows fit better in memory/cache; indexes can be smaller and more selective.  
 
-> 💡 **Note:** PostgreSQL has no native “vertical partitioning” feature.  
-> You model it using **1-to-1 tables** that share the same primary key.
+> 💡 **Note:** PostgreSQL has no native “vertical partitioning” feature. You model it using **1-to-1 tables** that share the same primary key.
 
 ---
 
