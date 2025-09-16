@@ -2,7 +2,6 @@
 For more in depth information about Indexing, Materialized views, Query optimization and Caching, the following resources could help.
 
 ### Indexing
-#### 📚 Vendor sources
 
 | Source | Vendor / Author | Summary |
 |--------|-----------------|---------|
@@ -12,16 +11,20 @@ For more in depth information about Indexing, Materialized views, Query optimiza
 
 ### Materialized Views
 
-#### 📚 Vendor sources
-
 | Source | Vendor / Author | Summary |
 |--------|-----------------|---------|
 | [PostgreSQL Documentation – Materialized Views](https://www.postgresql.org/docs/current/rules-materializedviews.html) | PostgreSQL Global Development Group | Official documentation on creating, refreshing, and managing materialized views. |
 | [Oracle Database – CREATE MATERIALIZED VIEW](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/CREATE-MATERIALIZED-VIEW.html) | Oracle | Detailed reference for materialized views in Oracle, including refresh modes (complete, fast, on commit). |
 
+### Partitioning
+
+| Source | Vendor / Author | Summary |
+|--------|-----------------|---------|
+| [PostgreSQL Documentation – Table Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html) | PostgreSQL Global Development Group | Official reference on partitioning methods (range, list, hash), setup, and optimizer behavior. |
+
+
 ### Caching
 
-#### 🔬 Vendor Sources
 
 | Source | Vendor / Author | Summary |
 |--------|-----------------|---------|
@@ -34,8 +37,6 @@ For more in depth information about Indexing, Materialized views, Query optimiza
 
 > 💡 **Note:**  
 > The terms *cache-aside*, *write-through*, *write-back*, and *write-around* are widely used in practice, but they are **not formally standardized**. Different vendors (AWS, Redis, Azure, Hazelcast) may use slightly different descriptions. Always specify what you mean in your own design or documentation.
-
-#### 🔬 Academic & Peer-Reviewed Sources
 
 | Source | Venue / Year | Summary |
 |--------|--------------|---------|
