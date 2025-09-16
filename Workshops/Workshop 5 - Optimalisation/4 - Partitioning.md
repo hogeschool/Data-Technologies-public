@@ -161,6 +161,14 @@ SELECT c.customer_id, c.full_name, e.preferences
 FROM customer_core c
 JOIN customer_ext  e USING (customer_id)
 WHERE c.customer_id = 42;
+
+--- Provide a **read-only view** that joins core + extension.
+--- Use this for analytics; keep hot paths on the **core** table only.
+
+CREATE VIEW customer_full AS
+SELECT c.*, e.date_of_birth, e.phone_number, e.preferences, e.notes
+FROM customer_core c
+LEFT JOIN customer_ext e USING (customer_id);
 ```
 
 #### Visual: Core ↔ Extension (1:1)
@@ -238,7 +246,7 @@ CREATE TABLE device_state (
 If only a small percentage of rows use certain columns, move them out to avoid wide sparse rows. The term 'sparse' means *sparsely populated* — in a database context this refers to a column or table where most rows contain no value (`NULL`) for specific columns.  
 
 ```sql
-CREATE TABLE user_marketing_optin (
+CREATE TABLE user_marketing_consent (
     user_id  BIGINT PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
     marketing_opted_in BOOLEAN NOT NULL,
     optin_metadata   JSONB
@@ -250,8 +258,8 @@ erDiagram
     USERS {
         bigint user_id PK
         text   email
-        boolean marketing_opt_in  "mostly NULL"
-        jsonb  optin_metadata     "mostly NULL"
+        boolean marketing_opted_in  "mostly NULL"
+        jsonb  consented_metadata     "mostly NULL"
     }
 ```
 *Figure: Example of a sparse columns. In the wide `USERS` table, most rows keep `NULL` values for opt-in data, which adds overhead.*
@@ -262,36 +270,23 @@ USERS_CORE {
         bigint user_id PK
         text   email
     }
-USERS_OPTIN {
+USERS_MARKETING_CONSENT {
         bigint user_id PK, FK
-        boolean marketing_opt_in
-        jsonb   optin_metadata
+        boolean marketing_opted_in
+        jsonb   consented_metadata
     }
 
-USERS_CORE ||--o{ USERS_OPTIN : "only when opted-in"
+USERS_CORE ||--o{ USERS_MARKETING_CONSENT : "only when consented or not"
 ```
-*Figure:  
-The table vertical partitioned. By moving the sparse columns into a separate `USERS_OPTIN` table, the core table stays lean and only opted-in users require extra storage.*
+*Figure: The table vertical partitioned. By moving the sparse columns into a separate `USERS_MARKETING_CONSENT` table, the core table stays lean and only users which explicity consented or not require extra storage.*
 
 **Why it helps:**\
 If only a small percentage of rows actually need certain attributes, keeping those columns in the main table makes every row wider — even when the values are empty or NULL. Each “empty” field still requires storage overhead (row headers, NULL markers), so most rows pay a cost for data they never use.
 
 By moving such optional or rarely used attributes into a separate table, the core table remains lean and efficient. Queries on the hot path touch only the core data, while the extra attributes are stored in the extension table and accessed only when needed.
 
----
 
-### Reconstructing a “full row”
 
-Provide a **read-only view** that joins core + extension.
-
-```sql
-CREATE VIEW customer_full AS
-SELECT c.*, e.date_of_birth, e.phone_number, e.preferences, e.notes
-FROM customer_core c
-LEFT JOIN customer_ext e USING (customer_id);
-```
-
-Use this for analytics; keep hot paths on the **core** table only.
 
 ---
 
