@@ -235,7 +235,7 @@ CREATE TABLE device_state (
 
 ### Pattern 4 — Optional/rare columns
 
-If only a small percentage of rows use certain columns, move them out to avoid wide sparse rows.
+If only a small percentage of rows use certain columns, move them out to avoid wide sparse rows. The term 'sparse' means *sparsely populated* — in a database context this refers to a column or table where most rows contain no value (`NULL`).  
 
 ```sql
 CREATE TABLE user_marketing_optin (
@@ -244,6 +244,10 @@ CREATE TABLE user_marketing_optin (
     meta     JSONB
 );
 ```
+**Why it helps:**\
+If only a small percentage of rows actually need certain attributes, keeping those columns in the main table makes every row wider — even when the values are empty or NULL. Each “empty” field still requires storage overhead (row headers, NULL markers), so most rows pay a cost for data they never use.
+
+By moving such optional or rarely used attributes into a separate table, the core table remains lean and efficient. Queries on the hot path touch only the core data, while the extra attributes are stored sparsely in the extension table and accessed only when needed.
 
 ---
 
