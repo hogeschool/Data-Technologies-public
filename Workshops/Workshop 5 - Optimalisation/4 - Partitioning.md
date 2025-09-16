@@ -91,22 +91,27 @@ Cache locality describes how well the data you frequently need fits together in 
 flowchart TD
     subgraph Wide_Row_Page["Page (8 KB) – Wide rows"]
         W1["Row 1 (many columns)"]
-        W2["Row 2 (many columns)"]        
+        W2["Row 2 (many columns)"]
+        W3["Row 3 (many columns)"]
     end
 
     subgraph Narrow_Row_Page["Page (8 KB) – Narrow rows"]
         N1["Row 1 (few columns)"]
         N2["Row 2 (few columns)"]
         N3["Row 3 (few columns)"]
-        N4["Row 4 (few columns)"]       
+        N4["Row 4 (few columns)"]
+        N5["Row 5 (few columns)"]
     end
 
-    W1:::wide -->|Fewer rows per page| Wide_Row_Page
-    N1:::narrow -->|More rows per page| Narrow_Row_Page
+    W1:::wide 
+    N1:::narrow 
 
     classDef wide fill:#f99,stroke:#333,stroke-width:1px;
     classDef narrow fill:#9f9,stroke:#333,stroke-width:1px;
 ```
+*Figure: Comparison of cache locality. Narrow rows (left) allow more rows to fit into a single page, improving I/O efficiency.  
+Wide rows (right) reduce the number of rows per page, which increases the number of pages the database must read.*
+
 
 **PII**\
 In the text below the term **PII** is used. This abbreviation stands for *Personally Identifiable Information* — data that can be used to identify an individual, either directly (e.g., name, social security number) or indirectly (e.g., date of birth, address, IP address).
