@@ -10,6 +10,14 @@ For more in depth information about Indexing, Materialized views, Query optimiza
 |[MySQL Documentation - Indexes](https://dev.mysql.com/doc/refman/9.4/en/mysql-indexes.html)|MySQL / Oracle| Official documentation covering how to use Indexes in MySQL.|
 | [Use the Index, Luke!](https://use-the-index-luke.com) | Markus Winand | Practical online guide explaining indexing strategies, access paths, and query optimization in SQL databases. |
 
+### Materialized Views
+
+#### 📚 Vendor sources
+
+| Source | Vendor / Author | Summary |
+|--------|-----------------|---------|
+| [PostgreSQL Documentation – Materialized Views](https://www.postgresql.org/docs/current/rules-materializedviews.html) | PostgreSQL Global Development Group | Official documentation on creating, refreshing, and managing materialized views. |
+| [Oracle Database – CREATE MATERIALIZED VIEW](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/CREATE-MATERIALIZED-VIEW.html) | Oracle | Detailed reference for materialized views in Oracle, including refresh modes (complete, fast, on commit). |
 
 ### Caching
 
