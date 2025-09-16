@@ -126,26 +126,6 @@ In the text below the term **PII** is used. This abbreviation stands for *Person
 
 > 💡 **Note:** PostgreSQL has no native “vertical partitioning” feature. You model it using **1-to-1 tables** that share the same primary key.
 
-## Visual: Core ↔ Extension (1:1)
-
-```mermaid
-erDiagram
-    CUSTOMER_CORE ||--|| CUSTOMER_EXT : "1-to-1"
-    CUSTOMER_CORE {
-        bigint customer_id PK
-        text full_name
-        text email
-        timestamp created_at
-    }
-    CUSTOMER_EXT {
-        bigint customer_id PK, FK
-        date date_of_birth
-        text phone_number
-        jsonb preferences
-        text notes
-    }
-```
-
 ---
 
 ### Pattern 1 — Core + Extension table (1:1 split)
@@ -181,6 +161,26 @@ SELECT c.customer_id, c.full_name, e.preferences
 FROM customer_core c
 JOIN customer_ext  e USING (customer_id)
 WHERE c.customer_id = 42;
+```
+
+#### Visual: Core ↔ Extension (1:1)
+
+```mermaid
+erDiagram
+    CUSTOMER_CORE ||--|| CUSTOMER_EXT : "1-to-1"
+    CUSTOMER_CORE {
+        bigint customer_id PK
+        text full_name
+        text email
+        timestamp created_at
+    }
+    CUSTOMER_EXT {
+        bigint customer_id PK, FK
+        date date_of_birth
+        text phone_number
+        jsonb preferences
+        text notes
+    }
 ```
 
 ### Pattern 2 — Security boundary for PII
