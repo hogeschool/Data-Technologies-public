@@ -67,7 +67,7 @@ WHERE sale_date BETWEEN '2024-05-01' AND '2024-05-31';
 ### Design tip
 Horizontal partitioning can be done not only by dates, but also by numeric values, text categories, or even hashed values. As a database designer, you should analyze the most common query patterns before deciding how to partition — the right partitioning strategy depends entirely on how the data is accessed.
 
-Example: LIST Partitioning
+***Example: LIST Partitioning***
 
 Useful when you want to split data into a fixed set of categories (e.g., regions).
 
@@ -87,11 +87,14 @@ CREATE TABLE sales_us PARTITION OF sales
 CREATE TABLE sales_asia PARTITION OF sales
     FOR VALUES IN ('Asia');
 
+--- Optional: create a default partition 
+CREATE TABLE sales_default PARTITION OF sales DEFAULT;
+
 -- Rows will be routed based on region value
 INSERT INTO sales (region, amount) VALUES ('Europe', 100);
 ```
 
-Example: HASH Partitioning
+***Example: HASH Partitioning***
 
 Useful when you want to distribute rows evenly across partitions, for example to balance write load without a natural range or list key.
 
@@ -101,6 +104,9 @@ CREATE TABLE orders (
     customer_id INT NOT NULL,
     order_date DATE NOT NULL
 ) PARTITION BY HASH (customer_id);
+
+--- The MODULUS is 4, beccause there are four partitions (buckets).
+--- If the result of `hash(value) % MODULUS` is the same as the REMAINDER then use that partition.
 
 CREATE TABLE orders_p0 PARTITION OF orders
     FOR VALUES WITH (MODULUS 4, REMAINDER 0);
@@ -118,13 +124,24 @@ CREATE TABLE orders_p3 PARTITION OF orders
 INSERT INTO orders (customer_id, order_date) VALUES (42, '2024-01-01');
 ```
 
+Assume the hash function works like `customer_id % 4` (simplified for illustration):
+
+| customer_id | Calculation (`customer_id % 4`) | Partition  |
+|-------------|----------------------------------|------------|
+| 101         | 101 % 4 = 1                     | orders_p1  |
+| 102         | 102 % 4 = 2                     | orders_p2  |
+| 103         | 103 % 4 = 3                     | orders_p3  |
+| 104         | 104 % 4 = 0                     | orders_p0  |
+| 105         | 105 % 4 = 1                     | orders_p1  |
+
+
 #### Partitioning Methods in PostgreSQL
 
 | Method   | Best suited for | Example use case | Pros | Cons |
 |----------|-----------------|------------------|------|------|
 | **RANGE** | Data with a natural order (dates, numbers) | Sales partitioned per year or per month | Easy to query by ranges, good for pruning old data | Risk of uneven distribution (recent partitions much larger) |
 | **LIST**  | A fixed set of discrete categories | Customers partitioned by region (`Europe`, `USA`, `Asia`) | Simple to understand, queries on categories route directly | Not flexible if categories change often; risk of skew if some categories dominate |
-| **HASH**  | Even distribution when no natural key exists | Orders spread evenly across 4 partitions by `customer_id` | Balances write/read load automatically, prevents hot partitions | Not human-readable, pruning by value is not efficient |
+| **HASH**  | Even distribution when no natural key exists | Orders spread evenly across 4 partitions by `customer_id` | Balances write/read load automatically, prevents hot partitions | Partitions are not human-readable (no natural grouping); pruning by value is less effective |
 
 
 
