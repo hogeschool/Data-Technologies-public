@@ -169,7 +169,7 @@ WHERE c.customer_id = 42;
 erDiagram
     CUSTOMER_CORE ||--|| CUSTOMER_EXT : "1-to-1"
     CUSTOMER_CORE {
-        bigint customer_id PK
+        bigserial customer_id PK
         text full_name
         text email
         timestamp created_at
