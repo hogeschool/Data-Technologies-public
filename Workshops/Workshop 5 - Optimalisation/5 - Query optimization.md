@@ -173,9 +173,43 @@ WHEN NOT MATCHED THEN
 
 ### Reflection questions
 
-- Why is the upsert approach more efficient?  
-- How does it help prevent race conditions?  
-- Can you think of situations where you **should not** use upserts?  
+Why is the upsert approach more efficient?
+<details>
+<summary>Click to reveal the answer</summary>
+
+Without `UPSERT` (`INSERT ... ON CONFLICT DO UPDATE`), applications often have to:
+1. First run a `SELECT` to check if the row exists.  
+2. Then run either an `INSERT` or an `UPDATE`.  
+
+That means **two queries and two network roundtrips**.  
+With an `UPSERT`, the database handles both cases in **one atomic query**, which reduces latency and load.  
+</details>
+<hr>
+
+How does it help prevent race conditions?  
+<details>
+<summary>Click to reveal the answer</summary>
+
+If two clients try to insert the same key at the same time:
+- With manual `SELECT` + `INSERT`, you may get a conflict (duplicate key error).  
+- With `UPSERT`, PostgreSQL detects the conflict and applies the `DO UPDATE` logic automatically.  
+
+This ensures consistency **without requiring extra application-side locking**.  
+</details>
+<hr>
+Can you think of situations where you **should not** use upserts?  
+
+<details>
+<summary>Click to reveal the answer</summary>
+
+Upserts are very convenient, but there are a few cases where they may not be ideal:
+- **High write contention:** if many transactions frequently update the same row, the conflict checks can become a bottleneck.  
+- **Complex update logic:** sometimes you need more control than a simple `DO UPDATE` allows.  
+- **Auditing requirements:** when you need to distinguish clearly between an `INSERT` and an `UPDATE` for logging or compliance reasons.  
+
+In those cases, a more explicit application workflow may be better.  
+
+</details>
 ---
 
 ## Window Functions
