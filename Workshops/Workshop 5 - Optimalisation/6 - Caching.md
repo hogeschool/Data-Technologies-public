@@ -91,7 +91,7 @@ Each strategy handles the following aspects in a different way:
 - **Application behavior during cache hits and misses** - What the application does on a cache hit or miss, and how it interacts with the authoritative data source.
 
 > 💡 **Note:**  
-> The terms *cache-aside*, *Read through**, *write-through*, *write-back*, and *write-around* are widely used in practice, but they are **not formally standardized**. Different manuals, blogs, and academic papers may describe them in slightly different ways. Always specify what you mean in your own design or documentation.
+> The terms *Cache aside*, *Read through*, *Write through*, *Write back*, and *Write around* are widely used in practice, but they are **not formally standardized**. Different manuals, blogs, and academic papers may describe them in slightly different ways. Always specify what you mean in your own design or documentation.
   
 ### Cache aside (also known as Lazy loading)
 In this caching strategy, the **application itself controls access to the cache**. When reading data, the application first checks the cache. If the data is not found (a cache miss), it retrieves the data from the authoritative data source and stores it in the cache for future use. When writing data, the application **writes directly to the authoritative data source** and may explicitly invalidate or update the corresponding cache entry.
