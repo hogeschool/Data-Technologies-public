@@ -67,6 +67,74 @@ WHERE sale_date BETWEEN '2024-05-01' AND '2024-05-31';
 ### Design tip
 Horizontal partitioning can be done not only by dates, but also by numeric values, text categories, or even hashed values. As a database designer, you should analyze the most common query patterns before deciding how to partition — the right partitioning strategy depends entirely on how the data is accessed.
 
+Example: LIST Partitioning
+
+Useful when you want to split data into a fixed set of categories (e.g., regions).
+
+```sql
+CREATE TABLE sales (
+    id        BIGSERIAL PRIMARY KEY,
+    region    TEXT NOT NULL,
+    amount    NUMERIC
+) PARTITION BY LIST (region);
+
+CREATE TABLE sales_eu
+    PARTITION OF sales
+    FOR VALUES IN ('Europe');
+
+CREATE TABLE sales_us
+    PARTITION OF sales
+    FOR VALUES IN ('USA');
+
+CREATE TABLE sales_asia
+    PARTITION OF sales
+    FOR VALUES IN ('Asia');
+
+-- Rows will be routed based on region value
+INSERT INTO sales (region, amount) VALUES ('Europe', 100);
+```
+
+Example: HASH Partitioning
+
+Useful when you want to distribute rows evenly across partitions, for example to balance write load without a natural range or list key.
+
+```sql
+CREATE TABLE orders (
+    order_id  BIGSERIAL PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_date DATE NOT NULL
+) PARTITION BY HASH (customer_id);
+
+CREATE TABLE orders_p0
+    PARTITION OF orders
+    FOR VALUES WITH (MODULUS 4, REMAINDER 0);
+
+CREATE TABLE orders_p1
+    PARTITION OF orders
+    FOR VALUES WITH (MODULUS 4, REMAINDER 1);
+
+CREATE TABLE orders_p2
+    PARTITION OF orders
+    FOR VALUES WITH (MODULUS 4, REMAINDER 2);
+
+CREATE TABLE orders_p3
+    PARTITION OF orders
+    FOR VALUES WITH (MODULUS 4, REMAINDER 3);
+
+-- Each row is assigned to a partition based on a hash of customer_id
+INSERT INTO orders (customer_id, order_date) VALUES (42, '2024-01-01');
+```
+
+#### Partitioning Methods in PostgreSQL
+
+| Method   | Best suited for | Example use case | Pros | Cons |
+|----------|-----------------|------------------|------|------|
+| **RANGE** | Data with a natural order (dates, numbers) | Sales partitioned per year or per month | Easy to query by ranges, good for pruning old data | Risk of uneven distribution (recent partitions much larger) |
+| **LIST**  | A fixed set of discrete categories | Customers partitioned by region (`Europe`, `USA`, `Asia`) | Simple to understand, queries on categories route directly | Not flexible if categories change often; risk of skew if some categories dominate |
+| **HASH**  | Even distribution when no natural key exists | Orders spread evenly across 4 partitions by `customer_id` | Balances write/read load automatically, prevents hot partitions | Not human-readable, pruning by value is not efficient |
+
+
+
 ### Comparision: Horizontal Partitioning vs Indexes
 
 | Feature                | Horizontal Partitioning                            | Indexes                                       |
