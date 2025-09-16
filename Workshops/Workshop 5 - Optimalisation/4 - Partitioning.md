@@ -82,7 +82,7 @@ Horizontal partitioning can be done not only by dates, but also by numeric value
 ## Vertical Partitioning (column-wise)
 Vertical partitioning is the process of splitting a large table into smaller ones by moving specific columns into separate tables. The goal is to reduce row width and isolate columns with different access patterns or sensitivity. This can improve I/O efficiency, cache locality, and security boundaries — at the cost of extra joins when queries need the full record.
 
-In the text below the term PII is used. This abbreviation stands for Personally Identifiable Information — data that can be used to identify an individual, either directly (e.g., name, social security number) or indirectly (e.g., date of birth, address, IP address).
+In the text below the term **PII** is used. This abbreviation stands for *Personally Identifiable Information* — data that can be used to identify an individual, either directly (e.g., name, social security number) or indirectly (e.g., date of birth, address, IP address).
 
 ---
 
