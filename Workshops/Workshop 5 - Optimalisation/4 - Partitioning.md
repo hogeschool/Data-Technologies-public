@@ -286,8 +286,8 @@ Use this for analytics; keep hot paths on the **core** table only.
 
 **SLO critical query**: A query that is part of a Service Level Objective (SLO), meaning its performance is subject to explicit targets (e.g., 95% of requests must finish under 200 ms). These queries usually define the “hot path” of an application and guide design choices like indexing or partitioning.
 
-*Example of an SLO query*\
-Suppose the service level objective is: 95% of user lookups by email must finish within 100 ms.
+*Example of an query part of a SLO*\
+Suppose the Service Level Objective is: 95% of user lookups by email must finish within 100 ms.
 In PostgreSQL, that translates into a very common query like:
 ```sql
 SELECT customer_id, full_name, created_at
