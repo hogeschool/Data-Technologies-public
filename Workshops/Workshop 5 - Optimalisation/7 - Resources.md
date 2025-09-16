@@ -7,6 +7,7 @@ For more in depth information about Indexing, Materialized views, Query optimiza
 | Source | Vendor / Author | Summary |
 |--------|-----------------|---------|
 | [PostgreSQL Documentation – Indexes](https://www.postgresql.org/docs/current/indexes.html) | PostgreSQL Global Development Group | Official documentation covering B-tree, BRIN, GIN, GiST, and index variants (partial, covering). |
+|[MySQL Documentation - Indexes](https://dev.mysql.com/doc/refman/9.4/en/mysql-indexes.html)|MySQL / Oracle| Official documentation covering how to use Indexes in MySQL.|
 | [Use the Index, Luke!](https://use-the-index-luke.com) | Markus Winand | Practical online guide explaining indexing strategies, access paths, and query optimization in SQL databases. |
 
 
