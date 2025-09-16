@@ -626,7 +626,7 @@ Some application frameworks, like **Django** and **Laravel**, already provide a 
 - [PgBouncer Official Documentation](https://www.pgbouncer.org/)  
 - [Pgpool-II Official Documentation](https://www.pgpool.net/docs/latest/en/html/)
 - [Django Persistent connections](https://docs.djangoproject.com/en/5.2/ref/databases/#persistent-connections)
-- [Laravel Documentation – Persistent connections](https://laravel.com/docs/11.x/database#persistent-connections)
+- [PHP Documentation – Persistent connections](https://www.php.net/manual/en/pdo.connections.php)
 
 
 
