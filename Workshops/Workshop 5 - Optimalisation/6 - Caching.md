@@ -591,7 +591,7 @@ Popular tools include:
 👉 Conceptually similar to caching (reuse instead of recreate), but applied at the **connection level** rather than the **data level**.
 
 **Sources:**  
-- [PostgreSQL Documentation – Connection Pooling](https://www.postgresql.org/docs/current/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-POOLING)  
+- [Microsoft Lean – Azure PostgreSQL Connection Pooling](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-connection-pooling-best-practices)  
 - [PgBouncer Official Documentation](https://www.pgbouncer.org/)  
 - [Pgpool-II Official Documentation](https://www.pgpool.net/docs/latest/en/html/)
 
