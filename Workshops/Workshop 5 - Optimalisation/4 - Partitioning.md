@@ -20,7 +20,7 @@ CREATE TABLE sales (
     amount NUMERIC
 ) PARTITION BY RANGE (sale_date);
 `````
-> 💡 **Note:** The column ```id``` is **not** a primary key in this table. The ```AS IDENTITY``` only indicates that the values are generated automatically. [PostgreSQL Identity columns](https://www.postgresql.org/docs/current/ddl-identity-columns.html)
+> 💡 **Note:** The column ```id``` is **not** a primary key in this table. The ```AS IDENTITY``` only controls automatic value generation; it does not imply uniqueness or a primary key by itself. [PostgreSQL Identity columns](https://www.postgresql.org/docs/current/ddl-identity-columns.html)
 
 This logically partitions the sales table by sale_date, meaning the data is transparently stored across multiple physical partitions behind the scenes. Queries that filter on sale_date can benefit from improved performance through partition pruning — but only after specific partitions have been created.
 
@@ -130,6 +130,23 @@ SELECT 'sales_other', COUNT(*) FROM sales_other;
 - This confirms that PostgreSQL correctly distributed the data across the partitions based on the sale_date.
 - It also demonstrates that rows outside the defined ranges are placed into the sales_other partition.
 
+### Dropping the logical parent table also drops the partitions
+When the logical parent table is dropped, the underlying partition tables are also dropped. 
+
+```sql
+DROP TABLE sales;
+--- All partition tables are dropped as well
+```
+If you only want to drop the logical parent but keep the underlying partition tables, you must detach the partitions first:
+
+```sql
+ALTER TABLE sales DETACH PARTITION sales_2023;
+ALTER TABLE sales DETACH PARTITION sales_2024;
+ALTER TABLE sales DETACH PARTITION sales_2025;
+ALTER TABLE sales DETACH PARTITION sales_other;
+DROP TABLE sales;
+```
+
 ### Design tip
 Horizontal partitioning can be done not only by dates, but also by numeric values, text categories, or even hashed values. As a database designer, you should analyze the most common query patterns before deciding how to partition — the right partitioning strategy depends entirely on how the data is accessed.
 
@@ -146,9 +163,10 @@ CREATE TABLE sales (
     CONSTRAINT sales_pk PRIMARY KEY (region, id)
 ) PARTITION BY LIST (region);
 ````
+> 💡 **Note:** The column ```id``` is **part of** the primary key in this table. This primay key is the **composite** ```(region, id)``` defined via the ```CONSTRAINT```. The ```AS IDENTITY``` only controls automatic value generation.
 
 - In PostgreSQL, a primary key (or unique constraint) on a partitioned table must always include all partition key columns.
-- Because the table is partitioned by region, the primary key cannot be defined on id alone. The solution is to define a composite primary key on (region, id). This ensures that uniqueness is guaranteed across all partitions, while still allowing id to be automatically generated.
+- Because the table is partitioned by ```region```, the primary key cannot be defined on ```id``` alone. The solution is to define a composite primary key on ```(region, id)```. This ensures that uniqueness is guaranteed across all partitions, while still allowing ```id``` to be automatically generated.
 
 #### Define physical partitions per region
 
