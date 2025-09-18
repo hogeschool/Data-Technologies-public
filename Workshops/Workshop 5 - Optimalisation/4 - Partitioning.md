@@ -329,6 +329,14 @@ WHERE customer_id IN (2, 7, 10);
 | **Performance impact** | Reduces I/O and planning time for large datasets   | Improves access speed within a large table    |
 | **Can be combined?**   | Yes – with indexes per partition                   | Yes – especially inside partitions          |
 
+>💡 Note on **point lookups**:
+>A point lookup is a query that searches for a single specific row (or a very small set of rows) based on an exact value.
+>Example:
+> ```sql
+> SELECT * FROM customers WHERE customer_id = 12345;
+>```
+>Indexes are especially efficient for this type of query, because the index can directly locate the matching row without scanning the full table.
+
 
 ## Vertical Partitioning (column-wise)
 Vertical partitioning is the process of splitting a large table into smaller ones by moving specific columns into separate tables. The goal is to reduce row width and isolate columns with different access patterns or privacy & security sensitivity. This can improve I/O efficiency, cache locality, and security boundaries — at the cost of extra joins when queries need the full record.
