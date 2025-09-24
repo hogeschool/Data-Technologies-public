@@ -197,5 +197,5 @@ Common auth methods (when to use)
 - ***cert/hostssl*** mutual TLS with client certificates; strongest identity guarantee.
 - ***ldap / pam / gss / sspi*** integrate with enterprise identity (AD/SSO).
 
-[PostgreSQL The pg_hba.conf file](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html)
+[PostgreSQL Client Authentication](https://www.postgresql.org/docs/current/client-authentication.html)
   
