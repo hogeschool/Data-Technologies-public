@@ -88,7 +88,7 @@ Row-Level Security (RLS) policies can then use these parameters to decide which 
 ## RLS and connection pooling
 
 With pooling, connections are reused across users. Always set the correct context when checking out a connection:
-```
+```sql
 SET app.current_user_id = '...';
 ```
 
