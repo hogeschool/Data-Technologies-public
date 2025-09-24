@@ -2,7 +2,23 @@
 
 Row-Level Security (RLS) provides **fine-grained access control** at the row level.  
 It lets you define which rows of a table a role can `SELECT`, `UPDATE`, `DELETE`, or `INSERT`.  
-RLS is especially useful in multi-tenant apps or self-service portals where users should only see or modify *their own* data.
+RLS is especially useful in *multi-tenant application* or self-service portals where users should only see or modify *their own* data.
+
+#### What is a multi-tenant application?
+
+A **multi-tenant application** is a software architecture where multiple customers (*tenants*) share the same application and database infrastructure, while their data remains logically separated.
+
+- **Shared resources** → one application instance (and often one database) serves multiple tenants.  
+- **Data isolation** → each tenant must only be able to see and manage *their own* data.  
+- **Cost-efficient** → cheaper and easier to maintain than running a separate installation per customer.  
+- **Challenge** → strict access control is required to prevent tenant A from accessing tenant B’s data.
+
+**Example:**  
+In a single-tenant setup, each company has its own database.  
+In a multi-tenant setup, all companies share the same database with a column like `tenant_id` in each table.  
+
+- Without RLS: the application must always add `WHERE tenant_id = ...` in queries.  
+- With RLS: PostgreSQL policies enforce that a tenant role can only access rows with its own `tenant_id`.
 
 ---
 
