@@ -117,7 +117,7 @@ CREATE ROLE app_read NOLOGIN;
 -- Create a login role (user account)
 CREATE ROLE app_service LOGIN PASSWORD 'secure_scram_password';
 
--- Make user 'app_read' member of role 'app_service'
+-- Make user 'app_service' member of role 'app_read'
 GRANT app_read TO app_service;
 ```
 
@@ -155,4 +155,46 @@ In this case, the ```app_read``` role can query non-sensitive data in customer_c
 
 [PostgreSQL Privileges](https://www.postgresql.org/docs/current/ddl-priv.html)
 
+#### Authentication outside PostgreSQL
 
+***Separation of concerns***:
+- Inside PostgreSQL: you define what a role may do (RBAC, grants on schemas/tables). This is authorization.
+- Outside PostgreSQL: you define how a role proves its identity and from where it may connect (authentication & client access).
+
+postgresql.conf (global settings)
+
+```
+# Use modern password hashing
+password_encryption = scram-sha-256
+# Optional: network interface binding (default is 'localhost')
+# listen_addresses = '0.0.0.0,::'
+```
+
+pg_hba.conf (host-based authentication)
+
+Anatomy (left→right): connection type, database, user, address, auth method, [options].
+Order matters: first matching line wins.
+If nothing matches → connection is rejected.
+
+```
+# 1) Local superuser via OS account (no password on the server itself)
+local   all                 postgres                               peer
+
+# 2) App service account from a specific subnet, password via SCRAM
+host    mydb                app_service        10.10.20.0/24        scram-sha-256
+
+# 3) DBA account only over VPN range, password via SCRAM
+host    all                 dba_user           10.99.0.0/16         scram-sha-256
+
+# 4) (Optional) mTLS: require a valid client certificate
+#    - Postgres must be configured with ssl=on and a CA that signs client certs.
+hostssl mydb                app_service        10.10.20.0/24        cert clientcert=1
+```
+
+Common auth methods (when to use)
+- ***scram-sha-256*** default for passwords; strong and simple.
+- ***peer*** local admin from the OS; convenient for postgres user on the server.
+- ***cert/hostssl*** mutual TLS with client certificates; strongest identity guarantee.
+- ***ldap / pam / gss / sspi*** integrate with enterprise identity (AD/SSO).
+
+  
