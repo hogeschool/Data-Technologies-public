@@ -98,7 +98,10 @@ This can lead to a **data leak**: the new user sees rows belonging to another us
 
 - Always execute the `SET` immediately after a connection is checked out from the pool.  
 - Use `SET LOCAL` inside a transaction so that the parameter is reset automatically when the transaction ends.  
-- Configure the pool to reset session state (e.g., with `DISCARD ALL`) when a connection is returned.  
+- Configure the pool to reset session state (e.g., with `DISCARD ALL`) when a connection is returned.
+
+  [PGBouncer Connection Sanity](https://www.pgbouncer.org/config.html#connection-sanity-checks-timeouts)
+  [PGPool-II Server Configuration](https://www.pgpool.net/docs/latest/en/html/runtime-config-connection-pooling.html)
 
 Prefer SET LOCAL within a transaction if your app uses a strict request-per-transaction model:
 
