@@ -110,14 +110,14 @@ This approach simplifies management: instead of configuring privileges for each 
 #### Step 1 – Data classification
 Before designing tables and roles, it is important to classify the attributes according to their sensitivity. This determines what needs extra protection.
 
-| **Attribute**          | **Planned table**     | **Classification**        | **Notes**                                |
-|-------------------------|-----------------------|---------------------------|------------------------------------------|
-| customer_id             | customer_core         | Technical identifier      | Needed for joins, not sensitive by itself |
-| full_name               | customer_core         | Basic PII                 | Identifies a person directly              |
-| email                   | customer_core         | Basic PII                 | Often required for login / communication  |
-| created_at              | customer_core         | Non-sensitive metadata    | Timestamp only, low sensitivity           |
-| social_security_number  | customer_pii          | Highly sensitive PII      | Requires strict access control            |
-| address                 | customer_pii          | Highly sensitive PII      | Identifies a person’s physical location   |
+| **Attribute**           |    **Classification**        | **Notes**                                |**Planned table** |
+|-------------------------|---------------------------|---------------------------|------------------------------------------|
+| customer_id             | Technical identifier      | Needed for joins, not sensitive by itself | customer_core |
+| full_name               | Basic PII                 | Identifies a person directly              | customer_core |
+| email                   | Basic PII                 | Often required for login / communication  |  customer_core |
+| created_at              | Non-sensitive metadata    | Timestamp only, low sensitivity           |  customer_core |
+| social_security_number  | Highly sensitive PII      | Requires strict access control            | customer_pii |
+| address                 | Highly sensitive PII      | Identifies a person’s physical location   | customer_pii|
 
 
 #### Step 2 – Schema design (vertical partitioning)
@@ -131,14 +131,11 @@ Based on the classification, sensitive attributes are placed in a separate table
 #### Step 3 – Access control matrix
 Once the tables are designed, we can map roles to data objects. 
 
-1. **Identify roles, data objects, and required permissions.**  
+1. **Identify roles and data objects.**  
    Start by listing the different roles in the organization (e.g., application user, HR admin, DBA) and the data objects they should interact with (e.g., `customer_core`, `customer_pii`, `orders`).  
 
 2. **Fill in an access control matrix.**  
-   In the rows we place the roles, in the columns the data objects. In every cell we define what that role can do with that object (e.g., `SELECT`, `INSERT`, `ALL`). This makes the model easy to understand, communicate, and audit.  
-
-3. **Translate the matrix into PostgreSQL roles and grants.**  
-   Once the required permissions are clear, we can implement them by creating roles in PostgreSQL and assigning the privileges accordingly.  
+   In the rows we place the roles, in the columns the data objects. In every cell we define what that role can do with that object (e.g., `SELECT`, `INSERT`, `ALL`). This makes the model easy to understand, communicate, and audit.       
 
 *Example of a simple access control matrix*
 
@@ -152,7 +149,7 @@ Once the tables are designed, we can map roles to data objects.
 The matrix shows which role can do what on each table.
 
 #### Step 4 – SQL implementation in PostgreSQL
-
+Once the required permissions are clear, we can implement them by creating roles in PostgreSQL and assigning the privileges accordingly.
 Roles are created and managed within the PostgreSQL database itself:
 
 ```sql
