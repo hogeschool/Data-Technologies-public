@@ -99,7 +99,7 @@ Strictly speaking, both ```full_name``` and ```email``` are also PII. In practic
 ## Role-Based Access Control (RBAC)
 
 Role-Based Access Control (RBAC) is a security model that restricts access to resources based on defined roles rather than individual user accounts.
-- ***Roles*** represent sets of permissions (e.g., read-only, data entry, administrator).
+- ***Roles*** represent represent organizational responsibilities (e.g., application user, HR administrator, database administrator). Each role is then mapped to a set of permissions on the relevant data objects.
 - ***Users*** are assigned to one or more roles.
 - ***Permissions*** are granted to roles, not directly to users.
 
