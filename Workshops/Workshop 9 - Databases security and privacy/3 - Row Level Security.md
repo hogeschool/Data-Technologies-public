@@ -68,8 +68,8 @@ In PostgreSQL the command `SET` is normally used to change configuration paramet
 Examples include changing the time zone or enabling/disabling logging.
 
 ```sql
-SET work_mem = '64MB';
 SET timezone = 'Europe/Amsterdam';
+SET log_statement = 'all';
 ```
 PostgreSQL also allows custom parameters, as long as they have a prefix. This is often used by applications to pass context into the database.
 
