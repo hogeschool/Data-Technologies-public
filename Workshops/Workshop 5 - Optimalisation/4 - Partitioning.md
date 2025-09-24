@@ -339,7 +339,7 @@ WHERE customer_id IN (2, 7, 10);
 
 
 ## Vertical Partitioning (column-wise)
-Vertical partitioning is the process of splitting a large table into smaller ones by moving specific columns into separate tables. The goal is to reduce row width and isolate columns with different access patterns or privacy & security sensitivity. This can improve I/O efficiency, cache locality, and security boundaries — at the cost of extra joins when queries need the full record.
+Vertical partitioning is the process of splitting a large table into smaller ones by moving specific columns into separate tables. The goal is to reduce row width and isolate columns with different access patterns. This can improve I/O efficiency and cache locality — at the cost of extra joins when queries need the full record.
 
 **Cache locality**\
 Cache locality describes how well the data you frequently need fits together in memory/pages. In PostgreSQL (and most databases), data is physically stored in fixed-size pages (8 KB).
@@ -371,15 +371,10 @@ flowchart TD
 ```
 *Figure: Comparison of cache locality. Wide rows (left) reduce the number of rows per page, which increases the number of pages the database must read. Narrow rows (right) allow more rows to fit into a single page, improving I/O efficiency.*
 
-
-**PII**\
-In the text below the term **PII** is used. This abbreviation stands for *Personally Identifiable Information* — data that can be used to identify an individual, either directly (e.g., name, social security number) or indirectly (e.g., date of birth, address, IP address).
-
 ---
 
 ### When vertical partitioning helps
 - **Performance:** Narrower hot tables (frequently read) keep more rows per page in memory and reduce I/O.  
-- **Security & compliance:** Sensitive fields (PII) can be isolated in a separate table/schema with tighter privileges.  
 - **Update frequency:** Separate “hot” frequently updated columns from “cold” rarely changing columns.  
 - **Cache efficiency:** Narrow rows fit better in memory/cache; indexes can be smaller and more selective.  
 
@@ -482,35 +477,9 @@ FROM customer_core c
 LEFT JOIN customer_ext e USING (customer_id);
 ```
 
-
-
-### Pattern 2 — Security boundary for PII
-
-Place personally identifiable information (PII) in a **separate schema** with stricter privileges.
-
-```sql
--- Create a dedicated schema for sensitive PII data, separate from the public schema
-CREATE SCHEMA pii AUTHORIZATION db_admin;
-
-CREATE TABLE pii.customer_pii (
-    customer_id BIGINT PRIMARY KEY
-        REFERENCES public.customer_core(customer_id) ON DELETE CASCADE,
-    ssn         TEXT,
-    address     TEXT
-);
-
--- Grant minimal privileges
-REVOKE ALL ON SCHEMA pii FROM app_read;
-REVOKE ALL ON pii.customer_pii FROM app_read;
-GRANT SELECT ON public.customer_core TO app_read;
-```
->💡 Note: In this example, ```app_read``` represents an application user with limited privileges. The user can query non-sensitive data in public.customer_core, but not the PII data stored in pii.customer_pii. How to create and configure such users and roles in PostgreSQL will be covered in a separate lesson.
-
-**Benefit:** Clear separation of duties and simplified audits.
-
 ---
 
-### Pattern 3 — Hot/Cold split by update frequency
+### Pattern 2 — Hot/Cold split by update frequency
 
 Keep frequently updated flags/counters separate from rarely changing identity data.
 
@@ -536,7 +505,7 @@ CREATE TABLE device_state (
 
 ---
 
-### Pattern 4 — Optional/rare columns
+### Pattern 3 — Optional/rare columns
 
 If only a small percentage of rows use certain columns, move them out to avoid wide sparse rows. The term 'sparse' means *sparsely populated* — in a database context this refers to a column or table where most rows contain no value (`NULL`) for specific columns. 
 
@@ -613,7 +582,6 @@ By moving such optional or rarely used attributes into a separate table, the cor
 - **Access patterns:** Which columns are hot vs cold?  
 - **Update behavior:** Which change often vs rarely?  
 - **Row width:** Do wide columns slow down reads?  
-- **Security:** Do some fields need stricter access?  
 - **Indexes:** Can you keep core indexes small?  
 - **Hot path:** Can Service Level Objective (SLO) critical queries hit only the core?
 
@@ -669,6 +637,6 @@ COMMIT;
 | **Split by**         | Row values (e.g. by date)                  | Columns (e.g. rarely used or sensitive fields)      |
 | **Primary use case** | Performance with large amounts of row data | Performance or security with wide tables            |
 | **Result**           | Multiple tables containing subsets of rows | Multiple tables containing subsets of columns       |
-| **Common scenarios** | Time-series data, logging, geographic data | Sensitive data, wide tables, column-specific access |
+| **Common scenarios** | Time-series data, logging, geographic data | Wide tables, column-specific access |
 
 
