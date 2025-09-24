@@ -1,6 +1,6 @@
 # Databases security and privacy
 
-When working with data, security and privacy are essential. You don’t want stored information to be accessible to people who have no legitimate reason to use it. Beyond the direct risks, organizations must also comply with regulations such as the GDPR. Failing to do so can result not only in legal consequences but also in serious damage to public trust and reputation.
+Databases often contain the most valuable asset of an organization: its data. Security and privacy are therefore essential. You don’t want stored information — especially *Personally Identifiable Information (PII)* — to be accessible to people who have no legitimate reason to use it. Beyond the direct risks, organizations must also comply with regulations such as the GDPR. Failing to do so can result not only in legal consequences but also in serious damage to public trust and reputation.
 
 Another important aspect is the prevention of internal misuse. Databases should be designed and managed in a way that minimizes opportunities for fraud or abuse by employees with access rights.
 
