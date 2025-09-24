@@ -12,9 +12,9 @@ In PostgreSQL a schema is a logical container inside a database. It groups toget
 - It allows you to separate sensitive data (e.g., PII) from non-sensitive data, making access control more transparent.
 
 > Note: The word “schema” has two meanings.
-> In **data modeling**, “schema” often refers to the entire structure of the database.
-> In **PostgreSQL, Oracle, and MS SQL**, a “schema” is a namespace inside a database, used to organize objects and control privileges.
-> In **MySQL** the terms *schema* and *database* mean the same thing — there is no separate namespace layer.
+> - In **data modeling**, “schema” often refers to the entire structure of the database.
+> - In **PostgreSQL, Oracle, and MS SQL**, a “schema” is a namespace inside a database, used to organize objects and control privileges.
+> - In **MySQL** the terms *schema* and *database* mean the same thing — there is no separate namespace layer.
 
 ### Security boundary for PII
 
