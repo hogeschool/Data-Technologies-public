@@ -14,3 +14,6 @@ Examples of database security measures include:
 - *Data minimization and anonymization*: storing only what is necessary, and anonymizing data where possible to reduce exposure risks.
 
 By combining these techniques, organizations strengthen their resilience against both external attacks and internal misuse.
+
+**PII**\
+In this workshop the term **PII** is used. This abbreviation stands for *Personally Identifiable Information* — data that can be used to identify an individual, either directly (e.g., name, social security number) or indirectly (e.g., date of birth, address, IP address).
