@@ -53,7 +53,7 @@ erDiagram
 
     pii_customer_pii {
         BIGINT customer_id PK,FK
-        TEXT   ssn        "sensitive PII"
+        TEXT   social_security_number  "sensitive PII"
         TEXT   address    "sensitive PII"
     }
 
