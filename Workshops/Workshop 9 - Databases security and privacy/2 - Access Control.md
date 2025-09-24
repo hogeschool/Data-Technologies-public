@@ -253,7 +253,9 @@ PII isolated under stricter privileges.
 | customer\_relations   | SELECT               | SELECT              | —                   |
 | dba                   | ALL                  | ALL                 | ALL                 |
 
-* Self-update via application with RLS or app-level checks; not blanket UPDATE on the whole table.
+* Self-update via application with Row-Level Security (RLS) or app-level checks; not blanket UPDATE on the whole table.
+
+RLS (Row-Level Security) is a mechanism to enforce access policies at the row level within a table. RLS will be covered later on.
 
 </details>
 
@@ -267,7 +269,9 @@ Prefer aggregated, non-PII views (e.g., analytics.subscriber_counts_by_topic) in
 🧠 Q6. How can recipients update only their own record?
 <details>
 <summary>Click to reveal the answer</summary>
-Use application-mediated updates and/or Row-Level Security (RLS): policies that allow UPDATE only on the row where subscriber_id = current_app_user_id(). Avoid granting broad table UPDATE to end-user roles.
+Use application-mediated updates and/or Row-Level Security (RLS). Avoid granting broad table UPDATE to end-user roles.
+
+RLS (Row-Level Security) is a mechanism to enforce access policies at the row level within a table. RLS will be covered later on.    
 </details>
 
 
