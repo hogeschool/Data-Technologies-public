@@ -130,3 +130,7 @@ REVOKE ALL ON pii.customer_pii FROM app_read;
 GRANT SELECT ON public.customer_core TO app_read;
 ```
 In this case, the ```app_read``` role can query non-sensitive data in customer_core, but has no access at all to the ```pii``` schema and therefore no access to the sensitive table ```customer_pii```.
+
+(https://www.postgresql.org/docs/current/ddl-priv.html)[PostgreSQL Privileges]
+
+
