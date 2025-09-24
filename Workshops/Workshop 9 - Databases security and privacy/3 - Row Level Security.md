@@ -56,7 +56,7 @@ ALTER TABLE customer_core FORCE ROW LEVEL SECURITY;
 
 When a role queries the table, the defined RLS policy is automatically applied.
 
-```
+```sql
 SET app.current_user_id = '55';
 SELECT * FROM customer_core;
 ```
