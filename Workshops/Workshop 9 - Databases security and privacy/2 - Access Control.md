@@ -89,4 +89,15 @@ flowchart LR
 ### Risk-based approach
 Strictly speaking, both ```full_name``` and ```email``` are also PII. In practice, however, not all PII carries the same level of sensitivity. In this example, the ```customer_core``` table contains basic identifiers that are commonly needed by applications, while the ```pii.customer_pii``` table isolates more sensitive identifiers such as social security number and physical address. This separation allows stronger access control where it matters most.
 
+## PostgreSQL roles & authentification
+
+### Role-Based Access Control (RBAC)
+
+Role-Based Access Control (RBAC) is a security model that restricts access to resources based on defined roles rather than individual user accounts.
+- ***Roles*** represent sets of permissions (e.g., read-only, data entry, administrator).
+- ***Users*** are assigned to one or more roles.
+- ***Permissions*** are granted to roles, not directly to users.
+
+This approach simplifies management: instead of configuring privileges for each user separately, you manage them at the role level. When a user’s responsibilities change, you only need to update their role membership. RBAC can be applied in a way that supports the principle of **least privilege**, by carefully defining roles so that users receive only the access they need to perform their job.
+
 
