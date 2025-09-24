@@ -192,6 +192,85 @@ flowchart LR
 ```
 **Figure**: Four-step workflow from classification to SQL implementation.
 
+
+### Questions
+These questions are to practic with data-classification and schema design. Please read the case and then answer the questions.
+
+***Case — Mailing list (newsletter)***
+
+You manage a mailing list with the following data per subscriber: email address, name, gender, and their topic preferences for newsletters.
+- The Marketing team creates and sends newsletters.
+- The Recipient must be able to update their own data (subscribe/unsubscribe).
+- The Marketing director wants to see how many people subscribed per topic.
+- Customer Relations can view the personal details of customers.
+
+🧠 Q1. Which organizational roles do we define?
+
+<details>
+<summary>Click to reveal the answer</summary>
+    
+- ***app_user (Recipient)*** → self-service updates to their own record (via the application).
+- ***marketing_team*** → manage content & send campaigns; needs read of audience and ability to manage topic preferences.
+- ***marketing_director*** → analytics-only (aggregated counts), no direct access to raw PII.
+- ***customer_relations*** → view personal details (read PII).
+- ***dba*** → full administrative access. 
+</details>
+
+🧠 Q2. Classify the attributes (PII / non-PII)?
+
+<details>
+<summary>Click to reveal the answer</summary>
+    
+- ***email*** → Basic PII (direct identifier; needed for delivery)
+- ***name*** → Basic PII (direct identifier)
+- ***gender*** → Potentially sensitive / special-category adjacent (treat conservatively; minimize use)
+- ***topic_preferences*** → Non-sensitive business data (preferences about content, not identity)
+- ***consent_status / subscribed_at (if stored)*** → Compliance metadata (low sensitivity but important for audits)
+</details>
+
+🧠 Q3. How would you split tables (schema design)?
+
+<details>
+<summary>Click to reveal the answer</summary>
+    
+- ***public.subscriber_core (subscriber_id, topic_preferences, consent_status, subscribed_at)***
+Mostly non-sensitive data needed by sending/segmentation logic.
+
+- ***pii.subscriber_pii (subscriber_id, email, name, gender)***
+PII isolated under stricter privileges.
+</details>
+
+🧠 Q4. Which permissions should each role have?
+
+<details>
+<summary>Click to reveal the answer</summary>
+
+| **Role**              | **subscriber\_core** | **subscriber\_pii** | **analytics views** |
+| --------------------- | -------------------- | ------------------- | ------------------- |
+| app\_user (recipient) | self-update\*        | —                   | —                   |
+| marketing\_team       | SELECT               | —                   | SELECT (aggregates) |
+| marketing\_director   | —                    | —                   | SELECT (aggregates) |
+| customer\_relations   | SELECT               | SELECT              | —                   |
+| dba                   | ALL                  | ALL                 | ALL                 |
+
+* Self-update via application with RLS or app-level checks; not blanket UPDATE on the whole table.
+
+</details>
+
+🧠 Q5. Should the director see raw tables or only aggregated views?
+
+<details>
+<summary>Click to reveal the answer</summary>
+Prefer aggregated, non-PII views (e.g., analytics.subscriber_counts_by_topic) instead of raw table access. This reduces exposure and aligns with data minimization.
+</details>
+
+🧠 Q6. How can recipients update only their own record?
+<details>
+<summary>Click to reveal the answer</summary>
+Use application-mediated updates and/or Row-Level Security (RLS): policies that allow UPDATE only on the row where subscriber_id = current_app_user_id(). Avoid granting broad table UPDATE to end-user roles.
+</details>
+
+
 ## PostgreSQL roles & authentification
 The example below shows how privileges are granted and revoked at the schema and table level. This illustrates the principle of least privilege:
 First, remove all default rights from the role (REVOKE). Then, explicitly grant only the permissions that are needed (GRANT).
