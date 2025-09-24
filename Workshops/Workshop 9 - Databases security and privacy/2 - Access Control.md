@@ -106,6 +106,28 @@ Role-Based Access Control (RBAC) is a security model that restricts access to re
 
 This approach simplifies management: instead of configuring privileges for each user separately, you manage them at the role level. When a user’s responsibilities change, you only need to update their role membership. RBAC can be applied in a way that supports the principle of **least privilege**, by carefully defining roles so that users receive only the access they need to perform their job.
 
+#### Planning access rights
+
+Before jumping into SQL statements, it is important to first design the access model at a conceptual level.  
+
+1. **Identify roles, data objects, and required permissions.**  
+   Start by listing the different roles in the organization (e.g., application user, HR admin, DBA) and the data objects they should interact with (e.g., `customer_core`, `customer_pii`, `orders`).  
+
+2. **Fill in an access control matrix.**  
+   In the rows we place the roles, in the columns the data objects. In every cell we define what that role can do with that object (e.g., `SELECT`, `INSERT`, `ALL`). This makes the model easy to understand, communicate, and audit.  
+
+3. **Translate the matrix into PostgreSQL roles and grants.**  
+   Once the required permissions are clear, we can implement them by creating roles in PostgreSQL and assigning the privileges accordingly.  
+
+##### Example of a simple access control matrix
+
+| **Role**   | **customer_core** | **customer_pii** | **orders** |
+|------------|-------------------|------------------|------------|
+| app_read   | SELECT            | —                | SELECT     |
+| app_write  | SELECT, INSERT    | —                | ALL        |
+| hr_admin   | —                 | SELECT, UPDATE   | —          |
+| dba        | ALL               | ALL              | ALL        |
+
 #### Roles inside PostgreSQL
 
 Roles are created and managed within the PostgreSQL database itself:
