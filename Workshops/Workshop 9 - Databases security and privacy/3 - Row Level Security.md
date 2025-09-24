@@ -20,7 +20,7 @@ In a multi-tenant setup, all companies share the same database with a column lik
 - Without RLS: the application must always add `WHERE tenant_id = ...` in queries.  
 - With RLS: PostgreSQL policies enforce that a tenant role can only access rows with its own `tenant_id`.
 
-SaaS providers like **Exact Online** (cloud-based accounting software) serve thousands of customers. For them, maintaining a separate database per customer would be unmanageable. Instead, they typically use a **multi-tenant architecture**, where all customers share the same application and database, with strict access control to ensure data isolation.
+SaaS providers like **Exact Online** (cloud-based accounting software) serve thousands of customers. For such providers, maintaining a separate database per customer would be unmanageable. Instead, SaaS platforms typically adopt a **multi-tenant architecture**, where many customers share the same application and database, with strict access control to ensure data isolation.
 
 ---
 
