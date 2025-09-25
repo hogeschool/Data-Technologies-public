@@ -1,10 +1,8 @@
 # Access Control
 Access control is the process of defining **who** can access **which data** and **what actions** they are allowed to perform.  
-The goal is to ensure that sensitive information is only available to authorized parties, while minimizing the risk of misuse or data leaks.  
+The goal is to ensure that sensitive information is only available to authorized parties, while minimizing the risk of misuse or data leakage.  
 
-In databases, access control is typically implemented using **roles** and **permissions**. Roles reflect responsibilities within an organization (e.g., application service, HR administrator, database administrator) and are mapped to the privileges needed for those responsibilities. By designing access rights according to the principle of *least privilege*, users and applications receive only the minimum permissions needed to perform their tasks.
-
-Database roles are service identities used by application processes to authenticate to the database (e.g. PostgreSQL); they are not mapped one-to-one to the application’s end-user accounts. End-user authorization is handled in the application layer and/or via database features such as Row-Level Security (RLS).
+In databases, access control is typically implemented using **roles** and **privileges**. Roles reflect responsibilities within an organization (e.g., application service, HR administrator, database administrator) and are mapped to the privileges needed for those responsibilities. By designing access rights according to the principle of *least privilege*, users and applications receive only the minimum privileges needed to perform their tasks.
 
 ## Vertical Partitioning
 
@@ -118,12 +116,12 @@ This approach simplifies management: instead of configuring privileges for each 
 
 ### RBAC in PostgreSQL
 
-In PostgreSQL, RBAC is implemented with database roles and privileges:
+PostgreSQL distinguishes two kinds of roles: **group roles** and **login roles**.
 
-- **Group roles** represent responsibilities. Grant privileges to these roles on schemas, tables, sequences and functions.
-- **Login roles** are principals that connect to the database. Assign them to the appropriate group roles; application processes authenticate to PostgreSQL using these principals.
-- **Privileges are granted to group-roles** Login roles inherit the necessary rights via group-role membership.
-- **End-user authorization** remains in the application and/or via **Row-Level Security (RLS)**; database roles are not one-to-one to app users.
+- **Group roles** represent responsibilities and hold privileges on schemas, tables, sequences and functions.
+- **Login roles** are the principals that connect to the database. Application processes authenticate to PostgreSQL using these principals.
+- **Privileges are granted to group-roles** Login roles inherit the necessary rights via membership in the group roles.
+- **End-user authorization** remains in the application and/or via **Row-Level Security (RLS)**; database roles are not mapped one-to-one to app users.
 
 ### Planning access rights
 
@@ -149,25 +147,42 @@ Based on the classification, sensitive attributes are placed in a separate table
 
 
 #### Step 3 – Access control matrix
-Once the tables are designed, we can map roles to data objects. 
+Once the tables (data objects) are clear, define how application actors will access them. 
 
-1. **Identify roles and data objects.**  
-   Start by listing the different roles in the organization (e.g., application user, HR admin, DBA) and the data objects they should interact with (e.g., `customer_core`, `customer_pii`, `orders`).  
+a) **Identify application actors and data objects.**
+   List the application components that connect to the database (e.g. web app, background jobs, admin tools) and the data objects they need. For each actor, decide which login role(s) (principals) it will use to connect. An application may use different login roles for different operations (e.g., read-only vs. write).       
 
-2. **Fill in an access control matrix.**  
-   In the rows we place the roles, in the columns the data objects. In every cell we define what that role can do with that object (e.g., `SELECT`, `INSERT`, `ALL`). This makes the model easy to understand, communicate, and audit.       
+b) **Map login roles to group roles.**
+   Map each login role to one or more group roles that hold the required priviliges.
+   *Note:* This mapping is many-to-many: multiple login roles may share the same group role, and a single login role can be a member of multiple group roles when justified.
+
+| Login role     | Purpose                  | Group role          |
+|----------------|--------------------------|----------------------|
+| app_service    | Web app runtime          | app_read             |
+| app_mobile     | iOS app                  | app_read             |
+| app_update     | Maintenance/update job   | app_write            |
+| hr_manager     | HR console               | hr_admin             |
+| report_job     | Nightly BI extracts      | app_read, hr_admin   |
+
+
+c) **Fill in an access control matrix.**  
+   Rows are group roles, columns are the data objects. In each cell, specify the privileges for that group role on that object (e.g., `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `ALL`).  This makes the model easy to understand, communicate, and audit.       
 
 *Example of a simple access control matrix*
 
-| **Role**   | **customer_core** | **customer_pii** | **orders** |
+| **Group role**   | **customer_core** | **customer_pii** | **orders** |
 |------------|-------------------|------------------|------------|
 | app_read   | SELECT            | —                | SELECT     |
 | app_write  | SELECT, INSERT    | —                | SELECT, INSERT, UPDATE, DELETE|
 | hr_admin   | —                 | SELECT, INSERT, UPDATE   | —          |
 | dba        | ALL               | ALL              | ALL        |
 
-The matrix shows which role can do what on each table. The ```dba``` role is abbrevation for **database administrator**. That is the role who manages the database itself. 
+*Notes:*  
+- “**ALL**” in PostgreSQL also includes `TRIGGER`, `TRUNCATE`, and `REFERENCES`. Grant it only if you truly need everything.  
+- “**dba**” is an abbreviation of *database administrator*; it manages the database and typically owns the objects.
 
+**Repeat steps a, b & c iteratively**, refining the application actors, data objects, and role mappings each pass until the access control matrix meets your requirements.
+  
 #### Step 4 – SQL implementation in PostgreSQL
 Once the required permissions are clear, we can implement them by creating roles in PostgreSQL and assigning the privileges accordingly.
 Roles are created and managed within the PostgreSQL database itself:
