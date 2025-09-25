@@ -163,12 +163,13 @@ b) **Map login roles to group roles.**
 | app_update     | Maintenance/update job   | app_write            |
 | hr_manager     | HR console               | hr_admin             |
 | report_job     | Nightly BI extracts      | app_read, hr_admin   |
+| dba_admin      | Database maintenance     | dba                  |
 
 
 c) **Fill in an access control matrix.**  
    Rows are group roles, columns are the data objects. In each cell, specify the privileges for that group role on that object (e.g., `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `ALL`).  This makes the model easy to understand, communicate, and audit.       
 
-*Example of a simple access control matrix*
+*Example of a access control matrix*
 
 | **Group role**   | **customer_core** | **customer_pii** | **orders** |
 |------------|-------------------|------------------|------------|
@@ -203,8 +204,10 @@ CREATE ROLE dba NOLOGIN;
 ```sql
 -- Login roles (accounts)
 CREATE ROLE app_service LOGIN PASSWORD 'secure_password';
+CREATE ROLE app_mobile LOGIN PASSWORD 'secure_password';
 CREATE ROLE app_update LOGIN PASSWORD 'secure_password';
 CREATE ROLE hr_manager  LOGIN PASSWORD 'secure_password';
+CREATE ROLE report_job  LOGIN PASSWORD 'secure_password';
 CREATE ROLE db_admin LOGIN PASSWORD 'super_secret_password';
 ```
 
@@ -212,8 +215,10 @@ CREATE ROLE db_admin LOGIN PASSWORD 'super_secret_password';
 ```sql
 -- Assign role membership
 GRANT app_read  TO app_service;
+GRANT app_read  TO app_mobile;
 GRANT app_write TO app_update;
 GRANT hr_admin  TO hr_manager;
+GRANT app_read, app_write TO report_job;
 GRANT dba TO db_admin;
 ```
 
