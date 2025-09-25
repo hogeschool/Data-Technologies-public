@@ -22,7 +22,11 @@ In PostgreSQL a schema is a logical container inside a database. It groups toget
 
 ### Security boundary for PII
 
-Place personally identifiable information (PII) in a **separate schema** with stricter privileges.
+Place personally identifiable information (PII) in a **separate schema** with stricter privileges. In the following SQL code some steps are omitted (e.g. creating the roles). It focus on the main steps:
+
+- Create a ```customer_core``` table
+- Create a ```customer_pii``` table in a seperate schema
+- Setup privileges
 
 ```sql
 -- Core table: contains basic identifiers (still PII, but less sensitive).
@@ -33,10 +37,10 @@ CREATE TABLE customer_core (
     created_at  TIMESTAMP NOT NULL DEFAULT now()
 );
 
-
--- Dedicated schema for more sensitive PII with stricter privileges.
+-- Dedicated schema for more sensitive PII with stricter privileges. The role 'db_admin' is the owner of this schema.
 CREATE SCHEMA pii AUTHORIZATION db_admin;
 
+--- PII table: contains sensitive identifiers. This table is placed in the 'pii' schema.
 CREATE TABLE pii.customer_pii (
     customer_id BIGINT PRIMARY KEY
         REFERENCES public.customer_core(customer_id) ON DELETE CASCADE,
@@ -50,7 +54,7 @@ REVOKE ALL ON pii.customer_pii FROM app_read;
 GRANT USAGE ON SCHEMA public TO app_read;
 GRANT SELECT ON public.customer_core TO app_read;
 ```
->💡 Note: In this example, ```app_read``` represents an application user with limited privileges. The user can query non-sensitive data in public.customer_core, but not the PII data stored in pii.customer_pii. How to create and configure such users and roles in PostgreSQL will be covered later on.
+>💡 Note: In this example, ```app_read``` represents an application user with limited privileges. This user can query non-sensitive data in public.customer_core, but not the PII data stored in pii.customer_pii. How to create and configure such users and roles in PostgreSQL will be covered later on.
 
 ```mermaid
 erDiagram
@@ -170,11 +174,35 @@ CREATE ROLE hr_manager  LOGIN PASSWORD 'secure_scram_password';
 GRANT app_read  TO app_service;
 GRANT hr_admin  TO hr_manager;
 
--- Grant minimal privileges
+-- Grant minimal privileges for app_read
+REVOKE ALL ON SCHEMA public from app_read;
+REVOKE ALL ON public.customer_core from app_read;
+REVOKE ALL ON public.orders from app_read;
 REVOKE ALL ON SCHEMA pii FROM app_read;
 REVOKE ALL ON pii.customer_pii FROM app_read;
 GRANT USAGE ON SCHEMA public TO app_read;
 GRANT SELECT ON public.customer_core TO app_read;
+GRANT SELECT ON public.orders TO app_read;
+
+-- Grant minimal privileges for app_write
+REVOKE ALL ON SCHEMA public from app_write;
+REVOKE ALL ON public.customer_core from app_write;
+REVOKE ALL ON public.orders from app_write;
+REVOKE ALL ON SCHEMA pii FROM app_write;
+REVOKE ALL ON pii.customer_pii FROM app_write;
+GRANT USAGE ON SCHEMA public TO app_write;
+GRANT SELECT,INSERT ON public.customer_core TO app_read;
+GRANT ALL ON public.orders TO app_write;
+
+-- Grant minimal privileges for hr_admin
+REVOKE ALL ON SCHEMA public from hr_admin;
+REVOKE ALL ON public.customer_core from hr_admin;
+REVOKE ALL ON public.orders from hr_admin;
+REVOKE ALL ON SCHEMA pii FROM hr_admin;
+REVOKE ALL ON pii.customer_pii FROM hr_admin;
+GRANT USAGE ON SCHEMA pii TO hr_admin;
+GRANT SELECT,UPDATE ON pii.customer_pii TO hr_admin;
+
 ```
 
 - NOLOGIN roles are used as groups of privileges.
