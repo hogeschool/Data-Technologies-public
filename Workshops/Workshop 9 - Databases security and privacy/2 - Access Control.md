@@ -487,15 +487,15 @@ PII isolated under stricter privileges.
 <details>
 <summary>Click to reveal the answer</summary>
 
-| **Role**              | **subscriber\_core** | **subscriber\_pii** | **analytics views** |
+| **Group role**        | **subscriber\_core** | **subscriber\_pii** | **analytics views** |
 | --------------------- | -------------------- | ------------------- | ------------------- |
-| app\_user (recipient) | self-update\*        | —                   | —                   |
+| app\_user             | self-update\*        | —                   | —                   |
 | marketing\_team       | SELECT               | —                   | SELECT (aggregates) |
 | marketing\_director   | —                    | —                   | SELECT (aggregates) |
 | customer\_relations   | SELECT               | SELECT              | —                   |
 | dba                   | ALL                  | ALL                 | ALL                 |
 
-\* Self-update via application with Row-Level Security (RLS) or app-level checks; not blanket UPDATE on the whole table. RLS is a mechanism to enforce access policies at the row level within a table. RLS will be covered later on.
+\* Self-update via application with Row-Level Security (RLS) or app-level checks; only a UPDATE limitation on the whole table is too broad. RLS is a mechanism to enforce access policies at the row level within a table. RLS will be covered later on.
 
 </details>
 
