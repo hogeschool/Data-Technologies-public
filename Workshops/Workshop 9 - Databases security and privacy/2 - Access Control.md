@@ -325,6 +325,7 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO app_write, dba;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA pii TO hr_admin, dba;
 ```
 **Check the assigned privileges**
+
 To check the assigned privileges for the tables, query the views in the ```information_schema``` schema
 
 ```sql
