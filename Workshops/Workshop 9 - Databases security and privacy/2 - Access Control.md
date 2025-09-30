@@ -444,16 +444,18 @@ You manage a mailing list with the following data per subscriber: email address,
 - The Marketing director wants to see how many people subscribed per topic.
 - Customer Relations can view the personal details of customers.
 
-🧠 Q1. Which organizational roles do we define?
+🧠 Q1. Which group roles can we define?
 
 <details>
 <summary>Click to reveal the answer</summary>
     
-- ***app_user (Recipient)*** → self-service updates to their own record (via the application).
+- ***app_user*** → self-service updates to their own record (via the application).
 - ***marketing_team*** → manage content & send campaigns; needs read of audience and ability to manage topic preferences.
 - ***marketing_director*** → analytics-only (aggregated counts), no direct access to raw PII.
 - ***customer_relations*** → view personal details (read PII).
-- ***dba*** → full administrative access. 
+- ***dba*** → full administrative access.
+
+The above group roles are not by definition the correct answer. It is a possible setup.
 </details>
 
 🧠 Q2. Classify the attributes (PII / non-PII)?
@@ -463,7 +465,7 @@ You manage a mailing list with the following data per subscriber: email address,
     
 - ***email*** → Basic PII (direct identifier; needed for delivery)
 - ***name*** → Basic PII (direct identifier)
-- ***gender*** → Potentially sensitive / special-category adjacent (treat conservatively; minimize use)
+- ***gender*** → Potentially sensitive (treat conservatively; minimize use)
 - ***topic_preferences*** → Non-sensitive business data (preferences about content, not identity)
 - ***consent_status / subscribed_at (if stored)*** → Compliance metadata (low sensitivity but important for audits)
 </details>
