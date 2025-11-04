@@ -1,0 +1,3 @@
+# Introduction – Why Optimize Databases?
+
+Databases form the backbone of modern applications, but as data grows, queries can slow down, and storage costs increase. Optimization techniques ensure fast retrieval, scalable performance, and efficient resource utilization. In this workshop, we'll explore indexing, materialized views, partitioning, caching, and more to make our databases faster, leaner, and more effective.

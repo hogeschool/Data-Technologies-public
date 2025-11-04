@@ -1,0 +1,20 @@
+- Week 1: Inleiding tot Database technologieën
+- Week 2: Relationele databases en Basis SQL
+- Week 3: Geavanceerde SQL
+- Week 4: Database design
+- Week 5: Normalisatie
+- Week 6: Database optimalisatie
+- Week 7: Toetsmoment
+- Week 8: NoSQL databases
+- Week 9: NoSQL databases
+- Week 10: Key-value databases
+- Week 11: Key-value databases
+- Week 12: Graph databases
+- Week 13: Graph databases
+- Week 14: Database Beveiliging en Privacy
+- Week 15: Database Beveiliging en Privacy
+- Week 16: Cloud databases
+- Week 17: Uitloop en afronding
+- Week 18: Eindpresentatie
+- Week 19: Herkansen
+- Week 20: Herkansen
