@@ -31,7 +31,6 @@ All links point to official documentation or trusted learning platforms.
 |--------|-----------|-------------|
 | Introduction to sets | [Redis Sets Documentation](https://redis.io/docs/latest/develop/data-types/sets/) | How to store and query unique, unordered collections. |
 | Set commands | [Set Commands List](https://redis.io/docs/latest/commands#set) | Full command reference, including `SADD`, `SINTER`, `SUNION`, and `SDIFF`. |
-| Practical example | [DigitalOcean: Using Redis Sets](https://www.digitalocean.com/community/tutorials/understanding-redis-sets) | Tutorial with practical examples and command walkthroughs. |
 
 ---
 
