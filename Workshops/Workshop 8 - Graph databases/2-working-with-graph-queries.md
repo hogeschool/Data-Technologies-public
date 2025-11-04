@@ -233,7 +233,7 @@ RETURN DISTINCT p1.name AS flagged_person,
 ```
 or alternative:
 
-```
+```cypher
 MATCH (p1:Person {flagged:true})-[:USES]->(:CreditCard)-[:USED_FROM]->(ip:IP_Address)<-[:USED_FROM]-(:CreditCard)<-[:USES]-(p2:Person)
 WHERE p1 <> p2
 RETURN DISTINCT p1.name AS flagged_person,
