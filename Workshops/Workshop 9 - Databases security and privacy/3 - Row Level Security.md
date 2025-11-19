@@ -121,8 +121,8 @@ Implement Row-Level Security (RLS) on the orders table so that an individual cus
 ### The Task
 1) User Context:
    - Create a customer role (app_customer).
-   - The application passes the current ```customer\_id``` through the session parameter ```app.current\_customer```.
-2) Implementation: Enable RLS on the orders table and create a SELECT policy that restricts the app_customer role to rows where ```customer\_id``` matches the current session parameter.
+   - The application passes the current ```customer_id``` through the session parameter ```app.current_customer```.
+2) Implementation: Enable RLS on the orders table and create a SELECT policy that restricts the app_customer role to rows where ```customer_id``` matches the current session parameter.
 3) Testing: Test the RLS implementation by assuming the app_customer role, setting the session parameter, and verifying that the visible rows are correct.
 
 ### Setup SQL Script
@@ -164,3 +164,57 @@ GRANT SELECT ON orders TO app_customer;
 -- This allows the application to pass the customer_id into the database session.
 SET app.current_customer TO '0'; -- Set a default value
 ```
+
+<details>
+<summary>Click to reveal a solution</summary>
+
+```sql
+-- 1. Enable RLS on the table
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+
+-- 2. Create the SELECT Policy (whitelisting principle)
+-- The policy allows SELECT access to the 'app_customer' role 
+-- *only* if the customer_id in the row matches the value in the session parameter.
+CREATE POLICY customer_self_view ON orders
+    FOR SELECT
+    TO app_customer
+    USING (customer_id = current_setting('app.current_customer')::BIGINT);
+
+-- 3. Enforce RLS (Optional, but good practice for robustness)
+ALTER TABLE orders FORCE ROW LEVEL SECURITY;
+```
+
+Testing and verification:
+
+```sql
+
+-- 1. Set the session role to the customer role
+SET ROLE app_customer;
+
+-- 2. Set the session context to Customer 101
+SET LOCAL app.current_customer = '101';
+
+-- 3. Execute a SELECT query
+SELECT * FROM orders;
+
+-- Expected Output: 2 rows (orders belonging to customer 101)
+-- order_id | customer_id | order_date | total_amount
+-- ---------|-------------|------------|--------------
+-- 1        | 101         | ...        | 45.99
+-- 3        | 101         | ...        | 78.00
+
+-- 4. Set the session context to Customer 102 (within the same transaction)
+SET LOCAL app.current_customer = '102';
+
+-- 5. Execute another SELECT query
+SELECT * FROM orders;
+
+-- Expected Output: 2 rows (orders belonging to customer 102)
+-- order_id | customer_id | order_date | total_amount
+-- ---------|-------------|------------|--------------
+-- 2        | 102         | ...        | 12.50
+-- 5        | 102         | ...        | 5.00
+
+```
+
+</details>
