@@ -55,6 +55,10 @@ REVOKE ALL ON pii.customer_pii FROM app_read;
 GRANT USAGE ON SCHEMA public TO app_read;
 GRANT SELECT ON public.customer_core TO app_read;
 ```
+
+The example above shows how privileges are granted and revoked at the schema and table level. This illustrates the principle of least privilege:
+First, remove all default rights from the role (REVOKE). Then, explicitly grant only the permissions that are needed (GRANT).
+
 >💡 Note: In this example, ```app_read``` represents an application user with limited privileges. This user can query non-sensitive data in public.customer_core, but not the PII data stored in pii.customer_pii. How to create and configure such users and roles in PostgreSQL will be covered later on.
 
 ```mermaid
@@ -498,19 +502,10 @@ By granting UPDATE to the end-user role supplemented with checks in the applicat
 </details>
 
 
-## PostgreSQL roles & authentification
-The example below shows how privileges are granted and revoked at the schema and table level. This illustrates the principle of least privilege:
-First, remove all default rights from the role (REVOKE). Then, explicitly grant only the permissions that are needed (GRANT).
+## PostgreSQL privileges, roles & authentification
+The table below list the most common privileges for a schema and table. For a complete reference refer to:
 
-```sql
--- Grant minimal privileges
-REVOKE ALL ON SCHEMA pii FROM app_read;
-REVOKE ALL ON pii.customer_pii FROM app_read;
-GRANT USAGE ON SCHEMA public TO app_read;
-GRANT SELECT ON public.customer_core TO app_read;
-```
-In this case, the ```app_read``` role can query non-sensitive data in customer_core, but has no access at all to the ```pii``` schema and therefore no access to the sensitive table ```customer_pii```.
-
+[PostgreSQL Privileges](https://www.postgresql.org/docs/current/ddl-priv.html)
 
 | **Type**             | **Privilege** | **Meaning**                                                                 |
 |-----------------------|---------------|------------------------------------------------------------------------------|
@@ -526,7 +521,7 @@ In this case, the ```app_read``` role can query non-sensitive data in customer_c
 |                       | TRIGGER       | Create triggers on the table.                                                |
 
 
-[PostgreSQL Privileges](https://www.postgresql.org/docs/current/ddl-priv.html)
+
 
 ### PostgreSQL managing configured roles
 Every dbms stores the roles configured in a database in a system-catalog. The system-catalog are tables in which the dbms itself stores meta-information about the database. In PostgreSQL the roles are stored in the ```pg_authid``` table. The view ```pg_roles``` provides a view on this table, with the password field blanked out.
@@ -560,46 +555,13 @@ SELECT table_catalog, table_schema, table_name, privilege_type FROM information_
 
 
 ### Authentication outside PostgreSQL
+Authentication and authorization are handled in two distinct stages within PostgreSQL. This adheres to the *separation of concerns* principle: each stage is only responsible for a single, specific task.
 
-***Separation of concerns***:
-- Inside PostgreSQL: you define what a role may do (RBAC, grants on schemas/tables). This is authorization.
-- Outside PostgreSQL: you define how a role proves its identity and from where it may connect. This is authentication.
-
-postgresql.conf (global settings)
-
-```
-# Use modern password hashing
-password_encryption = scram-sha-256
-# Optional: network interface binding (default is 'localhost')
-# listen_addresses = '0.0.0.0,::'
-```
-
-pg_hba.conf (host-based authentication)
-
-Anatomy (left→right): connection type, database, user, address, auth method, [options].
-Order matters: first matching line wins.
-If nothing matches → connection is rejected.
-
-```
-# 1) Local superuser via OS account (no password on the server itself)
-local   all                 postgres                               peer
-
-# 2) App service account from a specific subnet, password via SCRAM
-host    mydb                app_service        10.10.20.0/24        scram-sha-256
-
-# 3) DBA account only over VPN range, password via SCRAM
-host    all                 dba_user           10.99.0.0/16         scram-sha-256
-
-# 4) (Optional) mTLS: require a valid client certificate
-#    - Postgres must be configured with ssl=on and a CA that signs client certs.
-hostssl mydb                app_service        10.10.20.0/24        cert clientcert=1
-```
-
-Common auth methods (when to use)
-- ***scram-sha-256*** default for passwords; strong and simple.
-- ***peer*** local admin from the OS; convenient for postgres user on the server.
-- ***cert/hostssl*** mutual TLS with client certificates; strongest identity guarantee.
-- ***ldap / pam / gss / sspi*** integrate with enterprise identity (AD/SSO).
+**Separation of concerns**:
+- Outside PostgreSQL (authentication): you define how a role proves its identity (password, client-certificate, etc) and from where it may connect. This is authentication.
+- Inside PostgreSQL (authorization): you define what a role may do (RBAC, grants on schemas/tables). This is authorization.
+  
+The authentication is configured within the ```pg_hba.conf``` file. For specific configuration details, refer to the PostgreSQL documentation.
 
 [PostgreSQL Client Authentication](https://www.postgresql.org/docs/current/client-authentication.html)
   
