@@ -1,7 +1,7 @@
 # Row-Level Security (RLS)
 
 Row-Level Security (RLS) provides **fine-grained access control** at the row level.  
-It lets you define which rows of a table a role can `SELECT`, `UPDATE`, `DELETE`, or `INSERT`.  
+It lets you define which rows of a table a role can `SELECT`, `UPDATE`, `DELETE`, or `INSERT`. RLS is often used to refine the coarse-grained access granted by ```GRANT}``` and ```REVOKE``` commands. Role-Based Access Control (RBAC) determines if a role can access the table, while RLS determines which rows within that table are visible.
 RLS is especially useful in *multi-tenant application* or self-service portals where users should only see or modify *their own* data.
 
 #### What is a multi-tenant application?
