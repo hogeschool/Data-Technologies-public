@@ -376,11 +376,11 @@ SELECT schemaname, tablename, tableowner
 FROM pg_tables
 WHERE schemaname='pii' AND tablename in ('customer_pii');
 ```
-**See the privileges in action**
+**See the privileges in action**\
 Use the ```SET ROLE <user_role>``` command to switch to a specific role in the current SQL session.  
 Alternativly use the ```\c <db_name> <user_role>``` commands in the ```psql shell``` to connect to a specific database as a specfic user_role. Depending on the authentication configuration of PostgreSQL this is allowed without a password, with a password or not at all. The authentification configuration is stored in the file ```pg_hba.conf```. 
 
-[PostgreSQL The SET ROLE command](https://www.postgresql.org/docs/current/sql-set-role.html)
+[PostgreSQL The SET ROLE command](https://www.postgresql.org/docs/current/sql-set-role.html)\
 [PostgreSQL The pg_hba.conf File](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html)
 
 Connect as user_role 'app_service'
@@ -475,14 +475,13 @@ PII isolated under stricter privileges.
 
 | **Group role**        | **subscriber\_core** | **subscriber\_pii** | **analytics views** |
 | --------------------- | -------------------- | ------------------- | ------------------- |
-| app\_user             | self-update\*        | —                   | —                   |
+| app\_user             | UPDATE*        | —                   | —                   |
 | marketing\_team       | SELECT               | —                   | SELECT (aggregates) |
 | marketing\_director   | —                    | —                   | SELECT (aggregates) |
 | customer\_relations   | SELECT               | SELECT              | —                   |
 | dba                   | ALL                  | ALL                 | ALL                 |
 
-\* Self-update via application with Row-Level Security (RLS) or app-level checks; only a UPDATE limitation on the whole table is too broad. RLS is a mechanism to enforce access policies at the row level within a table. RLS will be covered later on.
-
+\* At minimum a UPDATE limitation on the whole table. This should be supplemented with app-level checks. Later on we will cover  Row-Level Security (RLS). RLS is a mechanism to enforce access policies at the row level within a table.
 </details>
 
 🧠 Q5. Should the director see raw tables or only aggregated views?
