@@ -226,7 +226,7 @@ t-Closeness requires that the distribution of sensitive values within each group
 
 **Weaknesses**
 - More complex to compute.
-- Requires statistical distance measures such as Earth Mover’s Distance.
+- Requires statistical distance measures.
 
 ## Explaining k-Anonymity
 
