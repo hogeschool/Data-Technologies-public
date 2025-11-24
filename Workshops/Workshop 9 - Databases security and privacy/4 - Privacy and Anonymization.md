@@ -33,6 +33,7 @@ The GDPR (General Data Protection Regulation) and its Dutch implementation, the 
    - **Transparency**: Organizations must be open about data processing and clearly inform data subjects.    
 - **Purpose limitation**: Personal data must be collected for specified, explicit, and legitimate purposes and not further processed in a manner incompatible with those purposes.
 - **Data minimization**: Processing must be adequate, relevant, and limited to what is necessary in relation to the purposes for which the data are processed.
+- **Accuracy**: Personal data must be accurate and, where necessary, kept up to date.
 - **Storage limitation**: Data must be kept for no longer than is necessary for the purposes for which the personal data are processed (i.e., retention policies must be in place).
 - **Integrity and confidentiality**: Processing must ensure appropriate security of the personal data, including protection against unauthorized or unlawful processing and against accidental loss, destruction, or damage.
 - **Accountability**: The data controller must be able to demonstrate compliance with all the above principles (e.g., through documentation, policies, and records of processing activities).
