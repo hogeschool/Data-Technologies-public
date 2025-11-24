@@ -38,6 +38,52 @@ The GDPR (General Data Protection Regulation) and its Dutch implementation, the 
 - **Integrity and confidentiality**: Processing must ensure appropriate security of the personal data, including protection against unauthorized or unlawful processing and against accidental loss, destruction, or damage.
 - **Accountability**: The data controller must be able to demonstrate compliance with all the above principles (e.g., through documentation, policies, and records of processing activities).
 
+### Case: Applying GDPR to a Newsletter Database
+
+Using the core principles of the GDPR, consider the following questions related to managing a customer newsletter subscription database.
+
+🧠 Lawfulness: What is the most critical legal basis required before an organization can send a newsletter to a recipient?
+
+<details> <summary>Click to reveal a answer</summary>
+The organization must obtain explicit, unambiguous consent from the recipient (the data subject). This consent must be freely given and specific to receiving the newsletter.
+</details>
+
+\
+🧠 Transparency: What mechanism must be in place to ensure compliance with the transparency principle regarding subscriptions?
+<details> <summary>Click to reveal a answer</summary>
+The sender must provide a clear and easy-to-use opt-out (unsubscribe) mechanism in every newsletter. Furthermore, the privacy policy must transparently explain how the subscriber's data is processed.
+</details>
+
+\
+🧠 Purpose: The newsletter database stores the recipient’s email address and name. According to the Purpose Limitation principle, can this data be used to send the recipient an unrelated sales survey from a third-party partner?
+<details> <summary>Click to reveal a answer</summary>
+No. The email address and name were collected specifically for the purpose of sending the newsletter. Using this data for a third-party sales survey would constitute further processing that is incompatible with the original, explicit purpose.
+</details>
+
+\
+🧠 Data Minimization: Besides the email address and name, the database currently stores the recipient's IP address at signup and date of birth. Which of these fields should likely be removed to comply with data minimization?
+<details> <summary>Click to reveal a answer</summary>
+The date of birth is almost certainly unnecessary for sending a generic newsletter. The IP address is generally not required for subscriber management and should be removed or pseudonymized/aggregated, unless there is a specific legal requirement (like fraud prevention) to keep it.
+</details>
+
+\
+🧠 Data Minimization & Relevance: The newsletter provider also tracks clicks on links within the email. Is storing this click data per individual recipient compliant with Data Minimization?
+<details> <summary>Click to reveal a answer</summary>
+This is a gray area. Storing clicks for performance analysis and aggregated statistics is often justifiable. However, if the tracking is used to create individual user profiles for targeted advertising unrelated to the newsletter service, it may violate the principle, as it goes beyond what is necessary for the core service.
+</details>   
+
+\
+🧠 Accuracy: How can the organization best ensure the Accuracy of the email addresses and names stored in the newsletter database?
+<details> <summary>Click to reveal a answer</summary>
+The most direct method is to provide the data subject with a secure, self-service way to view and update their own personal details (like name or email address). This delegates the responsibility for accuracy back to the data subject.
+</details>
+
+\
+🧠 Accountability: The Accountability principle requires the organization to demonstrate GDPR compliance. When challenged, how can the newsletter administrator prove that a recipient consented to receive the newsletter?
+<details> <summary>Click to reveal a answer</summary>
+The organization must maintain a verifiable record of consent (a proof of consent). This typically involves implementing a double opt-in system and storing the following evidence: the time, date, method, and the IP address used for the initial and final confirmation of the subscription.
+</details>
+
 ## Anonymization & Pseudonimisation
 
 Anonymization is the process of rendering personal data into a form that the data subject is no longer identifiable. So the link to the individual is permanently and irreversibly broken.
@@ -46,7 +92,7 @@ Pseudonimisation is process of replacing direct identifiers (like name or SSN) w
 
 ### Relevance for GDPR
 - Truly anonymized data falls *outside* GDPR.
-- Pseudonymized data still falls *inside* GDPR because re-identification remains theoretically possible.
+- Pseudonymized data still falls *inside* GDPR because re-identification remains possible.
 
 ### Common Techniques for anonymization
 - **Generalization:** Replace specific values with broader categories.
