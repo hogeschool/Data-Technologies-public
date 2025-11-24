@@ -42,9 +42,11 @@ The GDPR (General Data Protection Regulation) and its Dutch implementation, the 
 - Truly anonymized data falls *outside* GDPR.
 - Pseudonymized data still falls *inside* GDPR because re-identification remains theoretically possible.
 
-## Anonymization
+## Anonymization & Pseudonimisation
 
-Anonymization is the process where individuals cannot be identified, directly or indirectly, even with external information.
+Anonymization is the process of rendering personal data into a form that the data subject is no longer identifiable. So the link to the individual is permanently and irreversibly broken.
+
+Pseudonimisation is process of replacing direct identifiers (like name or SSN) with a pseudonym (e.g., an artificial identifier) so that the data can no longer be attributed to a specific data subject without the use of additional information.
 
 ### Common Techniques
 - **Generalization:** Replace specific values with broader categories.
