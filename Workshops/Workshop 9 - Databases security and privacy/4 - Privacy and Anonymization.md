@@ -38,17 +38,17 @@ The GDPR (General Data Protection Regulation) and its Dutch implementation, the 
 - **Integrity and confidentiality**: Processing must ensure appropriate security of the personal data, including protection against unauthorized or unlawful processing and against accidental loss, destruction, or damage.
 - **Accountability**: The data controller must be able to demonstrate compliance with all the above principles (e.g., through documentation, policies, and records of processing activities).
 
-### Relevance for Data Technologies
-- Truly anonymized data falls *outside* GDPR.
-- Pseudonymized data still falls *inside* GDPR because re-identification remains theoretically possible.
-
 ## Anonymization & Pseudonimisation
 
 Anonymization is the process of rendering personal data into a form that the data subject is no longer identifiable. So the link to the individual is permanently and irreversibly broken.
 
 Pseudonimisation is process of replacing direct identifiers (like name or SSN) with a pseudonym (e.g., an artificial identifier) so that the data can no longer be attributed to a specific data subject without the use of additional information.
 
-### Common Techniques
+### Relevance for GDPR
+- Truly anonymized data falls *outside* GDPR.
+- Pseudonymized data still falls *inside* GDPR because re-identification remains theoretically possible.
+
+### Common Techniques for anonymization
 - **Generalization:** Replace specific values with broader categories.
 - **Suppression:** Remove attributes entirely.
 - **Masking:** Concealing specific parts of data to prevent exposure.
