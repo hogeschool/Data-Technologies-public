@@ -107,6 +107,7 @@ To avoid redundancy and inconsistent data, relational databases are often normal
 students(id, first_name, last_name, emails)
 1, John, Smith, "john@mail.com; john.smith@uni.edu"
 ```
+Here, the field emails contains multiple email addresses.
 
 **2NF Bad example**:
 ```
