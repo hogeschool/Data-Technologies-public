@@ -105,7 +105,7 @@ A `RIGHT JOIN` works similarly to LEFT JOIN, but keeps all records from the righ
 
 ![alt text](data/img/right-join.jpeg "Right (Outer) Join")
 
-**Example:** Get all enrollments and their corresponding students (even if some enrollments lack student info)
+**Example:** Get all students and their corresponding enrollments (even if some students did not enroll)
 
 ````sql
 SELECT 
@@ -120,8 +120,8 @@ RIGHT JOIN students ON enrollments.student_id = students.id;
 
 **How it works:**
 
-- Shows all enrollments first.
-- If a course isn’t enrolled by any student, it won’t show up (because enrollments table is "stronger" in this join).
+- Shows all students first.
+- If an enrollment is missing for a student, the student will still appear because the students table is preserved in a RIGHT JOIN.
 - Typically, LEFT JOIN is preferred over RIGHT JOIN for readability.
 
 <details markdown="1">
