@@ -216,16 +216,44 @@ SELECT
     enrollments.academic_year 
 FROM students
 FULL OUTER JOIN enrollments ON students.id = enrollments.student_id;
-FULL JOIN courses ON enrollments.course_id = courses.id;
+FULL OUTER JOIN courses ON enrollments.course_id = courses.id;
 
 ````
 
 **How it works:**
 
-- Everything appears—students, courses, and academic_year.
-- If a student is not enrolled, their course_id will be NULL.
-- If a course has no enrollments, it will still be listed.
+- Matches students with enrollments. 
+    - If a student does not have a match, the fetched values for enrollment will be NULL. 
+    - If an enrollment does not have a match, the fetched values for student will be NULL. 
+    - The result is a temporary result-set T1.
+- Matches T1 with courses. 
+    - If T1 does not have a match, the fetched values for course will be NULL. 
+    - If a course does not have a match, the fetched values for T1 will be NULL.
+ 
+```mermaid
+flowchart LR
+    S[students] --> J1[FULL OUTER JOIN ON students.id = enrollments.student_id]
+    E[enrollments] --> J1
+    J1 --> T1[(Temporary result-set T1)]
 
+    T1 --> J2[FULL OUTER JOIN ON enrollments.course_id = courses.id]
+    C[courses] --> J2
+    J2 --> Result[(Final result-set)]
+
+    %% Styles for result sets
+    style T1 fill:#fff3b0,stroke:#e0a400,stroke-width:2px
+    style Result fill:#fff3b0,stroke:#e0a400,stroke-width:2px
+
+    %% Style join nodes
+    style J1 fill:#e6f3ff,stroke:#4a90e2,stroke-width:1px,stroke-dasharray: 3 3
+    style J2 fill:#e6f3ff,stroke:#4a90e2,stroke-width:1px,stroke-dasharray: 3 3
+
+    %% Notes for NULL behavior
+    note1[["If student has no match → enrollment columns = NULL<br/>If enrollment has no match → student columns = NULL"]]
+    note2[["If T1 has no match → course columns = NULL<br/>If course has no match → T1 columns = NULL"]]
+    T1 --- note1
+    Result --- note2
+```
 <details markdown="1">
 <summary>View this query result</summary>
 
