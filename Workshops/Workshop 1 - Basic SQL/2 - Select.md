@@ -2,7 +2,7 @@
 
 Structured Query Language (SQL) is the standard language for managing and querying relational databases. It allows users to retrieve, add, update, and delete data, as well as perform advanced operations such as combining data from multiple tables.
 
-To practice SQL, we will use a pre-formed [University dataset]("data/university.sql")
+To practice SQL, we will use a pre-formed [University dataset](data/university.sql)
 
 <!-- ##### students
 | id          | first_name | last_name | date_of_birth | email  | city  | enrolled |
@@ -74,7 +74,7 @@ The writing order of an SQL query is different from its execution order. When wr
 
 ## 1. Basic `SELECT`
 
-The `SELECT` statement is the most commonly used SQL command. It is used to query data from one or more tables. In this guide, we will explore various options and clauses that can be used with `SELECT`, with examples using our [University dataset]("data/university.sql").
+The `SELECT` statement is the most commonly used SQL command. It is used to query data from one or more tables. In this guide, we will explore various options and clauses that can be used with `SELECT`, with examples using our [University dataset](data/university.sql).
 
 &nbsp;
 
