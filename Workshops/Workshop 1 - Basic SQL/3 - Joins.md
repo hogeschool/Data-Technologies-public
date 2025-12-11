@@ -102,8 +102,26 @@ LEFT JOIN enrollments ON students.id = enrollments.student_id;
 
 **How it works:**
 
-- Includes all students.
-- If a student isn’t enrolled, the `course_id` and `academic_year` will be `NULL`.
+- Matches all students with enrollments.
+- If a student does not have an enrollment, the fetched values for enrollment ('course_id'and 'academic_year') will be 'NULL'.
+
+```mermaid
+
+flowchart LR
+    S[students] --> J1[LEFT JOIN ON students.id = enrollments.student_id]
+    E[enrollments] --> J1
+    J1 --> Result[(Final result-set: first_name, last_name, course_id, academic_year)]
+
+    %% Styles for result set (yellow highlight)
+    style Result fill:#fff3b0,stroke:#e0a400,stroke-width:2px
+
+    %% Optional: style join node (subtle)
+    style J1 fill:#e6f3ff,stroke:#4a90e2,stroke-width:1px,stroke-dasharray: 3 3
+
+    %% Annotation: non-matching rows
+    noteN[["If a student has NO matching enrollment:<br/>course_id = NULL, academic_year = NULL"]]
+    Result --- noteN
+```
 
 <details markdown="1">
 <summary>View this query result</summary>
