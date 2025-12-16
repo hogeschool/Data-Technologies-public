@@ -197,7 +197,8 @@ SELECT department, AVG(COALESCE(credits, 0)) AS avg_credits
 FROM courses
 GROUP BY department;
 ````
-
+*What does COALESCE do?*
+It returns the first non-null value from the list of arguments. In this example, if credits is NULL, 0 is used instead.
 &nbsp;
 
 #### PostgreSQL specific
