@@ -135,3 +135,6 @@ Dataset:
 ```
 √2,1875 => 1,479
 ```
+
+# Further explanation
+[Difference between standard deviation and variance](https://www.investopedia.com/ask/answers/021215/what-difference-between-standard-deviation-and-variance.asp)
