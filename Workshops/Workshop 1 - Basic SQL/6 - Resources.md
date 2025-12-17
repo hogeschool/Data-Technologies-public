@@ -16,15 +16,10 @@ For more in depth information about PostgresSql and SQL, the following resources
 
 *What is Linear Interpolation?*\
 Linear interpolation estimates a value between two known points by assuming a straight-line relationship.
-Formula:
-```
-Interpolated value = lower value + ((desired position − lower position) × (upper value − lower value))
-```
+Formula:\
+\
+![alt text](data/img/linear_interpolation_formula.svg "Linear interpolation")
 
-
-```latex
-Interpolated value = lower value + ((desired position − lower position) × (upper value − lower value)) / (upper position − lower position)
-```
 
 Example
 Dataset: 
