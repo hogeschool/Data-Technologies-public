@@ -50,4 +50,46 @@ Calculation of interpolated value:
 # Variance
 
 *What is Variance?*\
-Variance is a statistical measure that shows how spread out the numbers in a dataset are. If all numbers are close to each other, the variance is low. If all numbers are very different from each other, the variance is high.
+Variance is a statistical measure that shows how spread out the numbers in a dataset are. If all numbers are close to each other, the variance is low. If all numbers are very different from each other, the variance is high.\
+\
+Formula:\
+\
+![alt text](data/img/variance_formula.svg "Variance")
+
+*Example 1*\
+Dataset: 
+```
+10, 11, 12, 40
+```
+Calculation of the variance:
+
+- Calculate the average of the dataset:
+```
+(10 + 11 + 12 + 40) / 4 = 18,25 
+```
+
+- Apply the variance formula:
+```
+( (10-18,25)² + (11-18,25)² + (12-18,25)² + (40-18,25)² ) / 4 =>
+(68,0625 + 52,5625 + 39,0625 + 473,0625) / 4 =>
+632,75 / 4 = 158,1875 
+```
+
+*Example 2*\
+Dataset: 
+```
+10, 11, 12, 14
+```
+Calculation of the variance:
+
+- Calculate the average of the dataset:
+```
+(10 + 11 + 12 + 14) / 4 = 11,75 
+```
+
+- Apply the variance formula:
+```
+((10-11,75)² + (11-11,75)² + (12-11,75)² + (14-11,75)²) / 4 =>
+(3,0625 + 0,5625 + 0,0625 + 5,0625) / 4 =>
+8,75 / 4 = 2,1875
+```
