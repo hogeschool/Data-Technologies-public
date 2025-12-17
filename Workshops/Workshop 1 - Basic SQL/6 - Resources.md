@@ -93,3 +93,7 @@ Calculation of the variance:
 (3,0625 + 0,5625 + 0,0625 + 5,0625) / 4 =>
 8,75 / 4 = 2,1875
 ```
+# Standard deviation
+
+*What is Standard deviation?*\
+Standard deviation is a statistical measure that shows how much the numbers in a dataset deviate from the average. \
