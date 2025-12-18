@@ -127,7 +127,7 @@ Dataset:
 - Calculate the variance
 
 ```
-( (10-11,75)² + (11-11,75)² + (12-11,75)² + (40-11,75)² ) / 4 = 2,1875
+( (10-11,75)² + (11-11,75)² + (12-11,75)² + (14-11,75)² ) / 4 = 2,1875
 ```
 
 - Take the square root of the variance
@@ -135,6 +135,29 @@ Dataset:
 ```
 √2,1875 => 1,479
 ```
+
+# Calculate with SQL in PostgreSQL
+
+Try this SQL statement to see how PostgreSQL performs these calculations automatically. The dataset used here is the same as in Example 1.
+
+```sql
+WITH data(value) AS (
+    VALUES
+        (10),
+        (11),
+        (12),
+        (40)
+)
+SELECT
+    COUNT(*)                            AS n,
+    AVG(value)                          AS average,
+    VAR_POP(value)                      AS variance,
+    STDDEV_POP(value)                   AS standard_deviation,
+    PERCENTILE_CONT(0.5) 
+        WITHIN GROUP (ORDER BY value)   AS median
+FROM data;
+```
+
 
 # Further explanation
 - [Difference between standard deviation and variance](https://www.investopedia.com/ask/answers/021215/what-difference-between-standard-deviation-and-variance.asp)
