@@ -87,10 +87,10 @@ The `course_id` in `enrollments` is a foreign key that references the `id` in `c
 
 #### :key: Keys
 
-Relational databases use keys to structure data:
+Relational databases use keys to uniquely identify records and define relationships between tables.
 
 - Primary Key – A unique identifier for a record (e.g. `id` in `students`, `teachers` and `courses`).
-- Foreign Key – A reference to another table (e.g. `course_id` and `student_id` in `enrollments`).
+- Foreign Key – A reference to a record in another table (e.g. `course_id` and `student_id` in `enrollments`).
 
 &nbsp;
 
@@ -144,8 +144,16 @@ Why do many organizations choose relational databases? Here are some key benefit
 - ✔ Data consistency – Relationships and normalization prevent data loss and inconsistent data.
 - ✔ Powerful query capabilities – SQL provides advanced ways to retrieve and manipulate data.
 - ✔ Data integrity – Primary and foreign keys keep data consistent and accurate. 
-- ✔ Transactions & ACID Compliance – Relational databases support secure transactions using ACID principles:
-  - Atomicity (everything happens or nothing)
-  - Consistency (the database remains in a valid state)
-  - Isolation (transactions do not affect each other)
-  - Durability (data is preserved after a crash)
+- ✔ Transactions & ACID Compliance – Relational databases support secure transactions using ACID principles.
+
+**What is a transaction?**
+A transaction is a sequence of one or more SQL operations treated as a single, atomic unit of work. If any part of the transaction fails, the entire transaction is rolled back to maintain data integrity.
+
+**Why are transactions important?**
+They ensure that complex operations (such as updating multiple tables) are completed reliably and consistently, even in case of errors or system failures.
+
+**ACID Principles:**
+- Atomicity: A transaction is either fully completed or not at all.
+- Consistency: The database remains in a valid state before and after the transaction.
+- Isolation: Concurrent transactions do not interfere with each other.
+- Durability: Data persists even after a system failure.

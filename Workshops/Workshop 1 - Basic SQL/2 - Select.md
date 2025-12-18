@@ -149,7 +149,7 @@ SELECT DISTINCT department FROM courses;
 
 ### 3. Filtering with `WHERE`
 
-The `WHERE` clause allows you to filter records. For example, to select students who enrolled in 2022:
+The `WHERE` clause allows you to filter records. For example, to select students who live in Rotterdam:
 
 ````sql
 SELECT * FROM students 

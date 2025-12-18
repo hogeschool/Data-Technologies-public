@@ -29,9 +29,9 @@ FROM students;
 
 &nbsp;
 
-### Contional selection
+### Conditional Transformation & Sorting
 
-`CASE` allows for conditional logic within queries
+`CASE` allows you to apply conditional logic within SQL statements, for example to transform output, control sorting, or update values based on conditions.
 
 ````sql
 SELECT id, first_name, last_name, 
@@ -41,7 +41,15 @@ SELECT id, first_name, last_name,
        END AS enrollment_status
 FROM students;
 ````
+This does not filter rows; it creates a new column based on conditions.
 
+```sql
+
+SELECT first_name, last_name, enrolled
+FROM students
+ORDER BY CASE WHEN enrolled IS NOT NULL THEN 1 ELSE 2 END;
+```
+Enrolled students appear first.
 &nbsp;
 
 ### Expressions
@@ -189,19 +197,20 @@ SELECT department, AVG(COALESCE(credits, 0)) AS avg_credits
 FROM courses
 GROUP BY department;
 ````
-
+*What does COALESCE do?*
+It returns the first non-null value from the list of arguments. In this example, if credits is NULL, 0 is used instead.
 &nbsp;
 
 #### PostgreSQL specific
 
 PostgreSQL provides some extra functions to the default SQL functions above:
 
-- `PERCENTILE_CONT()` - Returns a computed result after doing linear interpolation
-- `PERCENTILE_DISC()` - Returns a value from the set of values that are aggregated over
+- `PERCENTILE_CONT()` - Returns a computed result after doing linear interpolation over a dataset.
+- `PERCENTILE_DISC()` - Picks the actual value from a dataset that corresponds to the requested percentile, without interpolation
 - `VARIANCE()` - Find the variance on a numeric column
 - `STDDEV()` - Find the standard deviation on a numeric column
 
-&nbsp;&nbsp;
+> See 'Resources' for a explanation of linear interpolation, variance & standard deviation.
 
 ## Filtering data
 
