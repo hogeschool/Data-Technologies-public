@@ -160,14 +160,101 @@ RELEASE SAVEPOINT enrollment_saved;
 
 &nbsp;
 
+### Common read anomalies
+
+When multiple transactions run concurrently, several read anomalies can occur if isolation is too low:
+
+- **Dirty read**  
+  A transaction reads data that has been modified by another transaction that has not yet been committed.  
+  If that other transaction rolls back, the first transaction has read data that never actually existed.
+
+- **Non-repeatable read**  
+  A transaction reads the same row twice and gets different values, because another committed transaction modified the row in between.
+
+- **Phantom read**  
+  A transaction re-executes a query and sees additional rows that were inserted or deleted by another committed transaction.
+
+#### Dirty read example
+```mermaid
+sequenceDiagram
+    participant T1 as Transaction 1 (Reader)
+    participant DB as Database
+    participant T2 as Transaction 2 (Writer)
+
+    T2->>DB: BEGIN
+    T2->>DB: UPDATE account SET balance = 999 WHERE id = 1
+    Note over T2,DB: Change is NOT committed yet
+
+    T1->>DB: BEGIN
+    T1->>DB: SELECT balance FROM account WHERE id = 1
+    DB-->>T1: 999
+    Note over T1: Dirty read (value may be rolled back)
+
+    T2->>DB: ROLLBACK
+    Note over DB: Balance returns to original value
+```
+
+#### Non-repetable read example
+```mermaid
+sequenceDiagram
+    participant T1 as Transaction 1 (Reader)
+    participant DB as Database
+    participant T2 as Transaction 2 (Writer)
+
+    T1->>DB: BEGIN
+    T1->>DB: SELECT balance FROM account WHERE id = 1
+    DB-->>T1: 100
+
+    T2->>DB: BEGIN
+    T2->>DB: UPDATE account SET balance = 150 WHERE id = 1
+    T2->>DB: COMMIT
+
+    T1->>DB: SELECT balance FROM account WHERE id = 1
+    DB-->>T1: 150
+    Note over T1: Non-repeatable read (same row, different value)
+```
+
+#### Phantom read example
+```mermaid
+sequenceDiagram
+    participant T1 as Transaction 1 (Reader)
+    participant DB as Database
+    participant T2 as Transaction 2 (Writer)
+
+    T1->>DB: BEGIN
+    T1->>DB: SELECT COUNT(*) FROM orders WHERE amount >= 100
+    DB-->>T1: 2
+
+    T2->>DB: BEGIN
+    T2->>DB: INSERT INTO orders(amount) VALUES (120)
+    T2->>DB: COMMIT
+
+    T1->>DB: SELECT COUNT(*) FROM orders WHERE amount >= 100
+    DB-->>T1: 3
+    Note over T1: Phantom read (same query, more rows)
+
+```
+
 ### Isolation levels
 
-SQL provides isolation levels to handle concurrent transactions safely:
+SQL provides isolation levels to handle concurrent transactions safely. Each isolation level determines which read anomalies are allowed:
 
-- **READ UNCOMMITTED**: Allows dirty reads (uncommitted data).
-- **READ COMMITTED**: Prevents dirty reads but allows non-repeatable reads.
-- **REPEATABLE READ**: Prevents dirty and non-repeatable reads.
-- **SERIALIZABLE**: Ensures full isolation, avoiding phantom reads.
+
+
+
+|Isolation Level|Dirty Read|Non-repeatable Read|Phantom Read|
+|---------------|----------|-------------------|------------|
+|Read Uncommitted|Allowed|Allowed|Allowed|
+|Read Committed|Prevented|Allowed|Allowed|
+|Repeatable Read|Prevented|Prevented|Allowed*|
+|Serializable|Prevented|Prevented|Prevented
+
+> **Note:**  
+> In PostgreSQL, `READ UNCOMMITTED` behaves the same as `READ COMMITTED`.  
+> Dirty reads are not possible in PostgreSQL.
+
+\* According to the SQL standard, phantom reads may still occur in `REPEATABLE READ`.
+
 
 You can set the isolation level like this:
 
@@ -176,5 +263,26 @@ SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 START TRANSACTION;
 ````
 
-&nbsp;
-&nbsp;
+**Why not always use SERIALIZABLE?**
+
+At first glance, it may seem logical to always use the SERIALIZABLE isolation level, since it prevents all read anomalies. However, stronger isolation comes with important trade-offs.
+
+Choosing an isolation level is a balance between data correctness, performance, and concurrency:
+- Higher isolation → stronger guarantees, but lower concurrency and performance
+- Lower isolation → better performance and scalability, but more tolerance for anomalies
+
+In practice, the right isolation level depends on the type of workload and the consequences of inconsistent reads.
+
+| Isolation Level      | Consistency Guarantees                                                              | Performance & Concurrency                                             | Typical Use Cases                                           |
+| -------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------- |
+| **READ UNCOMMITTED** | Weakest guarantees. Dirty reads, non-repeatable reads, and phantom reads may occur. | Highest concurrency, lowest overhead.                                 | Rarely used in practice; mainly theoretical.                |
+| **READ COMMITTED**   | Prevents dirty reads. Data may change between queries.                              | Good performance and concurrency.                                     | Reporting, dashboards, general CRUD applications.           |
+| **REPEATABLE READ**  | Prevents dirty and non-repeatable reads. Phantom reads may still occur.             | Lower concurrency than READ COMMITTED.                                | Consistent reads within a transaction, analytical queries.  |
+| **SERIALIZABLE**     | Strongest guarantees. Transactions behave as if executed one after another.         | Lowest concurrency, highest overhead; transactions may need to retry. | Financial transactions, reservations, inventory management. |
+
+
+## See Transaction Isolation in Action
+
+During class or as homework, explore transaction isolation levels in practice using the following exercise:
+
+[Isolation Levels Exercise](data/isolation_levels/isolation_levels_lab.pdf)
