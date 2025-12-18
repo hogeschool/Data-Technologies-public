@@ -157,7 +157,9 @@ SELECT
         WITHIN GROUP (ORDER BY value)   AS median
 FROM data;
 ```
+>The WITH clause defines a Common Table Expression (CTE), which creates a temporary result set that can be used like a table within this query. CTEs are explained in more detail in a later workshop.
 
+>The WITHIN GROUP clause defines the order in which values are processed by the percentile calculation. It defines a preprocessing step that orders the input values before the PERCENTILE_CONT calculation is performed.
 
 # Further explanation
 - [Difference between standard deviation and variance](https://www.investopedia.com/ask/answers/021215/what-difference-between-standard-deviation-and-variance.asp)
