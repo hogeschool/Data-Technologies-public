@@ -1,3 +1,8 @@
+---
+title: "Joins"
+parent: "1 - Basic SQL"
+nav_order: 3
+---
 # SQL Joins
 
 ## Introduction

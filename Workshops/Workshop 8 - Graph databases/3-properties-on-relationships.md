@@ -1,3 +1,8 @@
+---
+title: "Properties on relationships"
+parent: "8 - Graph databases"
+nav_order: 3
+---
 # Working with properties on relationships
 
 In Neo4j, not only nodes but also relationships can have properties.
@@ -342,4 +347,3 @@ Result:
 This example demonstrates how relationships in a graph database can carry their own data.
 Properties such as rating or created_at make it possible to capture not only who is connected to what, but also how and when that connection occurred.
 This is especially useful for use cases such as recommendation systems, fraud detection, and social networks, where the details of interactions are as important as the entities themselves.
-

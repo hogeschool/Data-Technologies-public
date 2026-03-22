@@ -1,3 +1,8 @@
+---
+title: "Resources"
+parent: "1 - Basic SQL"
+nav_order: 6
+---
 # Resources for further learning
 
 For more in depth information about PostgresSql and SQL, the following resources could help.

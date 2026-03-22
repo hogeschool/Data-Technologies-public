@@ -1,3 +1,8 @@
+---
+title: "Views"
+parent: "2 - Advanced SQL"
+nav_order: 2
+---
 # Views
 
 A view in SQL is a **virtual table** that is based on the result of a query. Unlike physical tables, views do not store data themselves; instead, they dynamically retrieve data from underlying tables whenever queried. Views help simplify complex queries, enhance security, and improve data abstraction.

@@ -1,3 +1,8 @@
+---
+title: "Working with graph queries"
+parent: "8 - Graph databases"
+nav_order: 2
+---
 # Working with Graph Queries
 
 In this part of the workshop you will start writing simple Cypher queries to create and explore data in a graph database.  

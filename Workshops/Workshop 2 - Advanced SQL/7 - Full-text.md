@@ -1,3 +1,8 @@
+---
+title: "Full-text"
+parent: "2 - Advanced SQL"
+nav_order: 7
+---
 # Full-Text Search
 
 Traditional SQL searches using `LIKE` or `ILIKE` are inefficient when dealing with large text-based datasets because they scan entire columns without indexing words efficiently. PostgreSQL Full-Text Search (FTS) solves this by breaking text into meaningful words (**lexemes**) and storing indexed versions for **fast retrieval**.

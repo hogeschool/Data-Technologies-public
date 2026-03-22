@@ -1,3 +1,8 @@
+---
+title: "CTE"
+parent: "2 - Advanced SQL"
+nav_order: 3
+---
 # Common Table Expressions
 
 Common Table Expressions (CTEs), introduced using the `WITH` clause, are a powerful feature in SQL that improve query structure, readability, and performance. CTEs allow temporary result sets to be referenced multiple times within a query, making them useful for **breaking down complex queries**, handling **recursive operations**, and improving **maintainability**.

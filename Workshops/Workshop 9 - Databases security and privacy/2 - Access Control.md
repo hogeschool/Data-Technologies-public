@@ -1,3 +1,8 @@
+---
+title: "Access Control"
+parent: "9 - Security and Privacy"
+nav_order: 2
+---
 # Access Control
 Access control is the process of defining **who** can access **which data** and **what actions** they are allowed to perform.  
 The goal is to ensure that sensitive information is only available to authorized parties, while minimizing the risk of misuse or data leakage.  

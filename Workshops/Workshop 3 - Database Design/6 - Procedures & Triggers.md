@@ -1,3 +1,8 @@
+---
+title: "Procedures & Triggers"
+parent: "3 - Database Design"
+nav_order: 6
+---
 # Stored Procedures & Triggers
 
 Databases are the backbone of modern applications, and managing them efficiently is crucial. **Stored procedures** and **triggers** are powerful tools that help automate tasks, enforce business rules, and optimize performance.

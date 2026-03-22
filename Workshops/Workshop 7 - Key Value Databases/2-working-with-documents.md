@@ -1,3 +1,8 @@
+---
+title: "Working with documents"
+parent: "7 - Key Value Databases"
+nav_order: 2
+---
 # Working with Documents
 
 In this section, you will learn how to store, query, and modify data in a **document database** using **MongoDB**.  

@@ -1,3 +1,8 @@
+---
+title: "Row Level Security"
+parent: "9 - Security and Privacy"
+nav_order: 3
+---
 # Row-Level Security (RLS)
 
 Row-Level Security (RLS) provides **fine-grained access control** at the row level.  

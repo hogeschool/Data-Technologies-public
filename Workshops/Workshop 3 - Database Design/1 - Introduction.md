@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+parent: "3 - Database Design"
+nav_order: 1
+---
 # Introduction
 
 Databases form the backbone of virtually every digital system, from web applications and e-commerce platforms to financial transactions and scientific research. Proper database design is essential for ensuring efficiency, scalability, and data integrity.

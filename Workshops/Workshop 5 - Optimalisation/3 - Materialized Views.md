@@ -1,3 +1,8 @@
+---
+title: "Materialized Views"
+parent: "5 - Optimalisation"
+nav_order: 3
+---
 # Materialized Views – Precomputing expensive queries
 
 A materialized view stores the precomputed results of a query physically on disk. This can significantly improve performance, especially for complex queries on large datasets.

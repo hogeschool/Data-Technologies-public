@@ -1,3 +1,8 @@
+---
+title: "In memory databases"
+parent: "6 - NoSQL databases"
+nav_order: 6
+---
 # In-Memory Databases and Data Persistence
 
 Redis is an **in-memory database**, meaning that all data is stored in **RAM (Random Access Memory)** instead of on disk.  
@@ -173,4 +178,3 @@ When Redis restarts, it replays the commands from the `appendonly.aof` file in o
 Redis is fast because it stores data entirely in memory. By default, it is **non-persistent** — data disappears after a restart. You can enable **RDB snapshots** or **AOF logging** to persist data on disk. When memory fills up, Redis automatically evicts keys based on the configured policy (e.g. *Least Recently Used*).
 
 This design makes Redis ideal for caching, session management, and temporary data — where **speed matters more than permanent storage**.
-

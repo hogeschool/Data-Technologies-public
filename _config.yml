@@ -1,0 +1,29 @@
+title: Data Technologies
+description: Data Technologies Course Materials
+remote_theme: just-the-docs/just-the-docs
+
+# Convert .md links to .html automatically
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+# Enable mermaid diagram support
+mermaid:
+  version: "11.13.0"
+
+# Exclude files from the build
+exclude:
+  - .gitignore
+  - LICENSE
+  - "*.docx"
+  - references.md
+
+# Hide data directories from navigation
+defaults:
+  - scope:
+      path: "**/data/**"
+    values:
+      nav_exclude: true

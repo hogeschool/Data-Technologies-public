@@ -1,3 +1,8 @@
+---
+title: "Data"
+parent: "1 - Basic SQL"
+nav_order: 4
+---
 # SQL Data Manipulation
 
 Structured Query Language (SQL) allows database manipulation using `INSERT`, `UPDATE`, and `DELETE` commands.

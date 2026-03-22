@@ -1,3 +1,8 @@
+---
+title: "Altering tables"
+parent: "3 - Database Design"
+nav_order: 5
+---
 # Altering tables
 
 Databases are dynamic systems that evolve over time as organizations expand, technology advances, and business requirements shift. As applications grow, they often require schema modifications—such as adding new data attributes, removing obsolete columns, or restructuring relationships between tables.

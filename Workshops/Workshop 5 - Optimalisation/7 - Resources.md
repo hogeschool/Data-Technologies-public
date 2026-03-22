@@ -1,3 +1,8 @@
+---
+title: "Resources"
+parent: "5 - Optimalisation"
+nav_order: 7
+---
 ## Resources for further learning
 For more in depth information about Indexing, Materialized views, Query optimization and Caching, the following resources could help.
 
@@ -30,4 +35,3 @@ For more in depth information about Indexing, Materialized views, Query optimiza
 
 > 💡 **Note:**  
 > The terms *cache-aside*, *write-through*, *write-back*, and *write-around* are widely used in practice, but they are **not formally standardized**. Different vendors (AWS, Redis, Azure, Hazelcast) may use slightly different descriptions. Always specify what you mean in your own design or documentation.
-

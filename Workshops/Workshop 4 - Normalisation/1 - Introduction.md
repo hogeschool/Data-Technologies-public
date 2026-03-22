@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+parent: "4 - Normalisation"
+nav_order: 1
+---
 # Introduction to Database Normalization
 
 ## What is Database Normalization?

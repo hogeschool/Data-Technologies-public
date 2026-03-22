@@ -1,3 +1,8 @@
+---
+title: "Working with key value databases"
+parent: "6 - NoSQL databases"
+nav_order: 3
+---
 # Working with Key–Value Databases
 
 Key–value databases store data as pairs of a **unique key** and a **value**.  

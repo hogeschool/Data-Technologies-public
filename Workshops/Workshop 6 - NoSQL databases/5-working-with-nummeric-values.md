@@ -1,3 +1,8 @@
+---
+title: "Working with nummeric values"
+parent: "6 - NoSQL databases"
+nav_order: 5
+---
 # Working with Numeric Values — Increment and Decrement
 
 Although Redis stores all values as strings, it can treat those strings as numbers when using special commands such as `INCR`, `DECR`, and `HINCRBY`.

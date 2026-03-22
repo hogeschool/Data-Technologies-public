@@ -1,3 +1,8 @@
+---
+title: "Indexing"
+parent: "5 - Optimalisation"
+nav_order: 2
+---
 # Indexing – Speeding Up Data Retrieval
 
 ## Introduction to Indexes
@@ -327,5 +332,3 @@ SELECT customer_id, amount
 FROM orders
 WHERE customer_id = 123;
 ```
-
-

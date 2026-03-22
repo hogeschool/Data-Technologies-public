@@ -1,3 +1,8 @@
+---
+title: "Relations"
+parent: "3 - Database Design"
+nav_order: 4
+---
 # Relationships Between Tables
 
 In relational databases like PostgreSQL, tables often relate to each other to model real-world connections between data entities. These relationships define how records in one table correspond to records in another, ensuring data integrity and efficient querying.

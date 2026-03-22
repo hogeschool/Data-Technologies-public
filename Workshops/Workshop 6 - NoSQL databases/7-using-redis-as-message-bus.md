@@ -1,3 +1,8 @@
+---
+title: "Using redis as message bus"
+parent: "6 - NoSQL databases"
+nav_order: 7
+---
 # Using Redis as a Message Bus
 
 Redis is not only a key–value store — it can also act as a **lightweight message bus** between processes or applications.  

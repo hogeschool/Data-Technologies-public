@@ -1,3 +1,8 @@
+---
+title: "Security"
+parent: "3 - Database Design"
+nav_order: 8
+---
 # Database Security & Access Control
 
 Databases store critical information, including personal data, financial records, and business intelligence. Without proper security measures, organizations risk data breaches, unauthorized access, and compliance violations.

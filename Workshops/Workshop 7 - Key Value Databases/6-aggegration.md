@@ -1,3 +1,8 @@
+---
+title: "Aggegration"
+parent: "7 - Key Value Databases"
+nav_order: 6
+---
 # Aggregation Framework (Introductie)
 
 ## Introduction to the Aggregation Framework

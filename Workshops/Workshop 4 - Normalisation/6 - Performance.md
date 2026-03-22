@@ -1,3 +1,8 @@
+---
+title: "Performance"
+parent: "4 - Normalisation"
+nav_order: 6
+---
 # Normalization vs. Performance Optimization
 
 Let’s talk performance—because while normalization is great for data integrity, it can sometimes clash with speed and efficiency. This section will help your students understand the trade-offs between a beautifully normalized schema and a system that actually performs well under load.

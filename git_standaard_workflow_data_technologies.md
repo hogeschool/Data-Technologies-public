@@ -1,3 +1,7 @@
+---
+title: Git standaard workflow
+---
+
 # Git standaard workflow – Data Technologies
 R.M. van Hoek, Versie: 1.0, Datum: 14 december 2025
 

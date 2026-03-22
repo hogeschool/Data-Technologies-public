@@ -1,3 +1,8 @@
+---
+title: "Indexes"
+parent: "7 - Key Value Databases"
+nav_order: 5
+---
 # Indexes in MongoDB
 
 Indexes improve query performance by allowing MongoDB to quickly locate documents that match a query condition, rather than scanning every document in the collection.

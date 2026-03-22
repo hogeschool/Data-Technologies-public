@@ -1,3 +1,8 @@
+---
+title: "Conceptual design (ERD)"
+parent: "3 - Database Design"
+nav_order: 2
+---
 # Conceptual Design – Entity-Relationship Diagram (ERD)
 
 An **Entity-Relationship (ER) Diagram** is a visual tool used in database design to organize data and show how different pieces of information relate to each other. Think of an ER diagram as a blueprint for how a database should store information efficiently. Businesses, schools, websites, and apps all use ER diagrams to structure their databases before they start coding.

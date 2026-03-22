@@ -1,3 +1,8 @@
+---
+title: "Physical design"
+parent: "3 - Database Design"
+nav_order: 3
+---
 # Physical Design – Creating Tables in SQL
 
 When working with PostgreSQL, physical database design plays a critical role in ensuring optimal performance, efficient storage, and scalability. It involves structuring data storage, indexing, partitioning, and tuning configurations to match workload requirements.

@@ -1,3 +1,8 @@
+---
+title: "Recourses"
+parent: "7 - Key Value Databases"
+nav_order: 7
+---
 # Further Learning Resources
 
 This final section provides a list of recommended online resources to deepen your understanding of ***Schema design***, **indexes** and the **aggregation framework** in MongoDB. All links point to official MongoDB documentation or trusted learning materials.
@@ -28,5 +33,3 @@ This final section provides a list of recommended online resources to deepen you
 | **Aggregation Overview** | [Aggregation (MongoDB Manual)](https://www.mongodb.com/docs/manual/aggregation/) | Main entry point for the aggregation framework, including key concepts. |
 | **Pipeline Stages** | [Pipeline Operators and Stages](https://www.mongodb.com/docs/manual/reference/mql/aggregation-stages/) | Detailed reference for each stage such as `$match`, `$group`, `$project`, and `$sort`. |
 | **Aggregation Examples** | [Aggregation Examples (MongoDB Manual)](https://www.mongodb.com/docs/manual/aggregation/#aggregation-pipeline-example) | Hands-on examples demonstrating grouping, filtering, and transformations. |
-
-

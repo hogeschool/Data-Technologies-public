@@ -1,3 +1,8 @@
+---
+title: "Select"
+parent: "1 - Basic SQL"
+nav_order: 2
+---
 # Introduction to SQL
 
 Structured Query Language (SQL) is the standard language for managing and querying relational databases. It allows users to retrieve, add, update, and delete data, as well as perform advanced operations such as combining data from multiple tables.

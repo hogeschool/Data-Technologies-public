@@ -1,3 +1,8 @@
+---
+title: "Resources"
+parent: "9 - Security and Privacy"
+nav_order: 7
+---
 ### Further reading in the PostgreSQL documentation
 
 1. [Roles and Database Privileges](https://www.postgresql.org/docs/current/user-manag.html)  

@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+parent: "8 - Graph databases"
+nav_order: 1
+---
 # Graph Databases
 
 In previous workshops we explored how data can be stored as individual records — either as key–value pairs or as JSON documents.
@@ -91,7 +96,3 @@ RETURN DISTINCT p2
 ```
 This ability to follow multi-level connections makes graph databases ideal for detecting complex fraud patterns that would be very hard to uncover with traditional SQL joins.
 </details>
-
-
-
-

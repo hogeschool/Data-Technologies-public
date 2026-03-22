@@ -1,3 +1,8 @@
+---
+title: "Anomalies"
+parent: "4 - Normalisation"
+nav_order: 2
+---
 # Anomalies in Unnormalized Databases
 
 Data anomalies are inconsistencies or errors that arise when a database is poorly structured—typically due to redundant or unnormalized data. These anomalies compromise data integrity, consistency, and efficiency.
@@ -234,4 +239,3 @@ Splitting data into:
 
 &nbsp;
 &nbsp;
-

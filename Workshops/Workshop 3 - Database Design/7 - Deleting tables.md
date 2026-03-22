@@ -1,3 +1,8 @@
+---
+title: "Deleting tables"
+parent: "3 - Database Design"
+nav_order: 7
+---
 # Deleting Tables
 
 Databases evolve over time, and there are situations where deleting a table becomes necessary. However, removing a table is a **permanent action**, meaning all data stored within it will be lost. Before executing a deletion, it's essential to understand why and when tables should be removed.

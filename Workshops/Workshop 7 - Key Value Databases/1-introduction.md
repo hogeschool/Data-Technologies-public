@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+parent: "7 - Key Value Databases"
+nav_order: 1
+---
 # Document Databases
 In the previous workshop, we discussed NoSQL databases and learned that key–value databases allow data to be stored without a fixed schema.
 We also saw how a key–value store can manage flexible data structures using simple JSON documents.

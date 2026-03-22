@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+parent: "9 - Security and Privacy"
+nav_order: 1
+---
 # Databases security and privacy
 
 Databases often contain the most valuable asset of an organization: its data. Security and privacy are therefore essential. You don’t want stored information — especially *Personally Identifiable Information (PII)* — to be accessible to people who have no legitimate reason to use it. Beyond the direct risks, organizations must also comply with regulations such as the GDPR. Failing to do so can result not only in legal consequences but also in serious damage to public trust and reputation.

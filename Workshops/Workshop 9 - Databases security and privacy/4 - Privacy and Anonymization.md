@@ -1,3 +1,8 @@
+---
+title: "Privacy and Anonymization"
+parent: "9 - Security and Privacy"
+nav_order: 4
+---
 # Privacy and Anonymization
 
 ## What is privacy
@@ -635,6 +640,3 @@ The user is very likely religious; may be dealing with medical or relationship i
 Even without identity disclosure, the attacker learns far more about the user than allowed.  
 This is sensitive attribute disclosure through probabilistic inference.
 </details>
-
-
-

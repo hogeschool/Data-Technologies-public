@@ -1,3 +1,8 @@
+---
+title: "Resources"
+parent: "4 - Normalisation"
+nav_order: 7
+---
 # Resources for further learning
 
 For more in depth information about PostgresSql and SQL, the following resources could help.

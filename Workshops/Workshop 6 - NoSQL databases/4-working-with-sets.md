@@ -1,3 +1,8 @@
+---
+title: "Working with sets"
+parent: "6 - NoSQL databases"
+nav_order: 4
+---
 # Working with Redis Sets
 
 Redis supports several *collection types*, and one of the most useful is the **Set**.
@@ -237,7 +242,3 @@ SDIFF A B \
 
 The difference return the elements of set A which are not in set B.
 </details>
-
-
-
-

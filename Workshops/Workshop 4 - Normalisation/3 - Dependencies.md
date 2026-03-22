@@ -1,3 +1,8 @@
+---
+title: "Dependencies"
+parent: "4 - Normalisation"
+nav_order: 3
+---
 # Dependencies
 
 In the context of relational databases, a dependency describes a relationship between attributes (columns) in a table. The most important type is the functional dependency, which is the backbone of normalization.

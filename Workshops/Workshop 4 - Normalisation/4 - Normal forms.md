@@ -1,3 +1,8 @@
+---
+title: "Normal forms"
+parent: "4 - Normalisation"
+nav_order: 4
+---
 # Normal forms (0NF, 1NF, 2NF, 3NF, Boyce Codd NF)
 
 Normal forms are rules or guidelines for structuring relational databases. Each form addresses specific types of redundancy and dependency issues. The goal is to ensure data integrity, minimize duplication, and simplify maintenance.

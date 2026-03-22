@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+parent: "6 - NoSQL databases"
+nav_order: 1
+---
 # NoSQL databases
 
 Until now, we worked with databases that use a fixed schema for the data structure. In a relational SQL database, all data must conform to the defined table structure. This works well as long as the structure of the data remains stable. However, when the structure of the data varies a lot, a fixed schema can become problematic.

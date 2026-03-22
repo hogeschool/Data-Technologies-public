@@ -1,3 +1,8 @@
+---
+title: "Advancing"
+parent: "1 - Basic SQL"
+nav_order: 5
+---
 # Advanced `SELECT` functionalities
 
 SQL's `SELECT` statement is incredibly powerful, offering a range of advanced options that allow for complex data retrieval, manipulation, and transformation.

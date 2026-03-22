@@ -1,3 +1,8 @@
+---
+title: "Relational databases"
+parent: "1 - Basic SQL"
+nav_order: 1
+---
 # Relational Databases
 
 ### 1. What is a Relational Database?

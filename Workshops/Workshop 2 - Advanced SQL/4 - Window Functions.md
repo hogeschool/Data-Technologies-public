@@ -1,3 +1,8 @@
+---
+title: "Window Functions"
+parent: "2 - Advanced SQL"
+nav_order: 4
+---
 # Window Functions
 
 Window functions are a powerful feature in SQL that allow calculations across a specific "window" of rows related to the current row—without collapsing them into a single output like traditional aggregation functions. 

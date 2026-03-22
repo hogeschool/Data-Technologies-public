@@ -1,3 +1,8 @@
+---
+title: "Caching"
+parent: "5 - Optimalisation"
+nav_order: 6
+---
 # Caching & Connection pooling
 
 ## Caching introduction
@@ -627,6 +632,3 @@ Some application frameworks, like **Django** and **Laravel**, already provide a 
 - [Pgpool-II Official Documentation](https://www.pgpool.net/docs/latest/en/html/)
 - [Django Persistent connections](https://docs.djangoproject.com/en/5.2/ref/databases/#persistent-connections)
 - [PHP Documentation – Persistent connections](https://www.php.net/manual/en/pdo.connections.php)
-
-
-

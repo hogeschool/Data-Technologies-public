@@ -1,3 +1,8 @@
+---
+title: "JSON"
+parent: "2 - Advanced SQL"
+nav_order: 6
+---
 # JSON and JSON Functions
 
 PostgreSQL provides extensive support for **JSON** and **JSONB** data types, allowing efficient storage and querying of semi-structured data.

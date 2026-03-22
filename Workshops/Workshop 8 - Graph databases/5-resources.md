@@ -1,3 +1,8 @@
+---
+title: "Resources"
+parent: "8 - Graph databases"
+nav_order: 5
+---
 # Resources
 
 ### Official Documentation

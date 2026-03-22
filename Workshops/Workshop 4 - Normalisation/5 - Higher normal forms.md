@@ -1,3 +1,8 @@
+---
+title: "Higher normal forms"
+parent: "4 - Normalisation"
+nav_order: 5
+---
 # Higher Normal Forms (4NF, 5NF, 6NF)
 
 Let’s venture into the higher normal forms—4NF, 5NF, and 6NF—which address more complex types of redundancy and dependencies that can still exist even after achieving BCNF. These are especially relevant in advanced database design, data warehousing, and temporal systems.

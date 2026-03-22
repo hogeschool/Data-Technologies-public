@@ -1,3 +1,8 @@
+---
+title: "Types of NoSQL databases"
+parent: "6 - NoSQL databases"
+nav_order: 2
+---
 # Types of NoSQL databases
 
 NoSQL databases come in different types, each optimized for specific kinds of data and access patterns:

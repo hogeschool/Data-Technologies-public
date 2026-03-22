@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+parent: "2 - Advanced SQL"
+nav_order: 1
+---
 # Introduction to Advanced SQL topics
 
 SQL is more than just simple queries! As databases become more complex and data-driven applications demand efficiency, advanced SQL techniques help developers and data analysts write more powerful, optimized queries.

@@ -1,3 +1,7 @@
+---
+title: Project Cases
+---
+
 # Data Technologies – Projectcases
 Versie: 1.0, 2 februari 2026
 

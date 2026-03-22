@@ -1,3 +1,8 @@
+---
+title: "Partitioning"
+parent: "5 - Optimalisation"
+nav_order: 4
+---
 # Partitioning – Breaking Large Tables into Smaller Pieces
 
 When dealing with large datasets, partitioning can help improve performance and maintainability. PostgreSQL supports two general types of partitioning:
@@ -638,5 +643,3 @@ COMMIT;
 | **Primary use case** | Performance with large amounts of row data | Performance or security with wide tables            |
 | **Result**           | Multiple tables containing subsets of rows | Multiple tables containing subsets of columns       |
 | **Common scenarios** | Time-series data, logging, geographic data | Wide tables, column-specific access |
-
-

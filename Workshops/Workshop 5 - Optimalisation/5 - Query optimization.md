@@ -1,3 +1,8 @@
+---
+title: "Query optimization"
+parent: "5 - Optimalisation"
+nav_order: 5
+---
 # Query Optimization – Writing Efficient SQL
 
 - Bulk Inserts
@@ -295,5 +300,3 @@ This computes a cumulative sum per customer ordered by date.
 ---
 
 👉 In short: **window functions combine the detail view of each row with the power of aggregates, in one efficient query.**
-
-

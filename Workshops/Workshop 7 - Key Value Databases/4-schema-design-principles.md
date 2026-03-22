@@ -1,3 +1,8 @@
+---
+title: "Schema design principles"
+parent: "7 - Key Value Databases"
+nav_order: 4
+---
 # Designing Document Structures in MongoDB
 
 Designing a good document structure in MongoDB is often the most challenging part of working with a document database.
@@ -248,7 +253,3 @@ For more schema design patterns and examples, see the official MongoDB documenta
 
 - [Schema Design Patterns (MongoDB Manual)](https://www.mongodb.com/docs/manual/data-modeling/design-patterns/)
 - [Building with Patterns (MongoDB Blog Series)](https://www.mongodb.com/company/blog/building-with-patterns-a-summary)
-
-
-
-

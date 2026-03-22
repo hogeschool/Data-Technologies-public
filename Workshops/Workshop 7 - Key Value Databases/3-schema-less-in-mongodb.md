@@ -1,3 +1,8 @@
+---
+title: "Schema less in mongodb"
+parent: "7 - Key Value Databases"
+nav_order: 3
+---
 # Schema-less in MongoDB
 
 Although MongoDB does not enforce a complete schema, it is not entirely schema-free. You can define validation rules to enforce a minimal structure on the documents within a collection.

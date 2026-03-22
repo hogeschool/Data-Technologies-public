@@ -1,3 +1,8 @@
+---
+title: "Transactions"
+parent: "2 - Advanced SQL"
+nav_order: 5
+---
 # Transactions
 
 Transactions in SQL are crucial for ensuring the integrity and consistency of a database, especially in scenarios where multiple related changes need to be executed together. A transaction is a sequence of operations performed as a single logical unit of work, which follows the ACID properties:

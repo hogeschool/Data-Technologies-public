@@ -1,3 +1,8 @@
+---
+title: "Resources"
+parent: "6 - NoSQL databases"
+nav_order: 8
+---
 # Further Learning Resources
 
 This final section provides a list of recommended online resources to deepen your understanding of **Redis** and its common use cases.  
