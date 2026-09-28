@@ -326,7 +326,7 @@ A `CROSS JOIN` generates a Cartesian product: every row from the first table is 
 
 If the first table has M rows and the second has N rows, the result contains M × N rows.
 
-In the diagram every row from the left table is combined with every row from the right table, regardless of colour. With three rows in each table, the result contains 3 × 3 = 9 rows.
+In the diagram below every row from the left table is combined with every row from the right table, regardless of colour. With three rows in each table, the result contains 3 × 3 = 9 rows.
 
 ![alt text](data/img/cross-join.jpeg "Cross Join")
 
@@ -344,7 +344,7 @@ CROSS JOIN courses;
 
 **How it works:**
 
-- Every student is matched with every course
+- Every student is combined with every course
 
 ```mermaid
 flowchart LR
@@ -359,13 +359,13 @@ flowchart LR
     style J fill:#e6f3ff,stroke:#4a90e2,stroke-width:1px,stroke-dasharray: 3 3
 
     %% Note
-    noteN[["Every student is matched with every course.<br/>Rows = students × courses"]]
+    noteN[["Every student is combined with every course.<br/>Rows = students × courses"]]
     Result --- noteN
 ```
 
 - If we have 100 students and 10 courses, this returns 1,000 rows.
-- Not commonly used unless explicitly needed.
-- Can be dangerous if tables contain large numbers of rows!
+- Useful when you need all possible combinations, for example to generate a list of every course option for every student, or to create test data. These combinations do not indicate actual enrollments.
+- The result size grows quickly: 100,000 students × 1,000 courses produces 100 million rows. Processing such a large result can overload the database server and slow down other users’ queries.
 
 <details markdown="1">
 <summary>View this query result</summary>
