@@ -182,7 +182,12 @@ flowchart LR
 
 ### :arrow_right: Right Join
 
-A `RIGHT JOIN` works similarly to LEFT JOIN, but keeps all records from the right table while including only matching rows from the left.
+A `RIGHT JOIN` is the mirror image of a `LEFT JOIN`: it includes every row from the right table and combines it with matching rows from the left table, based on the ON condition. 
+
+If multiple left-side rows match, the right-side data is repeated in the result: once for each matching left-side row. 
+If no match exists, the right-side row is included once, with NULL in the left-side columns.
+
+In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/right-join.jpeg "Right (Outer) Join")
 
@@ -243,7 +248,12 @@ Typically, LEFT JOIN is preferred over RIGHT JOIN for readability.
 
 ### :arrow_double_down: Full Outer Join
 
-A `FULL OUTER JOIN` returns all records from both tables, filling NULLs where matches don’t exist.
+A `FULL OUTER JOIN` includes every row from both tables. Rows that match based on the ON condition are combined. 
+
+If a row matches multiple rows in the other table, its data is repeated in the result: once for each match. 
+Rows without a match are included once, with NULL in the columns from the other table.
+
+In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/full-join.jpeg "Full (Outer) Join")
 
@@ -312,7 +322,9 @@ flowchart LR
 
 ### :twisted_rightwards_arrows: Cross Join
 
-A `CROSS JOIN`s generates a Cartesian product, meaning every row in one table joins with every row in another.
+A `CROSS JOIN` generates a Cartesian product: every row from the first table is combined with every row from the second table. No `ON` condition is used. 
+
+If the first table has M rows and the second has N rows, the result contains M × N rows.
 
 ![alt text](data/img/cross-join.jpeg "Cross Join")
 
