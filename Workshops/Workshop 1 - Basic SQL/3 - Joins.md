@@ -34,7 +34,9 @@ In the diagrams below, blocks with the same colour belong to the same logical un
 
 ### Inner Join
 
-An `INNER JOIN` retrieves records where there is a matching value in both tables. Any non-matching rows are discarded.
+An `INNER JOIN` combines rows from two tables when they satisfy the condition specified in the `ON` clause. Rows without a match are excluded from the result.
+
+In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/inner-join.jpeg "Inner Join")
 
