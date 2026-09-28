@@ -119,7 +119,9 @@ flowchart LR
 
 ### :arrow_left: Left Join
 
-A `LEFT JOIN` returns all records from the left table, plus matching records from the right table. If no match exists, NULL is returned from the right-side columns.
+A `LEFT JOIN` includes every row from the left table and combines it with matching rows from the right table, based on the ON condition. If multiple right-side rows match, the left-side data is repeated in the result: once for each matching right-side row. If no match exists, the left-side row is included once, with NULL in the right-side columns.
+
+In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/left-join.jpeg "Left (Outer) Join")
 
