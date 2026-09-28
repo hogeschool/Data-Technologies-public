@@ -63,6 +63,30 @@ In the diagram, matching rows are indicated by the same colour; the numbers and 
 
 **Example:** Get students and their enrolled courses
 
+This ERD shows the tables and columns relevant to the example. Relationship lines describe the database structure; the SQL query determines how rows are combined and which rows appear in the result.
+
+```mermaid
+erDiagram
+    students {
+        integer id PK
+        varchar first_name
+        varchar last_name
+    }
+
+    enrollments {
+        integer student_id FK
+        integer course_id FK
+    }
+
+    courses {
+        integer id PK
+        varchar name
+    }
+
+    students ||--o{ enrollments : "has"
+    courses ||--o{ enrollments : "includes"
+```
+
 ```sql
 SELECT 
     students.first_name, 
@@ -129,6 +153,27 @@ In the diagram, matching rows are indicated by the same colour; the numbers and 
 ![alt text](data/img/left-join.jpeg "Left (Outer) Join")
 
 **Example:** Get all students and their enrollment info (including students not enrolled)
+
+This ERD shows the tables and columns relevant to the example. Relationship lines describe the database structure; the SQL query determines how rows are combined and which rows appear in the result.
+
+```mermaid
+erDiagram
+    students {
+        integer id PK
+        varchar first_name
+        varchar last_name
+    }
+
+    enrollments {
+        integer id PK
+        integer student_id FK
+        integer course_id FK
+        integer academic_year
+    }
+
+    students ||--o{ enrollments : "has"
+```
+
 To list all courses and any enrollments (if present):
 
 ````sql
@@ -192,6 +237,27 @@ In the diagram, matching rows are indicated by the same colour; the numbers and 
 ![alt text](data/img/right-join.jpeg "Right (Outer) Join")
 
 **Example:** Get all students and their corresponding enrollments (even if some students did not enroll)
+
+This ERD shows the tables and columns relevant to the example. Relationship lines describe the database structure; the SQL query determines how rows are combined and which rows appear in the result.
+
+```mermaid
+erDiagram
+    students {
+        integer id PK
+        varchar first_name
+        varchar last_name
+    }
+
+    enrollments {
+        integer id PK
+        integer student_id FK
+        integer course_id FK
+        integer academic_year
+    }
+
+    students ||--o{ enrollments : "has"
+```
+
 
 ````sql
 SELECT 
@@ -258,6 +324,31 @@ In the diagram, matching rows are indicated by the same colour; the numbers and 
 ![alt text](data/img/full-join.jpeg "Full (Outer) Join")
 
 **Example:** Get all students and enrollments (including unmatched records)
+
+This ERD shows the tables and columns relevant to the example. Relationship lines describe the database structure; the SQL query determines how rows are combined and which rows appear in the result.
+
+```mermaid
+erDiagram
+    students {
+        integer id PK
+        varchar first_name
+        varchar last_name
+    }
+
+    enrollments {
+        integer student_id FK
+        integer course_id FK
+    }
+
+    courses {
+        integer id PK
+        varchar name
+    }
+
+    students ||--o{ enrollments : "has"
+    courses ||--o{ enrollments : "includes"
+```
+
 
 ````sql
 SELECT 
@@ -332,6 +423,22 @@ In the diagram below every row from the left table is combined with every row fr
 
 **Example:** Get all possible student-course combinations
 
+There is no direct relationship between students and courses in the full ERD; they are linked through enrollments. Therefore, no relationship line is shown between them here. This CROSS JOIN combines every student with every course, regardless of enrollment.
+
+```mermaid
+erDiagram
+    students {
+        integer id PK
+        varchar first_name
+        varchar last_name
+    }
+
+    courses {
+        integer id PK
+        varchar name
+    }
+```
+
 ````sql
 SELECT 
     students.first_name, 
@@ -390,6 +497,18 @@ A self join combines rows from a table with other rows from the same table. Diff
 There is no separate `SELF JOIN` keyword: you use a join type such as `INNER JOIN` or `LEFT JOIN`. In this example, an `INNER JOIN` finds pairs of different students who live in the same city.
 
 **Example:** Finding students from the same city
+
+Only one table is shown because a self join references the same table twice, using the aliases `s1` and `s2`. In this example, the query matches different students who live in the same city. This comparison does not represent a relationship defined in the ERD, so no relationship line is shown.
+
+```mermaid
+erDiagram
+    students {
+        integer id PK
+        varchar first_name
+        varchar last_name
+        varchar city
+    }
+```
 
 ````sql
 SELECT 
