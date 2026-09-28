@@ -32,6 +32,26 @@ In the diagrams below, blocks with the same colour belong to the same logical un
 
 &nbsp;
 
+### General JOIN syntax
+
+The general JOIN syntax is as follows:
+
+```sql
+SELECT <columns>
+FROM <table_x>
+<join_type> JOIN <table_y>
+    ON <condition>;
+```
+Replace `<join_type>` with `INNER`, `LEFT`, `RIGHT`, or `FULL OUTER`.
+
+A `CROSS JOIN` has no `ON` clause: it combines every row from the first table with every row from the second table.
+
+```sql
+SELECT <columns>
+FROM <table_x>
+CROSS JOIN <table_y>;
+```
+
 ### Inner Join
 
 An `INNER JOIN` combines rows from two tables when they satisfy the condition specified in the `ON` clause. Rows without a match are excluded from the result.
