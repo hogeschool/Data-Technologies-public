@@ -326,6 +326,8 @@ A `CROSS JOIN` generates a Cartesian product: every row from the first table is 
 
 If the first table has M rows and the second has N rows, the result contains M × N rows.
 
+In the diagram every row from the left table is combined with every row from the right table, regardless of colour. With three rows in each table, the result contains 3 × 3 = 9 rows.
+
 ![alt text](data/img/cross-join.jpeg "Cross Join")
 
 **Example:** Get all possible student-course combinations
