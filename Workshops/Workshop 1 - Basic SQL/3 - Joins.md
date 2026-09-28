@@ -182,7 +182,7 @@ flowchart LR
 
 ### :arrow_right: Right Join
 
-A `RIGHT JOIN` is the mirror image of a `LEFT JOIN`: it includes every row from the right table and combines it with matching rows from the left table, based on the ON condition. 
+A `RIGHT JOIN` is the mirror image of a `LEFT JOIN`: it includes every row from the right table and combines it with matching rows from the left table, based on the `ON` condition. 
 
 If multiple left-side rows match, the right-side data is repeated in the result: once for each matching left-side row. 
 If no match exists, the right-side row is included once, with NULL in the left-side columns.
@@ -248,7 +248,7 @@ Typically, LEFT JOIN is preferred over RIGHT JOIN for readability.
 
 ### :arrow_double_down: Full Outer Join
 
-A `FULL OUTER JOIN` includes every row from both tables. Rows that match based on the ON condition are combined. 
+A `FULL OUTER JOIN` includes every row from both tables. Rows that match based on the `ON` condition are combined. 
 
 If a row matches multiple rows in the other table, its data is repeated in the result: once for each match. 
 Rows without a match are included once, with NULL in the columns from the other table.
