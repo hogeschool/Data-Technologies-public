@@ -26,13 +26,7 @@ We will discuss the following join types:
 - Cross join
 - Self join
 
-### How to read the JOIN diagrams
-
-In the diagrams below, blocks with the same colour belong to the same logical unit: their colours indicate that they match based on the JOIN condition. The numbers and letters are dummy data, not the values used to determine a match. Each diagram illustrates which blocks are included and how they are combined for that JOIN type.
-
-&nbsp;
-
-### General JOIN syntax
+#### General JOIN syntax
 
 The general JOIN syntax is as follows:
 
@@ -51,6 +45,13 @@ SELECT <columns>
 FROM <table_x>
 CROSS JOIN <table_y>;
 ```
+
+#### How to read the JOIN diagrams
+
+In the diagrams below, blocks with the same colour belong to the same logical unit: their colours indicate that they match based on the JOIN condition. The numbers and letters are dummy data, not the values used to determine a match. Each diagram illustrates which blocks are included and how they are combined for that JOIN type.
+
+&nbsp;
+
 
 ### Inner Join
 
