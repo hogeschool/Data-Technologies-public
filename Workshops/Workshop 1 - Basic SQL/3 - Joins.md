@@ -17,6 +17,19 @@ SQL joins are used to combine rows from two or more tables based on a related co
 
 ---
 
+We will discuss the following join types:
+
+- Inner join
+- Left join
+- Right join
+- Full outer join
+- Cross join
+- Self join
+
+### How to read the JOIN diagrams
+
+In the diagrams below, blocks with the same colour belong to the same logical unit: their colours indicate that they match based on the JOIN condition. The numbers and letters are dummy data, not the values used to determine a match. Each diagram illustrates which blocks are included and how they are combined for that JOIN type.
+
 &nbsp;
 
 ### Inner Join
