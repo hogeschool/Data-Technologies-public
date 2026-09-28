@@ -385,8 +385,9 @@ flowchart LR
 
 ### :arrow_right_hook: Self Join
 
-A `SELF JOIN' joins a table with itself using a join condition.
-It does not automatically produce a Cartesian product unless you omit the ON clause (which would then behave like a CROSS JOIN).
+A self join combines rows from a table with other rows from the same table. Different aliases are used to distinguish the two references to the table.
+
+There is no separate `SELF JOIN` keyword: you use a join type such as `INNER JOIN` or `LEFT JOIN`. In this example, an `INNER JOIN` finds pairs of different students who live in the same city.
 
 **Example:** Finding students from the same city
 
@@ -406,9 +407,10 @@ INNER JOIN students s2
 
 **How it works:**
 
-- The students table is joined with itself.
-- Matches each student (s1) with other students (s2) from the same city (`s1.city = s2.city`).
-- The condition (`s1.id <> s2.id`) prevents matching a student with themselves.
+- The students table is referenced twice, using the aliases `s1` and `s2`. These aliases do not create copies of the table.
+- The condition `s1.city = s2.city` matches students who live in the same city.
+- The condition `s1.id <> s2.id` prevents a student from being matched with themselves.
+- Each matching pair appears twice: once in each direction. To include each pair only once, use `s1.id < s2.id` instead.
 
 ```mermaid
 
@@ -424,7 +426,7 @@ flowchart LR
     style J fill:#e6f3ff,stroke:#4a90e2,stroke-width:1px,stroke-dasharray: 3 3
 
     %% Note
-    noteN[["No Cartesian product.<br/>Only pairs matching the ON condition."]]
+    noteN[["Only different students from the same city are paired."]]
     Result --- noteN
 ```
 
@@ -443,20 +445,21 @@ flowchart LR
 &nbsp;
 &nbsp;
 
-### Real-World Considerations:
+### Choosing the right JOIN
 
-- **INNER JOIN** is the default choice for extracting accurate relationships.
-- **LEFT JOIN** is great for auditing data (seeing missing connections).
-- **FULL JOIN** isn't always available in some databases *(MySQL doesn't support it natively)*.
-- **CROSS JOIN** should be handled with caution due to potentially huge result sets.
-- **SELF JOIN** is highly useful in social networks or employee management scenarios.
+- **INNER JOIN**: Use when you only need rows with a match in both tables, such as students and the courses they are enrolled in.
+- **LEFT JOIN**: Use when you need every row from the left table, even without a match. For example, list all students, including those without enrollments.
+- **RIGHT JOIN**: The mirror image of a LEFT JOIN. You can rewrite it as a LEFT JOIN by swapping the tables.
+- **FULL OUTER JOIN**: Use when you need every row from both tables, including unmatched rows on either side. This is useful when comparing datasets and identifying missing connections.
+- **CROSS JOIN**: Use when you need every possible combination. Check the table sizes first: M rows combined with N rows produce M × N result rows.
+- **SELF JOIN**: Use when you need to relate rows within the same table, such as finding students from the same city or linking employees to their managers.
 
 &nbsp;
 &nbsp;
 
 ### Conclusion
 
-SQL joins aren’t just theoretical constructs; they’re powerful tools that shape data-driven decisions. Mastering them ensures efficient data retrieval, enhanced reporting, and strong relational database design.
+Choose your JOIN based on which rows you want to keep and how they should be combined. For joins with an `ON` clause, the condition determines which rows match. Remember that one row can have multiple matches, causing its data to be repeated in the result. A `CROSS JOIN` combines all rows without a matching condition.
 
 &nbsp;
 &nbsp;
