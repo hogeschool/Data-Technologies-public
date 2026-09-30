@@ -19,12 +19,12 @@ SQL joins are used to combine rows from two or more tables based on a related co
 
 We will discuss the following join types:
 
-- Inner join
-- Left join
-- Right join
-- Full outer join
-- Cross join
-- Self join
+- [Inner join](#inner-join)
+- [Left join](#arrow_left-left-join)
+- [Right join](#arrow_right-right-join)
+- [Full outer join](#arrow_double_down-full-outer-join)
+- [Cross join](#twisted_rightwards_arrows-cross-join)
+- [Self join](#arrow_right_hook-self-join)
 
 #### General JOIN syntax
 
