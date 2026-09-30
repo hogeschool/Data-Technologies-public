@@ -498,7 +498,7 @@ There is no separate `SELF JOIN` keyword: you use a join type such as `INNER JOI
 
 In the illustration below, the same table is used twice, with aliases a and b. Rows are combined when they satisfy the ON condition, as indicated by matching colours. In this example, A from alias a matches C from alias b, B matches A, and C matches B. The letters represent dummy data, not the values used to determine a match.
 
-![alt text](data/img/self-join.png "Self Join")
+![alt text](data/img/self-join-labelled.png "Self Join")
 
 **Example:** Finding students from the same city
 
