@@ -59,7 +59,7 @@ An `INNER JOIN` combines rows from two tables when they satisfy the condition sp
 
 In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
-![alt text](data/img/inner-join.jpeg "Inner Join")
+![alt text](data/img/inner-join-labelled.png "Inner Join")
 
 **Example:** Get students and their enrolled courses
 
@@ -150,7 +150,7 @@ If no match exists, the left-side row is included once, with NULL in the right-s
 
 In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
-![alt text](data/img/left-join.jpeg "Left (Outer) Join")
+![alt text](data/img/left-join-labelled.png "Left (Outer) Join")
 
 **Example:** Get all students and their enrollment info (including students not enrolled)
 
@@ -234,7 +234,7 @@ If no match exists, the right-side row is included once, with NULL in the left-s
 
 In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
-![alt text](data/img/right-join.jpeg "Right (Outer) Join")
+![alt text](data/img/right-join-labelled.png "Right (Outer) Join")
 
 **Example:** Get all students and their corresponding enrollments (even if some students did not enroll)
 
@@ -321,7 +321,7 @@ Rows without a match are included once, with NULL in the columns from the other 
 
 In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
-![alt text](data/img/full-join.jpeg "Full (Outer) Join")
+![alt text](data/img/full-join-labelled.png "Full (Outer) Join")
 
 **Example:** Get all students and enrollments (including unmatched records)
 
@@ -419,7 +419,7 @@ If the first table has M rows and the second has N rows, the result contains M Ã
 
 In the illustration below every row from the left table is combined with every row from the right table, regardless of colour. With three rows in each table, the result contains 3 Ã— 3 = 9 rows.
 
-![alt text](data/img/cross-join.jpeg "Cross Join")
+![alt text](data/img/cross-join-labelled.png "Cross Join")
 
 **Example:** Get all possible student-course combinations
 
