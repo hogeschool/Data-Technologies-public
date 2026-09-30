@@ -494,7 +494,7 @@ flowchart LR
 
 A self join combines rows from a table with other rows from the same table. Different aliases are used to distinguish the two references to the table.
 
-There is no separate `SELF JOIN` keyword: you use a join type such as `INNER JOIN` or `LEFT JOIN`. In this example, an `INNER JOIN` finds pairs of different students who live in the same city.
+There is no separate `SELF JOIN` keyword: you use a join type such as `INNER JOIN` or `LEFT JOIN`.
 
 In the illustration below, the same table is used twice, with aliases a and b. Rows are combined when they satisfy the ON condition, as indicated by matching colours. In this example, A from alias a matches C from alias b, B matches A, and C matches B. The letters represent dummy data, not the values used to determine a match.
 
@@ -502,6 +502,7 @@ In the illustration below, the same table is used twice, with aliases a and b. R
 
 **Example:** Finding students from the same city
 
+In this example, an `INNER JOIN` finds pairs of different students who live in the same city.
 Only one table is shown because a self join references the same table twice, using the aliases `s1` and `s2`. In this example, the query matches different students who live in the same city. This comparison does not represent a relationship defined in the ERD, so no relationship line is shown.
 
 ```mermaid
