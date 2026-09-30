@@ -46,9 +46,9 @@ FROM <table_x>
 CROSS JOIN <table_y>;
 ```
 
-#### How to read the JOIN diagrams
+#### How to read the JOIN illustrations
 
-In the diagrams below, blocks with the same colour belong to the same logical unit: their colours indicate that they match based on the JOIN condition. The numbers and letters are dummy data, not the values used to determine a match. Each diagram illustrates which blocks are included and how they are combined for that JOIN type.
+In the illustrations below, blocks with the same colour belong to the same logical unit: their colours indicate that they match based on the JOIN condition. The numbers and letters are dummy data, not the values used to determine a match. Each illustration illustrates which blocks are included and how they are combined for that JOIN type.
 
 &nbsp;
 
@@ -57,7 +57,7 @@ In the diagrams below, blocks with the same colour belong to the same logical un
 
 An `INNER JOIN` combines rows from two tables when they satisfy the condition specified in the `ON` clause. Rows without a match are excluded from the result.
 
-In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
+In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/inner-join.jpeg "Inner Join")
 
@@ -148,7 +148,7 @@ A `LEFT JOIN` includes every row from the left table and combines it with matchi
 If multiple right-side rows match, the left-side data is repeated in the result: once for each matching right-side row. 
 If no match exists, the left-side row is included once, with NULL in the right-side columns.
 
-In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
+In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/left-join.jpeg "Left (Outer) Join")
 
@@ -232,7 +232,7 @@ A `RIGHT JOIN` is the mirror image of a `LEFT JOIN`: it includes every row from 
 If multiple left-side rows match, the right-side data is repeated in the result: once for each matching left-side row. 
 If no match exists, the right-side row is included once, with NULL in the left-side columns.
 
-In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
+In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/right-join.jpeg "Right (Outer) Join")
 
@@ -319,7 +319,7 @@ A `FULL OUTER JOIN` includes every row from both tables. Rows that match based o
 If a row matches multiple rows in the other table, its data is repeated in the result: once for each match. 
 Rows without a match are included once, with NULL in the columns from the other table.
 
-In the diagram, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
+In the illustration, matching rows are indicated by the same colour; the numbers and letters represent other data in those rows.
 
 ![alt text](data/img/full-join.jpeg "Full (Outer) Join")
 
@@ -417,7 +417,7 @@ A `CROSS JOIN` generates a Cartesian product: every row from the first table is 
 
 If the first table has M rows and the second has N rows, the result contains M × N rows.
 
-In the diagram below every row from the left table is combined with every row from the right table, regardless of colour. With three rows in each table, the result contains 3 × 3 = 9 rows.
+In the illustration below every row from the left table is combined with every row from the right table, regardless of colour. With three rows in each table, the result contains 3 × 3 = 9 rows.
 
 ![alt text](data/img/cross-join.jpeg "Cross Join")
 
@@ -495,6 +495,10 @@ flowchart LR
 A self join combines rows from a table with other rows from the same table. Different aliases are used to distinguish the two references to the table.
 
 There is no separate `SELF JOIN` keyword: you use a join type such as `INNER JOIN` or `LEFT JOIN`. In this example, an `INNER JOIN` finds pairs of different students who live in the same city.
+
+In the illustration below, the same table is used twice, with aliases a and b. Rows are combined when they satisfy the ON condition, as indicated by matching colours. In this example, A from alias a matches C from alias b, B matches A, and C matches B. The letters represent dummy data, not the values used to determine a match.
+
+![alt text](data/img/self-join.png "Self Join")
 
 **Example:** Finding students from the same city
 
