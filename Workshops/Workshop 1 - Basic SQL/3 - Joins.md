@@ -4,7 +4,7 @@
 
 SQL joins are used to combine rows from two or more tables based on a related column. In this document, we'll explore different types of joins using the given database schema.
 
-:information_source: Just as a reminder, we have the following tables in our [University dataset](data/university.sql):
+:information_source: Just as a reminder, we have the following tables in our [University dataset](../../Kickoff/data/files/data-technologies-pgsql.zip):
 
 ---
 

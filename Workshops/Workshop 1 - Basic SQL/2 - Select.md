@@ -4,7 +4,7 @@ Structured Query Language (SQL) is the standard language for managing and queryi
 
 To practice SQL, we will use the `university` database, which is automatically created and populated during the PostgreSQL installation.
 
-Before starting this workshop, make sure you have completed the [PostgreSQL installation](../Kickoff/1%20-%20Installation%20PostgreSQL.md).
+Before starting this workshop, make sure you have completed the [PostgreSQL installation](../../Kickoff/1%20-%20Installation%20PostgreSQL.md).
 
 ---
 
