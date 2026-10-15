@@ -19,9 +19,9 @@ Just as a reminder, we have the following tables in our database:
 
 ---
 
-In SQL, queries follow a specific execution order, which determines how the database processes different clauses. The logical order of execution is different from the written order in an SQL statement.
+In SQL, queries follow a specific logical processing order, which determines how the database processes different clauses. The logical order of execution is different from the written order in an SQL statement.
 
-**SQL Query Execution Order**
+**SQL Query Logical processing Order**
 
 1. **FROM** – Specifies tables and joins data from multiple tables if needed.
 2. **WHERE** – Filters rows based on conditions.
