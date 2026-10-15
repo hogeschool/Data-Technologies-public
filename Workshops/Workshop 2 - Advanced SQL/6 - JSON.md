@@ -80,40 +80,34 @@ Use cases|Storing configuration data, log data, simple JSON documents|Storing JS
 
 &nbsp;
 
-### Before we continue
+### Querying JSONB data
 
-Our current database model `university` has no `JSON` or `JSONB` column in any of the tables, so we need to `ALTER` one of the tables to make sure we can store JSON in it. We are going to alter the `courses` table. *More on altering tables in another workshop.*
+The `courses` table contains a `course_details` column of type `JSONB`.
+
+For the course named `Advanced SQL`, this column contains JSON data with the following structure:
+
+- `prerequisites`: An array of prerequisite course names.
+- `textbooks`: An array of objects containing a title and an author.
+- `learning_objectives`: An array of learning objectives.
+
+To see this JSON data, execute the following query:
 
 ```sql
-ALTER TABLE courses ADD COLUMN course_details JSONB;
-```
-
-Now the table has a JSONB field we can query on via the JSON functions in PostgreSQL.
-Let's add some data so we can grab information via the examples:
-
-```sql
-UPDATE courses
-SET course_details = '{
-    "prerequisites": ["Mathematics 101", "Introduction to Programming"],
-    "textbooks": [
-        {"title": "Database Systems", "author": "Elmasri & Navathe"},
-        {"title": "PostgreSQL for Professionals", "author": "Christophe Pettus"}
-    ],
-    "learning_objectives": [
-        "Understand database normalization",
-        "Master SQL queries",
-        "Optimize database performance"
-    ]
-}'
+SELECT course_details
+FROM courses
 WHERE name = 'Advanced SQL';
 ```
+We can now use PostgreSQL's JSON functions and operators to query this data. Let's explore some examples.
 
 &nbsp;
 
-### Extracting JSON functions
+### Extracting JSON data
 
-Because JSON is a format on it's own, we need to do use specific functions inside a SELECT query to grab information from the JSON field. &nbsp; The `->` operator extracts a JSON object or array, so we can use it inside the query. 
-The `->` operator is used to extract a JSON object or array, keeping the data in its JSON format.
+PostgreSQL provides several operators to extract data from a JSONB column.
+
+The `->` operator extracts a value from a JSON object or array, keeping the result in JSON format.
+
+For example, we can retrieve the `textbooks` array from the `course_details` column:
 
 ```sql
 SELECT course_details->'textbooks' AS textbook_list

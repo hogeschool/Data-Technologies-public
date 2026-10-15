@@ -73,11 +73,8 @@ JOIN recent_enrollments re ON ac.id = re.course_id;
 
 Recursive queries are particularly useful for **organizational hierarchies**, **course prerequisites**, and **nested relationships**.
 
-The original university dataset does not include a table for course prerequisites.
-For this example, we extend the database with a new table: ```course_dependencies```, which stores prerequisite relationships between courses.
-
-Before running the query below, execute the script to create and populate this table:\
-[University Course prerequisites](data/course_prerequisites.sql)
+The university dataset has a table for course prerequisites.
+This table is: ```course_dependencies```, which stores prerequisite relationships between courses.
 
 What if we need to find course prerequisites recursively? We could use:
 
