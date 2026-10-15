@@ -19,7 +19,7 @@ Just as a reminder, we have the following tables in our database:
 
 ---
 
-In SQL, queries follow a specific logical processing order, which determines how the database processes different clauses. The logical order of execution is different from the written order in an SQL statement.
+In SQL, queries follow a specific logical processing order, which determines how the database processes different clauses. The logical order of processing is different from the written order in an SQL statement.
 
 **SQL Query Logical processing Order**
 
@@ -32,7 +32,7 @@ In SQL, queries follow a specific logical processing order, which determines how
 7. **ORDER BY** – Sorts the result set.
 8. **LIMIT/OFFSET** – Restricts the number of rows returned.
 
-The writing order of an SQL query is different from its execution order. When writing a SQL statement, you typically follow this structure:
+The writing order of an SQL query is different from its processing order. When writing a SQL statement, you typically follow this structure:
 
 **SQL Writing Order**
 
