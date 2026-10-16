@@ -11,6 +11,12 @@ The installation guide refers to a ZIP file containing the required configuratio
 
 - [data-technologies-pgsql.zip](data/files/data-technologies-pgsql.zip)
 
+On Windows, Docker Desktop may prompt you to install **Windows Subsystem for Linux (WSL)**. If this happens, follow one of the guides below to install WSL.
+
+- [Installation Guide WSL (Dutch)](data/files/installatie_wsl_windows_NL.pdf)
+- [Installation Guide WSL (English)](data/files/installatie_wsl_windows_EN.pdf)
+
+
 # Usage of local files in pgAdmin
 
 pgAdmin lets you run SQL queries against PostgreSQL databases and view the results. When pgAdmin runs in a Docker container, files on your computer are not automatically available inside the container. The guides below explain how to upload these files using the built-in Storage Manager.
