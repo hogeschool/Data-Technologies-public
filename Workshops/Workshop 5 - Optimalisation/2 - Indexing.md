@@ -58,7 +58,7 @@ In a B-tree, a node with N keys always has N+1 child nodes, which ensures that t
 
 ```mermaid
 flowchart TD
-    A[1000&vert;2000&vert;3000] --> B(500&vert;750)
+    A["1000&vert;2000&vert;3000"] --> B("500&vert;750")
     A --> C(1200&vert;1800)    
     A --> E(2100&vert;2500)        
     A --> G(3100&vert;3800)
